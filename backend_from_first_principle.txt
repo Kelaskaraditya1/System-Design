@@ -1,0 +1,655 @@
+<--------------------------------------------------------------------------------->Backend from First Principle Playlist<---------------------------------------------------------------------------------------------------->
+
+<--------------------------------------------------------------------------------->Lecture 1: What is Backend and why do we need it?<---------------------------------------------------------------------------------------------------->
+
+
+1) Domain: what users type for eg:instagram.com , linked to an ip.
+SubDomain: prefix which is used before the domain name for seprating things for different services.
+
+for eg: https://backend-demp.seriously.com/users
+          ^            ^            ^       ^
+          |            |            |       |
+          Protocol      SubDomain   Domain  Route/Resource
+
+2) what is reverse proxy and nginx:
+
+Reverse Proxy: Reverse proxy is a server(middle man) which sits in front of backend server and any request coming from frontend/client is gone to reverse proxy and than it goes to the backend. 
+so the client hits the domain url: "instagram.com" and this request reaches Nginx and it goes/forwards to the particular ip on which the backend is running.
+Nginx: tool which is used for Reverse Proxy.
+
+3) how does request travels from browser to backend server:
+
+browser -> DNS -> AWS Firewall -> Aws Instance -> Nginx -> Backend server (running locally in instance)
+
+1) Request starts from browser and goes to Dns server to get the ip of the domain name.
+2) than it get's the ip and it goes through the Security firewall of aws (setup as Security group, we have to set up that which request coming from which port can access the server)
+3) than it reaches the Aws Instance where it meets the Nginx reverse proxy which redirects the incoming request to the backend server which is running locally in Aws Instance.
+
+Dns(Domain Name System) : maps domain name to ip address.
+it has 2 types of records , A Type which maps domain to ip and C name type which maps domain to other domain/sub domain
+
+
+<--------------------------------------------------------------------------------->Lecture 2: Http Protocol<---------------------------------------------------------------------------------------------------->
+
+1) Http protocol are stateless means it donot have memory of itself , we have to provide all the necessary information to the server so that it responds back properly and 
+after than it forgets about the interaction.
+than again for another request again we have to give all the necessary information like headers, tokens etc. this is stateless behaviour.
+
+2) Http is a protocol which uses TCP(Transmission Control protocol) for establishing connection between client and server
+
+3) Idempotent vs Non Idempotent:
+
+it simply means that how much the state of the server changes on the request when we hit the same request once vs again and again.
+
+Idempotent request: GET, PUT, DELETE
+
+GET: hit once or again gives same result again and again
+DELETE: first time data is deleted but than for next request it gives the same result that is 404 (NOT FOUND).
+PUT: since the request is same so the data will also be same so it updates the same data again and again so no change in state.
+
+Non Idempotent request: POST
+
+POST: creates new resource again and again therefore non Idempotent.
+
+Options Method/CORS(Cross Origin Request)
+
+Cors Origin has 2 types of request:
+
+1) Normal request: when the client accesses some another domain and server gives response than it adds a Access-Control-Allow_Origin it contains the Client's domain , if it is present than the client
+will parse the response and if it is absent than it will throw CORS error.
+
+2) Preflight request: It is a request which is raised before the actual request , just to verify whether the server allows the origin, method, header etc.
+for a request to be Preflight request it has to be Cross origin request and either of the below condition has to be satisfied:
+    1) the method should not be GET, POST it could be PUT or DELETE.
+    2) it should have non simple headers like Authorization X-custom-headers
+    3) the content/type should be other than application/x-www-form-urlencoded multipart/form-data and text/plain that is it should be application/json.
+
+since we mostly add Authorization header also the content type of the request is content/Json therefor most of the request are Preflight request.
+
+this request returns a 204(Ok + No response body) and it is just an enquiry request that does the server allows the client's origin and the methods and headers that the client is going to use.
+
+Status Codes:
+
+1) 1xxx: Informational 
+    commonly used, when massive size request in this case the client sends first headers and it returns some code on the basis of that it sends the request-body
+                    when switching protocols like switching from Http to Websocket.
+
+2) 2xxx: Succeess
+    200 (Ok) , 201(Ok + Creation of resource), 204(Ok + No response body).
+
+3) 3xxx: Redirection
+    301(Permenant Redirection) resource has been moved to another route permenantly.
+    302(Temporary Redirection)
+
+4) 4xxx: client side error
+    400(Bad request), 401(UnAuthorized), 403(Forbiden), 404(Not found), 405(Method not allowed), 409(Conflict), 429(Rate Limit)
+
+5) 5xxx: Server side error
+    500(Interval server error), 503(Service unavailable), 504(Server Timeout)
+
+Content Negotiation: this is a concept in which the client and server agrees on the best format to exchange data. could be Json,Xml or Html.
+there are 3 types of Content Negotiation
+    1) Media Negotiation: the client specifies the desired format through Accept headers , for eg: content-type/json
+    2) Language Negotiation: client requests the content in a particular language and it uses Accept language header
+    3) Encoding Negotiation: client specifies which encoding format it supports.
+
+<--------------------------------------------------------------------------------->Lecture 3: Serialization & Deserialization<---------------------------------------------------------------------------------------------------->
+
+Serialization and Deserialization is a way of converting data into a common format so that both client and server could understand and process it.
+
+Serialization standards:
+    1) Text based Serialization: which includes Json, Xml, Yaml
+    2) Binary format: which includes ProtoBuf
+
+<--------------------------------------------------------------------------------->Lecture 4: Authentication & Authorization<---------------------------------------------------------------------------------------------------->
+
+Http was stateless means it donot have memory of itself , but we require stateful interaction for that session came into picture.
+
+1) Session:
+
+Session gives server temprory memory/context of the user, whether the user is authenticated or not , what items has user has saved in the cart etc along with session id.
+
+whenever client first time interacts with server the server creates a session id and creates session for user and sends this session id to the client 
+which is saved in browser cookies by the client/frontend and server stores both session id and data.
+Client/Browser saves this session id in Cookies.
+So next time Client makes the request it attaches the cookies and from cookies it get's the session id for accessing the stored data from the session. 
+
+Session used to store information in file system than in database than in cache memory.
+
+Disadvantage of session is that when application scales it gives difficulty to share data accross multiple servers 
+
+2) Json Web Token(Jwt):
+
+jwt token contains of 3 parts header.payload.signature.
+header contains the information of which encryption algorithm is used like Hmac Sha256.
+payload contains crucial information such subject which can be userId than  issued at and expired at 
+than there is signature which the result of signing of Base 64 url encoding combination of header and payload and secret key.
+
+the secret key is shared accross the servers so that every server can validate the jwt token.
+
+while validating it takes the header and payload reruns the base64 encoding gets the data and using secret key calculates the signature that is the 3rd part and compares it with the original Jwt Token.
+
+Because of Jwt Authentication becomes Stateless instead of saving auth status in session.
+
+Disadvantage: since it is stateless the server has no memory that the user is authenticated or not so if the jwt token is stolen and the hacker sends a request it will consider the request to be authenticated.
+
+
+3) Cookies:
+
+cookies is a mechanism a key value pair which the server stores on the client browser. and the server has the access to the cookie which is stored on the clients browser.
+cookie given by one server cannot be accessed by another server.
+
+workflow: 
+first time user authenticates using username and password to the server.
+In return server stores the cookie which contains jwt/session id in the clients browser.
+than in every subsequent request the client sends cookies which can be accessed by the server for validating the authenticity of the user.
+
+4) Open Authentication(OAuth):
+
+OAuth let's the sharing of resource from one app to another without sharing password they share token which has limited access of one app's resources.
+
+Oauth 1 flow 
+
++--------+        +-------------+        +------------------+
+|  User  |        |  Client App |        | Service Provider |
+|        |        | (Your App)  |        |   (Twitter etc.) |
++--------+        +-------------+        +------------------+
+
+    |                     |                        |
+    |                     |---(1) Request Token-->|
+    |                     |<-- token + secret ----|
+    |                     |                        |
+    |<--(2) Redirect -----|                        |
+    |   to authorize URL  |                        |
+    |-------------------->|                        |
+    |   Login + Approve   |                        |
+    |                     |                        |
+    |<--(3) Redirect back with verifier ----------|
+    |                     |                        |
+    |                     |---(4) Access Token -->|
+    |                     |<-- access token ------|
+    |                     |                        |
+    |                     |---(5) API Request --->|
+    |                     |<-- Protected Data ----|
+    |                     |                        |
+
+
+Flow: 
+
+there are 2 main components our client and resource server(Twitter)
+
+steps:
+
+1) client calls the resource server for request token(temporary token)
+2) than the app is redirected to resource server's website to login and allow permission that this resource has to be accessed.
+3) after sucessful approval the resource server gives request token + verifier(proof that the user is authenticated).
+4) than the client again calls the resource with both request token and verifier for the access token to access the resources.
+
+Disadvantages:
+
+1) Difficult to implement
+2) Signature/Encryption based
+
+
+OAuth 2 flow:
+
+oauth2 was introduced since oauth1 was encryption/signature based and oauth 2 is bearer token based therefor easy to implement and use.
+
++--------+        +-------------+        +---------------------+        +------------------+
+|  User  |        |  Client App |        | Authorization Server|        | Resource Server  |
+|        |        | (Your App)  |        |   (Google Login)    |        |   (Google API)   |
++--------+        +-------------+        +---------------------+        +------------------+
+
+    |                     |                        |                           |
+    |---(1) Open App----->|                        |                           |
+    |                     |---(2) Redirect-------->|                           |
+    |                     |   (login request)      |                           |
+    |<--------------------|                        |                           |
+    |---(3) Login & Allow------------------------->|                           |
+    |                     |                        |                           |
+    |<--(4) Redirect back with CODE--------------|                           |
+    |                     |                        |                           |
+    |                     |---(5) Send CODE------->|                           |
+    |                     |   (backend call)       |                           |
+    |                     |<--(6) Access Token-----|                           |
+    |                     |                        |                           |
+    |                     |---(7) API Request------------------------------->|
+    |                     |   (with token)         |                           |
+    |                     |<--(8) User Data----------------------------------|
+    |                     |                        |                           |
+
+there are 3 main components in this flow client, Authorization server, Resource server.
+
+1) user/Client/Frontent clicks on Login with google and it redirects to Google authentication server where user signins with google account and gives permission to the resources
+2) than it gives the Authentication code which is a temporary code which is short lived.
+3) than the Backend/Server goes to the authentication server with the authentication code to get access token in exchange of the auth token.
+4) than with the access token it goes to the resource server to access the information like email, calender etc.
+
+Disadvantage: It solved the issue of Authorization not Authentication like it gives permission to access the information. not Authentication.
+
+
+Open Id Connect(OIDC):
+
+the main lacking of oauth2 is that it provides authorization but not authentication.
+so it added a layer of authentication in oauth2 flow 
+
+along with access token it provides Id token which is a JWT token and it has the information about the user , like who issued it when it was issued etc.
+ it follows the same flow as oauth2 just it get's an extra Id token with access token.
+
+
+ <--------------------------------------------------------------------------------->Lecture 5: Validation<---------------------------------------------------------------------------------------------------->
+
+The Backend structure is broken brodly in 3 stages:
+1) Controller: for reciving request and giving back response to the client
+2) Service: where it executes buisness logic
+3) Repository: layer which interacts with database or external api's.
+
+so the incoming request has to be in a specific format, like it should have all the necessary fields and the fields should have proper values as per requirements.
+so this validation of incoming request can be done with a middleware which intercepts and checks the request body before it reaches the controller.
+
+Types of validation:
+
+1) Syntactic validation: checking whether proper type of data is provided or not , like email should contain @gmail.com , phone number should contain country code.
+2) Symantic validation: checking whether data makes sense or not, for eg the age>0 && age<120 than the birth date cannot be in current date or future date etc. 
+3) Type validation: checking the expected(what type is required) and actual type of data which is submitted. 
+
+ <--------------------------------------------------------------------------------->Lecture 6: Backend Components<---------------------------------------------------------------------------------------------------->
+
+There are some backend components, Controller, Service, Repository, Middleware etc.
+
+1) Controller: it contains 2 objects request and response 
+    1) we have to take data to be processed from the request object like request body, request param, path variable etc.
+    2) than we have to deserialize the incoming data into our native format which is called as binding
+    3) than we validate and transform the data as per our requirement.
+    4) controller layer should alone deal with all the http related stuff like what statuscode etc.
+
+    tip: make all query parameter optional , set a default value to them.
+
+2) Service: This is the layer where all the buisness logic are executed
+    1) this is the layer which should isolate and operate, like take some data process and send response.
+
+3) Repository: This is the layer which interacts with the database and external api and provides data to service layer.
+
+4) Middleware: middleware are in between layers and they perform some task.
+
+|layer1| -> |Controller| -> |layeer2| -> |Repository|
+    ^                           ^
+    |                           |
+Middleware                  Middleware
+
+Middleware are optional means they come in picture as per requirement.
+Middleware has 3 object request, response and next , next is used to pass the execution from 1 layer/context to next.
+since it has response object so we can if there is any issue in the request than withnout moving ahead we can directly send response to client using response object.
+order of middleware is very important since it moves in one way, so the next layer cannot access the previous layer.
+generally keep the global error handling middleware at the last so that if any error occurs than it can respond with a appropriate error message.  
+
+implement of Middleware:
+
+1) Security part: below are some implementations which we want to be applied to evevry incoming request so instead of making fn call from each controller we create a middleware layer for it.
+
+    1) CORS:server recives the request from the client , it checks the origin from the request header.
+            if the origin is allowed than it adds a special header in response header Access control allowed origin.
+            than the client checks if this header is present or not , if not than it throws the CORS error.
+            so we create a middlleware for it, insread of every controller calling a function.
+
+    2) Authentication: with every request we attach a jwt-token/session id which has to be validated.
+                        so we create a middleware which takes the token from the request and validates it.
+                        if not valid than it sends UnAuthorized and terminates the request before passing it to next layer.
+                    
+    3) Rate Limiting: we create a middleware which keeps a track of the number of requests that had made by a particula ip address.
+                        and we set a treshhold that this many request are allowed, if exceeded than returns 429.
+
+2) Logging and Monitoring: we can create a middlleware for logging the incoming request.
+                            like noting every request , noting the paramenters etc which helps in debugging.
+
+3) Global Error Hanneling: we implement a global error handeling so we can create a middleware of it.
+                            and we have place this in the last so that at it will get a raw error and it can send back a proper error message and statuscode.
+
+4) Compression: it compresses incoming the request data process it and send a compressed response , modern browsers have a capability to decompress the response.
+
+
+Request Context: Request context is a Storage/State which is only related to a particular request.
+Context is a centralized storage usually a Hashmap which stores data in a key value pair and is accessible by all the layers for that particular request.
+without passing data from one layer to another , we centralized it at one location so every layer can access it.
+
+for eg: 
+    we send a request to enter a new book and it takes user_id.
+    so it takes token which contains user_id so once the Authentication server authenticates the token it can store the user_id, roles etc in Context.
+    so that while entering the data it will take the user_id from the context instead of taking from client since client can send malicious data as well.
+
+ <--------------------------------------------------------------------------------->Lecture 6: Cacheing<---------------------------------------------------------------------------------------------------->
+
+Cacheing is a mechanism in which the data which is used repeatedly is being stored temporaryly in ram since it is faster as compared to ssd for retrival.
+first time the data is being fetched from database and it is being stored in cache, second time the data comes from cache layer.
+
+Types of Cacheing:
+    1) Network level:
+        this innvolves 2 components CDN and DNS 
+        
+        1) CDN is a Network which are spread across the worls and it implements the concept of edge computing.
+        every region has a Point of Presence(Pop) which is a group of servers, which routes the incoming request to the appropriate server.
+        it checks the ip address of the request, network strength and geographical location and than assigns appropriate server to it.
+        so cacheing is implemented in a way that the request is sent to the nearest pop server and it doesnot get response than it is send to the actual root server and it sends response
+        and this response is being cached by pop server for further requests.
+
+        2) DNS
+        so we are to get the ip of the domain name ,
+        so this is the hardware level implementation 
+
+        1) the request for instagram.com which is a dns query is sent to the hardware and it looks in it's cache memory which is primaryly L1/L2 cache for the ip address , if found than returns it.
+        2) if not than it sends the reuqest to multiple recursive resolver which are the root level server which have the address for top level domain like .com, .co, .in.
+        3) than since it is a .com so we go to the top level domain of .com , and there we get the address of the authoritavtive server which has the ip address of instagram.com
+        4) than the authorative server get's the ip address and sends back.
+
+        how cacheing is implemented:
+        so once we find out the ip address at any level we cache it/saves it so for further requests in local cache so it does not have to do the entire process again.
+
+    2) Software level:
+
+    3) Hardware level:
+
+ <--------------------------------------------------------------------------------->Lecture 6: Background Tasks <---------------------------------------------------------------------------------------------------->
+
+Background Tasks are tasks which run their execution our of the normal request response cycle , asynchronously without depending or making some service dependent on it self.
+
+for eg: There is a signup process in which when we enter the details and send a verification email to the user , and now there is another service which handels the sending of the email.
+and it might not be as responsive like it might go down , so because of this the entire process will fail since it is a synchronous request if there is no proper error handeling 
+
+so the solution for this might be make a queue and a background process , once the user signups it will serialize the data and send it to the queue and than the email service will 
+take data from the queue deserialize and use it for sending email. so by this we made the process asynchronous ,so that even if the process fails it fails gracefully instead of failing 
+the entire process.
+So basically background tasks provide asynchronous behaviour instead of waiting for a job to completed , we suspend it and move the execution ahead.
+
+Task Queue/Broker:
+
+This follows a Pub/Sub model.
+The publisher creates a new task and pushes into the queue and the consumer which has a background process constantly monitors the queue for the incoming message and executes them 
+outside of the req/res cycle.
+after sucessful completion of the task the consumer sends a acknowledgement to the queue and than it can decide whether to remove the task from the queue or not.
+
+Design consideration when working with task queue:
+
+1) Idempotency: the task should be designed in such a way , even if it fails it should not cause any side effect.
+it should be a complete single transaction means if failed it should be roll backed to the previous state sucessfully and next time the transaction should start from scratch.  
+
+2) Error handeling: should impement proper logging, retry mechanism 
+
+3) Monitoring: at any instance we should have a complete picture about the pending tasks in the queue no of sucessful task , nno of failed task reason behind the failed tasks.
+for this we should use proper monitoring tools such as Promethus/Grafana and add proper metric for clearity.
+
+4) Scaling: add proper horizontal or vertical scaling mechanism as per the traffic etc.
+
+5) Rate Limiting: add proper rate limiting mechanism so that if there it is making request to external services it should not overload by sending multiple requests to it.
+
+  <--------------------------------------------------------------------------------->Lecture 6: Elastic Serach <---------------------------------------------------------------------------------------------------->
+
+for eg, we have to find book and it has a title and description and we have to find the book based on both 
+
+so the tradational query might require a lot of time since it might have to go through all records.
+so instead of the normal query we use inverted index which is implemented by elastic search.
+
+so that in inverted index , we devide the entity into parts for eg: title:"Machine Learning" -> ["Machine","Learning"]
+than we take all results on the basis of "Machine" and "Learning". 
+
+Elastic search works on 2 main factors , the freqyency and the significance/context/meaning which meets best with the coondition.so on the basis of this 2 factors it ranks the results  
+
+  <--------------------------------------------------------------------------------->Lecture 7: Logging, Monitoring, Observability<---------------------------------------------------------------------------------------------------->
+
+1) Logging: logging simply means recording the event with some metadata.
+2) Monitoring: having realtime look over the state of the system.
+3) Observability: Observability has 3 pillars , if this below pillars are present than only we say that system is observable.
+                    -> Logs(Records of what happened)
+                    -> Metrices()
+                    -> Traces(Tracking of journney of a request from origin to destination)
+
+Logging Levels:
+1) Debug: use in development enviornment, for debugging and getting information about the bug.
+2) Info: use for trival events for eg: user created successfully.
+3) Warn: this are not errors ,just backend warning that you might had done something wrong.
+4) Error: when any part fails than we use Error level log.
+5) Fatal: when there is a sever level of issue with the app than we use Fatal level.
+
+  <--------------------------------------------------------------------------------->Lecture 8: Security aspects<---------------------------------------------------------------------------------------------------->
+
+The Attacker does not care about the language/framework it thinks about where the developer might have made an assumption.
+Attacker tries to break the happy assumption of the developer.
+
+Types of attacks:
+
+1) Injection attack:
+this is a type of attack in which the attacker enters some invalid/malicious input rather than what is expected which breaks the system
+
+for eg: while login the query used might be , Select * from users where username='username';
+so instead of entering the username the attacker might enter ' OR '1'='1'--'
+so the input becomes '' OR '1'='1'--' and this get's placed instead of username.
+
+what happenes in this input is that the first ' closes the place holder so that 'username' becomes '', means it completes one condition than comes OR clause and 2nd condition '1'='1' which is true 
+and then there is --' which is a comment which closes the first '. without this it will give an error. 
+
+now for this input it returns all records, this is SQL injection attack.
+
+This attacks happen when there is a confusion between data and code , like what to treat as code and what to treat as data. as every specific charecter has a seprate meaning.
+some times attacker may send a malocious query and it may be concatinated in the query
+
+Solution: so the solution for this is to use parameterised queries in which there is no confusion between data and query.
+
+for eg: 
+query='select * from users where username= $1';
+process_query(query,param1);
+
+now the data passed in placed of param1 will be placed in the query so even if there is any malicious input, it won't work.
+
+2) Command Injection: This is a type of attack which injects OS level commands
+
+for eg while executing a nosql command some one entered ";rm -rf" so basically ; ends the search and query and than there is rm -rf;
+
+Password protection techniques:
+
+1) Hashing: Hashing is a technique in which we use a hash function, and it's speciality is that , it doesnot matter the length of the input, the output always has a constant length.
+hashing is irreversible, we cannot the actual password from the hash string.
+hashing has level of strength higher the level stronger the hash string and difficult to decrypt.
+and they for a peice of string it produce the same string of Hash, if we again and again hash the same string it produces the same result
+there is a rainbow table which is a HashMap where the key is the hash value and the value is the actual password , so we can iterate over the hashmap to get the password.
+
+2) Salting: 
+the issue with hashing is that it provides same hash for a string everytime so to solve this salting was introduced.
+salting suggests of adding a unique key to every input and than hash the entire combination 
+password = hash(password + salt)
+than both hashed password and unique salt are stored in the database.
+
+Sessions:
+Session is a temprorary context about the user. whenever the user login it creates a session-id and stores in the client's cookie. this is on Client side
+and on server side it creates stores the session-id and information in redis or database.
+Sessions are stateful
+
+Cookies flags:
+1) Http Only: 
+XSS attack : this is a type of attack in which attacker injects malicious js script in webapp and it runs into the users browser.
+since js can access cookies , it can be used to access cookies from local storage.
+
+so when Http only flag is set to true , than it make sure no malicious js can run on client's browser and js script ran on browser cannot access the cookies information.
+
+2) Secure: 
+this flag ensures that the cookies information can only be send over https that is secured connection.
+the http traffic can be monitored or the data can be stolen out of the request , so this flag ensures that only secure requests can access the cookies information
+
+Rate Limiting: Rate Limiting is a tachnique by which we can control the amount of request reaching our server.
+stratergies to implementing Rate Limiting:
+
+1) per ip: this works by keeping a count of how many incoming request by a single ip.
+but this is not that effective, since many users from a common organization making request has a common outgoing ip address.
+and also there are tools which can assign each request some fake ip.
+
+2) per client/account:  we can set a limit per client/account that how many requests could be made from one client.
+but this also has some issues and thiis system can also be broken.
+
+3) global rate limiting: insread of above techniques we set a global rate limit count for our backend that only this much count of request can be made per minute.
+and we can also show captcha for the user who are trying to make a geniune request. so attackers request won't reach to the server without passing the captcha layer.
+
+Authorization:
+in simple meaning the user can access the resources which he donot have access for.
+Vulnerablities that arises in Authorization:
+
+1) Broken Object Level Authorization(BOLA):
+
+Problem: The user has a valid Jwt Token and he is able to login in the system , but he donot have the permission to read the invoices from the system.
+so basically a valid user also has a access to the resource which is not permitted to it.
+this happened because the authentication is only limited to the routing layer and other layers
+
+Solution:
+for eg there is a query which fetches the list of invoices it should also ask for the proper role/permission of the user ,if the user is allowed to access the resource than only allow it.
+authorization should be implemented not only in routing layer, but also in Service and Repository layer.
+
+2) Broken Function level Authorization:
+This is a type of Vulnerablity in which the normal user which donot have permission to perform a particular task can also perform this.
+there is a functionlaity /{user_id}/delete/user. which only admin can access , but this functionlaity can also be performaed by the normal user.
+
+
+XSS (Cross Site Scripting):
+Attacker attaches malicous js script and it runs in the clients browser and takes access of the browser.
+because of which attacker gains access of the sensative data of from the browser, make api calls etc.
+
+Types of XSS Attack:
+1) Stolen XSS Attack: 
+some how attacker adds a script tag by which it runs a malicious script which stoles session.
+it mostly happens from the input given by the user. so the simple solution is sanitizing the input data before storing it.
+
+Cross Site Request Fogery(CSRF): 
+
+Attackers       Attacker calls          Server get cookies from browser
+website    ->   server which       ->
+                has users cookies 
+
+when we visit to attackers website so the attacker basically calls to the server from which the user is logged in and since the request is coming from users browser so the cookies also get attached
+with the request. and this is how the attacker get's access of the users cookies.
+
+<--------------------------------------------------------------------------------->Lecture 8: Scaling & Performance<---------------------------------------------------------------------------------------------------->
+
+ Latency: the time taken for the request to complete it's cycle or give the error is known as Latency.
+ in simple terms , the time taken by the client to raise the request, it reaches the server, the server responses and client processess that response is called as Latency.
+
+ Throughput: how many requests the system can handle in a given unit of time.
+
+Utilization: the amount of use of the entire system at a given instance of time. 
+
+Bottle neck: the component or that part of the system which makes it slower.
+Important note: whenever the latency increases measure each component indivisually and find the real bottle neck component, instead of playing the guessing game. 
+
+Percentile math with latency:
+
+There are 3 figures which we have to consider while trying to figure the latency of the system.
+1) P50 which is how much 50% of our users are facing latency.
+2) p90 which is how much 10% of our users are facing latency.
+3) p99 which is how much 1% of our users are facing latency.
+
+and p99 is top than comes p90 and p50.
+this figures help us understand latency of the system.
+
+Performance related issues which are related to Database:
+1) N+1 Query problem (1 + N extra query):
+
+We have to show post realted information on our frontend , where above there is a multimedia file and below is information of the author.
+and our api only returns image of the post , but it does not returns the information about the user.
+than for every post id we fetch the information of the author , so in total '1' query for fetching all the posts and rest 'n' requests for fetching the author information.
+
+which could have been done in a single request or 2 requests.
+ like in a single request all information, or in a single request get all the posts and than take an array of user_id and get the list of information of users.
+ so the task which requires 'n+1' requests can be done in single request.
+
+2) Lack of indexes: we have to monitor our system and than decide that some computing are happening again and again so we can add index to that columns.
+
+3) Database Connections: Locally database connections are cheap but when the app scales but it creates issues when the app starts to scale.
+also it requires a lot of resources to database connection and the number of connections get exhausted quickly, so to solve this problem Connection pooling was introduced.
+
+Connection Pool: it is a pool which has a bunch of open connections and when the request arrives it goes to the connection pool where it has open connection which serves the request 
+and than the open connection is given to the pool again which can be reused again to another request.
+
+types of connection pool:
+1) Internal: in internal connection our server is responsible for managing the open connections , basically handeling the database connection, opening, assigning, closing etc.
+2) External: in external connection we use a external service to manage the connections pool for database connections. for eg: Pg bouncer.   
+
+
+Cacheing patterns: 
+
+1) Read aside: (which we usually use)
+whenever we want to find anything, first we check in the cache whether it exists or not , if not we find it in cache and than store in the cache and than returns to the request.
+and when we update that resource than the stale data should be invalidated and get the fresh data from the db.
+
+2) Write through: 
+when there is a update operation , the system updates the db and cache simultaniously.
+
+3) Write behind:(Clever approach with risk)
+
+In this approach whenever there is a update operation we update the data in the cache layer first so that it could be server to the user. than asynchronously update the db.
+but there is a risk factor that if the asynchronous operation to the database fails than the db and the cache will be inconsistant.     
+
+Scaling:
+
+1) Vertical Scaling: Adding more resources to a single server and making it powerful so that it can handle more no of requests.
+Disadvante: Single point of failure, if the single server fails than the system is dead.
+
+2) Horizontal Scaling: adding more no of powerful servers in the system so that the request can go to any server.
+Disadvantage: how to distribute the request traffic amongs the server, basically load balancer 
+Data consistency
+
+while implementing horizontal scaling we have to ensure that the servers are stateless that is it doesnot contain any information of the past interaction.
+
+Load Balancer: Load Balancer decides to which server the request will be redirected to.
+Load Balancer algorithms:
+
+1) Round Robin: it sends the request in a circular order, first request goes to server 1 than 2 than 3 and after all servers are over it gives the request again to server 1.
+this is suitable when the weight of request or the complexicity of the request is identical so that it doesnot matter to which server the request goes.
+
+2) Weighted Round Robin: so in this case there are multiple servers and some of the server might have higher compute power , more resources.
+so this algorithm sends more amount of request to the powerful servers.
+but still it fails to send request as per their complexicity , it might send 3 simpler requests to the server which has more compute and 1 complex request to server which has less compute resources.
+
+3) Least Connection: 
+in this algorithm the system keeps a count of active connections of a server, means how many active requests a server is serving currently and on the basis of that it will distribute the load.
+
+Database Scaling:
+As we do horizontal scaling for servers, similar to that we have increase the database copies as well.
+there is a single master node/copy of the database and then there are multiple copies which are insync with the master copy which sync the changes made in the master node in itself.
+this slave nodes are only read only nodes , any read request comes , so it will be handled by this slave nodes and insert update queries will be handleled by our master node.
+
+Database Sharding:
+Database Sharding is a technique in which the a particular table is being divided into multiple logical parts and it is done on the basis of a sharding key.
+for eg: there is a orders table which has multiple orders so we can divide them on the basis of date.
+we can divide the table in 3 parts basically in 3 quarters. or in 12 months etc. 
+
+For eg there is a long operation ,deleting some records which might take time so instead doing this task synchronously we can suspend such tasks.
+maintain a queue system where such events can be pushed in the queue and the app can move with the further execution without blocking the app 
+and the job will be executing in background.
+
+<--------------------------------------------------------------------------------->Lecture 9: Concurrency & Parallelism<---------------------------------------------------------------------------------------------------->
+
+Concurrency:
+So when we make a api call, it is a synchronous process the cpu is ideal untill it get's the response and it is a lot of time waste, cpu could have introduced many tasks in that period.
+So to solve this issue we have introduced Concurrency so that the cpu doesnot remains ideal in that time and it can be alloted to some other tasks.
+So Concurrency is about structuring the programme in a way that it can start, stop and continue execution of a task whenever it wants.
+Concurrency can be achived by a single core cpu only.
+
+Parallelism: 
+Parallelism is also similar to concurrency in which as well it executes task simultaniously, but the difference is at a hardware level it has multiple cpu core support.
+so that it can distribute the tasks between multiple cores.
+
+Parallelism is about doing multiple things at once and Concurrency is about dealing with multiple things at once.
+
+Io Bound vs CPU Bound:
+
+1) Io Bound is making request and waiting for response factor.
+Api call, Database interaction, interaction with file system etc all come under I/O operation and this requeires Concurrency which means when the cpu is ideal, assign it to another task.
+
+Cpu Bound is actual computing, like processing, validating jwt token etc.
+
+How Cpu achives Concurrency/Parallelism:
+
+1) Threads:
+Thread are light weight parts of process which run simultaniously.
+Thread are allocated with memory which is stack, where the function calls, the variables declared in them are stored.
+Then there are schedulers which are responsible for starting pausing and continuing the execution of threads.
+
+2) Event Loops:
+Event loops works on a single thread.
+When there is a I/O task than the event loop delegates(gives) it to someone else and when the execution is complete it adds the task in a callback queue, and after that eventloop get's the callback 
+from callback queue and executes the callback.

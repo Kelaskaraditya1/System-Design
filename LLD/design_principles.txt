@@ -1,0 +1,157 @@
+There are 4 main design principles:
+
+1) SOLID
+2) DRY
+3) YAGNI
+4) KISS
+
+1) SOLID principles:
+
+Solid principles are required for maintaining Scalability, Maintainability, Redability etc.
+
+1) Single Resonsibility:
+This principle states that a component(class, function) should do only those things for which it is designed for.donot unnecessaryly increase the complexcity.
+This makes code more readable and modular.
+
+2) Open/Closed:
+The component should be open for extension but closed for modification.
+This simply means that we should be able to extend the functionality without breaking the existing functionality.
+
+for eg: 
+    Bad approach:
+        class Payment{
+            public void makePayment(String type){
+                if(type.equals("UPI")){
+                    ..implementation
+                }else if(type.equals("CARD")){
+                    ..implementation
+                }
+            }
+        }
+
+now when there will be more number of payment methods added than we will have to add the same function which can cause error.
+
+    Better approach: 
+
+        interface Payment{
+            public void pay();
+        }
+
+        class UPI extend Payment{
+            public void pay(){
+                ...
+            }
+        }
+
+        class CARD extends Payment{
+            public void pay(){
+                ...
+            }
+        }
+
+        class makePayment{
+            pulic void makePayment(Payment payment){
+                payment.pay();
+            }
+        }
+
+Better approach innvolves making use of interface, abstract class and polymorphism.
+
+3) Liskov Substitution principle:
+
+This states that the child class should be able to substitute the parent class seamlessly.
+the issue is that a child class might not be able to overide all the abstract methods of the abstract class or the interface so this case should also be taken care properly.
+
+for eg: Bad Pracise
+
+interface Vehicle{
+    public void startEngine()
+}
+
+class Car extends Vehicle{
+    publc void startEngine(){
+        ...implementation
+    }
+}
+
+class BailGadi extend Vehicle{
+    // cannot provide implementation for startEngine() 
+}
+
+so the solution for this is: Good Pracise
+
+interface Vehicle{
+    public abstaract void move();
+}
+
+interface EngineVehicle extend Vehicle{
+    public void startEngine()
+}
+
+interface EngineLessVehicle extend Vehicle{
+    public void startBail()
+}
+
+than accordingly the class can implement the interface accordingly on the basis of presence of engine or not.
+
+4) Interface segrigation:
+
+This simply means that the single interface should only have abstract function which are only required and no unnecessary abstract methods.
+so that the implementing class will not have to implement unnecessary methods.
+
+5) Dependency Inversion: This suggests depend more on interface rather than concrete classes.
+This introduces Loose Coupling, instead of using a concreate class pass it's parent class or interface so that the functionality will not be tight copuled with one factor.
+
+for eg: Bad Pracise:
+
+class OrderService{
+    public EmailService emailService;
+
+    public OrderService(EmailService emailService){
+        this.emailService=emailService;
+    }
+}
+
+
+now this OrderService is tightly copuled with EmailService and will give issue when other services will be introduced.
+
+Good Practise:
+
+interface NotificationService{
+    public void sendMessage();
+}
+
+class EmailService{
+    publc void sendMessage(){
+        ...
+    }
+}
+
+class SmsService{
+        publc void sendMessage(){
+        ...
+    } 
+}
+
+class OrderService{
+    public NotificationService notificationService;
+
+    public OrderService(NotificationService notificationService){
+        this.notificationService=notificationService;
+    }
+}
+
+now in this we can pass either EmailService or SmsService. 
+
+
+2) KISS principle:
+
+KISS stands for Keep It Simple & Stupid.
+this simply suggests that keep design & code as simple as possible.so that the code is more understandable, maintainable.
+
+3) YAGNI principle:
+
+YAGNI stands for You aren't gonna need it.
+YAGNI principle states that donot build features untill it is required, just for adding unnecessary complexcity which is not required at instant , this principle suggests to avoid this.
+
+

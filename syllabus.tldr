@@ -127,7 +127,7 @@
 			"props": {
 				"color": "black",
 				"size": "m",
-				"w": 582.2908513065543,
+				"w": 2630.597416813936,
 				"font": "draw",
 				"textAlign": "start",
 				"autoSize": true,
@@ -158,7 +158,7 @@
 							"content": [
 								{
 									"type": "text",
-									"text": "2) Solid Principle"
+									"text": "2) Design Principle (SOLID, DRY, KISS, YAGNI) "
 								}
 							]
 						},
@@ -353,9 +353,9 @@
 			"typeName": "shape"
 		},
 		{
-			"x": 3795.292908458243,
-			"y": 5060.627633966881,
-			"z": 0.11407139720087486,
+			"x": 4520.138901428613,
+			"y": 6032.319994684843,
+			"z": 0.08362463717401086,
 			"meta": {},
 			"id": "camera:page:page",
 			"typeName": "camera"
@@ -1067,7 +1067,7 @@
 			"typeName": "shape"
 		},
 		{
-			"editingShapeId": null,
+			"editingShapeId": "shape:7csDOArLtOJfIiCbrAgkM",
 			"croppingShapeId": null,
 			"selectedShapeIds": [
 				"shape:7csDOArLtOJfIiCbrAgkM"
@@ -2365,7 +2365,7 @@
 			"brush": null,
 			"scribbles": [],
 			"cursor": {
-				"type": "move",
+				"type": "default",
 				"rotation": 0
 			},
 			"isFocusMode": false,

@@ -1,0 +1,87 @@
+1) When to use Interface vs Abstract class.
+
+Abstract class are to be used when there are multiple common behaviours between entities.
+Interface in general Multiple Inheritance is to be used when there are some extra special/unique functionality which we donot want other entity should have, in this case we can create 
+multiple interfaces.
+
+for eg: abstract class Animal{ // common functionality between all entities
+
+    public abstract void eat();  
+    public abstract void speak();
+
+}
+
+interface Fly{
+    public void fly();
+}
+
+interface LayEgg{
+    public void layEgg();
+}
+
+now if there is a class Eagle than we can extend Animal since it has all the common functionality and it can also implement the extra functionality.
+
+class Eagle extends Animal implements Fly,LayEgg { // overide methods. 
+
+}
+
+but if there is a class Tiger than the functionality of fly() and give_eggs() is extra so in this case we have to use interface.
+
+Summary:
+
+1) Abstract class:
+When we have to give a structure that how a class should look like what all functionality should it have which will be followed by multiple classes than we should use Abstract class.
+when some complexcity has to be hidden from the child class than to use Abstract class.
+when there are multiple common functionality which multiple classes are following than we should create a Abstract class for it.
+Abstract class can have all types of variables and a constructor
+
+2) Interface:
+When there are some special functionality which only few class want to implement than create a interface of it.
+when there are some functionality which are extra and should not be inherited by child class than create interface of it.
+interface can only have static final variables and no constructor.
+
+Interview Questions:
+
+1) Can we create object of Abstract class and Interface?
+No because they are made for extending , and not using directly.
+
+2) If a class extends another class and implements a interface and they both have a common name method so which one will it use?
+for eg:
+
+class A {
+    public T method(){
+
+    }
+}
+
+interface I{
+    public T method(){
+
+    }
+}
+
+class B extends A implements I{
+    method();
+}
+
+the priority will give to the parent class , method of Class A will be called.
+
+2) Protected vs Default access modifier:
+
+| Modifier      | Same Class | Same Package | Subclass (diff package) | Outside package |
+| ------------- | ---------- | ------------ | ----------------------- | --------------- |
+| **default**   | ✅          | ✅            | ❌                       | ❌         |
+| **protected** | ✅          | ✅            | ✅ (with condition ⚠️)   | ❌         |
+
+3) Relationships:
+
+1) Is-A relationship: when all the properties of parent class are inherited by child class than it is a Is-A relationship.
+for eg: Account->Saving Account
+
+2) Association: when there is a relationship between 2 entities.
+for eg: Person drives Car.
+
+3) Composition:
+when one entities existance is dependent on another.
+for eg: House has Rooms
+if the parent entity is destroyed than there is no relevance of child entities.

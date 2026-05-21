@@ -121,13 +121,13 @@ interface NotificationService{
     public void sendMessage();
 }
 
-class EmailService{
+class EmailService extends NotificationService{
     publc void sendMessage(){
         ...
     }
 }
 
-class SmsService{
+class SmsService  extends NotificationService{
         publc void sendMessage(){
         ...
     } 

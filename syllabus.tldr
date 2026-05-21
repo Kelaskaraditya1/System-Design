@@ -127,7 +127,7 @@
 			"props": {
 				"color": "black",
 				"size": "m",
-				"w": 2630.597416813936,
+				"w": 2782.7208854157425,
 				"font": "draw",
 				"textAlign": "start",
 				"autoSize": true,
@@ -146,7 +146,7 @@
 							"content": [
 								{
 									"type": "text",
-									"text": "1) Oops principles"
+									"text": "1) Oops principles ✅"
 								}
 							]
 						},
@@ -158,7 +158,7 @@
 							"content": [
 								{
 									"type": "text",
-									"text": "2) Design Principle (SOLID, DRY, KISS, YAGNI) "
+									"text": "2) Design Principle (SOLID, DRY, KISS, YAGNI) ✅"
 								}
 							]
 						},
@@ -206,7 +206,7 @@
 							"content": [
 								{
 									"type": "text",
-									"text": "\t1) Factory"
+									"text": "\t\t1) Creational"
 								}
 							]
 						},
@@ -218,7 +218,7 @@
 							"content": [
 								{
 									"type": "text",
-									"text": "\t2) Builder"
+									"text": "\t\t\t1) Factory ✅"
 								}
 							]
 						},
@@ -230,7 +230,7 @@
 							"content": [
 								{
 									"type": "text",
-									"text": "\t3) SingleTon"
+									"text": "\t\t\t2) Abstract Factory ✅"
 								}
 							]
 						},
@@ -242,7 +242,7 @@
 							"content": [
 								{
 									"type": "text",
-									"text": "\t4) Stratergy"
+									"text": "\t\t\t3) Builder ✅"
 								}
 							]
 						},
@@ -254,7 +254,25 @@
 							"content": [
 								{
 									"type": "text",
-									"text": "\t5) Observer"
+									"text": "\t\t\t4) SingleTon ✅"
+								}
+							]
+						},
+						{
+							"type": "paragraph",
+							"attrs": {
+								"dir": "auto"
+							}
+						},
+						{
+							"type": "paragraph",
+							"attrs": {
+								"dir": "auto"
+							},
+							"content": [
+								{
+									"type": "text",
+									"text": "\t\t2) Behavioral"
 								}
 							]
 						},
@@ -266,7 +284,31 @@
 							"content": [
 								{
 									"type": "text",
-									"text": "\t6) abstract"
+									"text": "\t\t\t1) Stratergy"
+								}
+							]
+						},
+						{
+							"type": "paragraph",
+							"attrs": {
+								"dir": "auto"
+							},
+							"content": [
+								{
+									"type": "text",
+									"text": "\t\t\t2) Observer"
+								}
+							]
+						},
+						{
+							"type": "paragraph",
+							"attrs": {
+								"dir": "auto"
+							},
+							"content": [
+								{
+									"type": "text",
+									"text": "\t"
 								}
 							]
 						},
@@ -281,6 +323,168 @@
 			},
 			"parentId": "page:page",
 			"index": "aGy6L0LV",
+			"typeName": "shape"
+		},
+		{
+			"x": 11034.283459534858,
+			"y": 237.04938703138123,
+			"rotation": 0,
+			"isLocked": false,
+			"opacity": 1,
+			"meta": {},
+			"id": "shape:sEb73In1DIY1R2OaLlxPd",
+			"type": "text",
+			"props": {
+				"color": "black",
+				"size": "m",
+				"w": 5290.520945133943,
+				"font": "draw",
+				"textAlign": "start",
+				"autoSize": true,
+				"scale": 9.086143851302637,
+				"richText": {
+					"type": "doc",
+					"attrs": {
+						"dir": "auto"
+					},
+					"content": [
+						{
+							"type": "paragraph",
+							"attrs": {
+								"dir": "auto"
+							},
+							"content": [
+								{
+									"type": "text",
+									"text": "Order"
+								}
+							]
+						},
+						{
+							"type": "paragraph",
+							"attrs": {
+								"dir": "auto"
+							}
+						},
+						{
+							"type": "paragraph",
+							"attrs": {
+								"dir": "auto"
+							},
+							"content": [
+								{
+									"type": "text",
+									"text": "1) Api"
+								}
+							]
+						},
+						{
+							"type": "paragraph",
+							"attrs": {
+								"dir": "auto"
+							},
+							"content": [
+								{
+									"type": "text",
+									"text": "\t\t1) Rest"
+								}
+							]
+						},
+						{
+							"type": "paragraph",
+							"attrs": {
+								"dir": "auto"
+							},
+							"content": [
+								{
+									"type": "text",
+									"text": "\t\t2) SOAP"
+								}
+							]
+						},
+						{
+							"type": "paragraph",
+							"attrs": {
+								"dir": "auto"
+							}
+						},
+						{
+							"type": "paragraph",
+							"attrs": {
+								"dir": "auto"
+							},
+							"content": [
+								{
+									"type": "text",
+									"text": "2) Authentication"
+								}
+							]
+						},
+						{
+							"type": "paragraph",
+							"attrs": {
+								"dir": "auto"
+							},
+							"content": [
+								{
+									"type": "text",
+									"text": "3) Cacheing"
+								}
+							]
+						},
+						{
+							"type": "paragraph",
+							"attrs": {
+								"dir": "auto"
+							},
+							"content": [
+								{
+									"type": "text",
+									"text": "4) Event Driven Architecture & Message Queue"
+								}
+							]
+						},
+						{
+							"type": "paragraph",
+							"attrs": {
+								"dir": "auto"
+							},
+							"content": [
+								{
+									"type": "text",
+									"text": "5) Api Improvements"
+								}
+							]
+						},
+						{
+							"type": "paragraph",
+							"attrs": {
+								"dir": "auto"
+							},
+							"content": [
+								{
+									"type": "text",
+									"text": "6) Web Sockets/Web Hook/Web rtc"
+								}
+							]
+						},
+						{
+							"type": "paragraph",
+							"attrs": {
+								"dir": "auto"
+							},
+							"content": [
+								{
+									"type": "text",
+									"text": "7)Graph QL"
+								}
+							]
+						}
+					]
+				}
+			},
+			"parentId": "page:page",
+			"index": "aJoAq3CV",
 			"typeName": "shape"
 		},
 		{
@@ -353,9 +557,9 @@
 			"typeName": "shape"
 		},
 		{
-			"x": 4520.138901428613,
-			"y": 6032.319994684843,
-			"z": 0.08362463717401086,
+			"x": 4096.964160270406,
+			"y": 4540.43844533662,
+			"z": 0.08988091804186399,
 			"meta": {},
 			"id": "camera:page:page",
 			"typeName": "camera"
@@ -1072,7 +1276,7 @@
 			"selectedShapeIds": [
 				"shape:7csDOArLtOJfIiCbrAgkM"
 			],
-			"hoveredShapeId": null,
+			"hoveredShapeId": "shape:7csDOArLtOJfIiCbrAgkM",
 			"erasingShapeIds": [],
 			"hintingShapeIds": [],
 			"focusedGroupId": null,
@@ -2375,7 +2579,7 @@
 			"screenBounds": {
 				"x": 0,
 				"y": 0,
-				"w": 1170.4000244140625,
+				"w": 1488,
 				"h": 702.4000244140625
 			},
 			"insets": [

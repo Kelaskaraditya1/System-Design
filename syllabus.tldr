@@ -557,9 +557,9 @@
 			"typeName": "shape"
 		},
 		{
-			"x": 4096.964160270406,
-			"y": 4540.43844533662,
-			"z": 0.08988091804186399,
+			"x": 4908.219049271987,
+			"y": -248.9380568521115,
+			"z": 0.10007475363439043,
 			"meta": {},
 			"id": "camera:page:page",
 			"typeName": "camera"
@@ -1271,12 +1271,12 @@
 			"typeName": "shape"
 		},
 		{
-			"editingShapeId": "shape:7csDOArLtOJfIiCbrAgkM",
+			"editingShapeId": "shape:QJLW5PnRiag8uRA1qTIFl",
 			"croppingShapeId": null,
 			"selectedShapeIds": [
-				"shape:7csDOArLtOJfIiCbrAgkM"
+				"shape:QJLW5PnRiag8uRA1qTIFl"
 			],
-			"hoveredShapeId": "shape:7csDOArLtOJfIiCbrAgkM",
+			"hoveredShapeId": "shape:QJLW5PnRiag8uRA1qTIFl",
 			"erasingShapeIds": [],
 			"hintingShapeIds": [],
 			"focusedGroupId": null,
@@ -2620,7 +2620,7 @@
 			"props": {
 				"color": "black",
 				"size": "m",
-				"w": 1001.502679812698,
+				"w": 3100.624868509481,
 				"font": "draw",
 				"textAlign": "start",
 				"autoSize": true,
@@ -2675,7 +2675,7 @@
 							"content": [
 								{
 									"type": "text",
-									"text": "1. URL Design (REST maturity levels, HATEOAS)"
+									"text": "1. URL Design (REST maturity levels, HATEOAS) ✅"
 								}
 							]
 						},
@@ -2687,7 +2687,7 @@
 							"content": [
 								{
 									"type": "text",
-									"text": "2. HTTP Status Codes (granular 4xx/5xx usage)"
+									"text": "2. HTTP Status Codes (granular 4xx/5xx usage) ✅"
 								}
 							]
 						},
@@ -2699,7 +2699,7 @@
 							"content": [
 								{
 									"type": "text",
-									"text": "3. DTO Patterns (Mapper, Builder, inheritance)"
+									"text": "3. DTO Patterns (Mapper, Builder, inheritance) ✅"
 								}
 							]
 						},
@@ -2711,7 +2711,7 @@
 							"content": [
 								{
 									"type": "text",
-									"text": "4. Advanced Validation (@Valid groups, custom validators)"
+									"text": "4. Advanced Validation (@Valid groups, custom validators) ✅"
 								}
 							]
 						},

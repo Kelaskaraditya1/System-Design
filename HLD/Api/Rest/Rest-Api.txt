@@ -1,0 +1,117 @@
+=======================================================================================================================================================================================================
+                                                                                            REST API
+=======================================================================================================================================================================================================
+
+
+=======================================================================================================================================================================================================
+                                                                                    NAMING CONVENTIONS/URL DESIGNS
+=======================================================================================================================================================================================================
+
+
+1) Naming conventions:
+
+  1) Rest Api should be named after entities and not actions, /posts and not /getPosts
+  2) action should be represented by Http methods.
+  3) nouns should be in plular form
+  4) use lower case and '-' instead of '_'
+  5) can innvolve simple nesting for eg: /users/1/posts means post's belonging to user 1, donot complicate the nesting , should go max upto 2 entities.
+
+2) Path variable vs Query params:
+
+Path variable are used to access particular resource with id.
+Query params are used to perform different operations on collections , like filter, sort, pagination etc
+
+query parameter format "/resource ? key=value & key=value" 
+  starts with a '?' and use '&' to seprate the key value pair. 
+
+
+=======================================================================================================================================================================================================
+                                                                                            HTTP STATUS CODES
+=======================================================================================================================================================================================================
+
+1) Status codes tell the client what is the outcome of the request sent.
+
+2) The status codes are divided in 5 categories 
+  
+    1) 1's series: represents information
+    2) 2's series: respresents success
+    3) 3's series: represents re direction
+    4) 4's series: represents client side error
+    5) 5's series: represents server side error
+
+Meaning of Information and Redirection:
+
+1) Informational: This are the intermediate response that server sends to the client before sending the actual sucess or failure status code.
+
+  for eg: 100 (Continue)
+  1) If client want to send a image to the server so it adds the authentication headers etc and sends.
+  2) so first the server checks all the headers are proper or not and sends a '100' continue status code than the client sends the entire image and server returns 201.
+  3) if this checking was not there , than client will send the image and server will through 401.
+
+2) Redirection: this simply means don't stop at this step, do one more.
+
+for eg: client types 'http://google.com' but it has moved to 'https://google.com' than the server throws a 301 and redirects the user to the actual url.
+
+302: Found 
+ for eg: if in a webapp we directly try to access the api/v1/dashboard without login so the instead of 401, server sends 302 which is Found and redirects to api/v1/login route.
+ basically instead of throwing 401 , it tells you are not logged in so go to /login.
+  301 is permenant migration and 302 is temporary migration.
+
+    Flow:
+
+    1. Client requests api/v1/dashboard
+
+    2. Server checks auth
+
+    3. User not logged in
+
+    4. Server sends:
+      302 Found
+      Location: api/v1/login
+
+    5. Browser reads Location header
+
+    6. Browser automatically requests api/v1/login
+
+    it gives the Location header by which the browser comes to know that where to make the next request.
+
+ Most common status codes:
+
+1) 100: Continue
+  meaning: intermediate response, continues processing, send before sending the actual sucess/failure response.
+  eg: before sending the image, the server validates the auth headers and sends 100.
+
+2) 200: OK
+
+3) 201: resource created.
+
+4) 202: Accepted 
+  meaning: request is accepted,  and is in progress not might completed.
+
+5) 204: Ok+No response body.
+
+6) 301: Redirection (Permenant Redirection)
+  meaning: resource has been moved to another destination.
+
+7) 302: Found (Temporary Redirection)
+  meaning: Server says that the resource has been temporarily migrated to another loocation, than browser  automatically redirects to the new route.
+
+8) 400: Bad request
+
+9) 401: Un authorized
+
+10) 403: Access/Permision Denied
+
+11) 404: Reouce not Found
+
+12) 429: Too many requests.
+
+13) 500: Internal Server error
+
+14) 503: Service Down
+
+
+=======================================================================================================================================================================================================
+                                                                                            DTO VALIDATION
+=======================================================================================================================================================================================================
+

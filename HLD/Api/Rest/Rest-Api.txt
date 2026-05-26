@@ -112,6 +112,31 @@ for eg: client types 'http://google.com' but it has moved to 'https://google.com
 
 
 =======================================================================================================================================================================================================
-                                                                                            DTO VALIDATION
+                                                                                            API OPERATIONS
 =======================================================================================================================================================================================================
 
+=======================================================================================================================================================================================================
+                                                                                            1) PAGINATION
+=======================================================================================================================================================================================================
+
+Pagination is a technique by which we can send data in batches instead of sending the entire response at one.
+The entire data is divided in pages and size.
+
+we have to pass 2 requestParams page and size.
+the page number starts from 0.
+
+There are 2 types of pagination:
+  1) Offset pagination
+  2) Cursor pagination
+
+1) Offset pagination is normal pagination which is based on Offset.
+    offset = (page)*size , means leave this number of records and give the next 'size' of records.
+
+    disadvantage: The database has to read/skip offset number of records to reach next records. 
+
+2) Cursor pagination: in Cursor pagination we get the next objects, by taking into consideration the last object of the list.
+    instead of pageNo we consider the primary key of the object.
+
+    so the queryParam look like: ?cursor=""
+
+    basicallly we donot have to pass any parameter , just the primary key of the last object.

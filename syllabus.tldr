@@ -557,9 +557,9 @@
 			"typeName": "shape"
 		},
 		{
-			"x": 4908.219049271987,
-			"y": -248.9380568521115,
-			"z": 0.10007475363439043,
+			"x": 942.2561576598875,
+			"y": -24.000349290963186,
+			"z": 0.13891510409775784,
 			"meta": {},
 			"id": "camera:page:page",
 			"typeName": "camera"
@@ -2723,7 +2723,7 @@
 							"content": [
 								{
 									"type": "text",
-									"text": "5. Pagination (Offset vs Cursor, Spring Data Pageable)"
+									"text": "5. Pagination (Offset vs Cursor, Spring Data Pageable) ✅"
 								}
 							]
 						},

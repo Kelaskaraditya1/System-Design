@@ -199,6 +199,65 @@ step 2: Create a class which has a validation logic.
 
 								} 
 
+<-----------------------------------------------------------------------------------------------Pagination-------------------------------------------------------------------------------------------->
+
+<-----------------------------------------------------------------------------------------------Offset Pagination------------------------------------------------------------------------------------->
+
+		Pagination uses 2 parameters size and page no, which are to be taken as Request Param.
+		we use Pageable interface and PageRequest which implements Pageable for implementing Pagination.
+		all the request params should have some default values.
+
+		Steps:
+			1) in controller layer , accept 2 request params , for size and page no.
+
+	@GetMapping
+  public ResponseEntity<?> method(
+    @RequestParam(name = "pageNo", defaultValue = "0", required = false)int pageNo ,
+    @RequestParam(name = "size", defaultValue = "10", required = false)int size
+  ){ ... }
+
+	2) than form a PageRequest object using page no and size. and if there is a service layer pass it forward since the repository method requires it.
+	
+	PageRequest pageRequest = PageREquest.of(pageNo, size);
+
+	3) than pass this pageRequst object to the repository method , findAll(), since it gives a list of objects.	
+
+	response to return:
+			1) if we want additional information than return the entire page as it is like, total items, pages etc.
+			2) for getting stream , use .get() this returns stream of list
+			3) for getting the actual list, .getContent() since in the page response 'content' defines the actual data.
+			4) for getting pageNumber: getNumber()
+			5) for getting number of items in current response: getNumberOfElements() or getSize()	
+			6) for getting total number of elements: .getTotalElements()
+			7) for getting total number of pages: .getTotalPages()
+
+			extra functions: hasContent(), hasPrevious(), hasNext(), isEmpty(), isFirst(), isLast()
+
+<-----------------------------------------------------------------------------------------------Cursor Pagination------------------------------------------------------------------------------------->
+
+		In Cursor pagination, instead of pageNo and size we have to pass , cursor which is the primary key of the last object.
+
+	@GetMapping
+  public ResponseEntity<?> getAllUsers(
+    @RequestParam(name = "cursor", required = false) String cursor
+  ){ ... }
+
+	we have to pass the primary key of the last object in the cursror.
+
+	now we havev to write 2 queries/ repository methods 
+		1) which runs initially first time and returns first 10 records.
+		2) which takes the primary key off the last object and returns next 10 records.
+
+		Repository methods:
+			1) List<Users> findTop10ByOrderByUserIdAsc(); => returns 1st 10 records
+  		2)   List<Users> findTop10ByUserIdGreaterThanOrderByUserIdAsc(String userId); => returns next 10 records next to userID (last object). 
+
+	now first time, cursor == null than use , List<Users> findTop10ByOrderByUserIdAsc();
+	than when we get the primary key of the last object than use, List<Users> findTop10ByOrderByUserIdAsc();
+
+	the above logic has to be implemented in Controller layer.
+
+
 
 	
 	

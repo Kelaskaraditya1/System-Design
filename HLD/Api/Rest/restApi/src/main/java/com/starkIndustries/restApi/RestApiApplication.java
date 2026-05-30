@@ -20,6 +20,7 @@ public class RestApiApplication {
 
 			1) @NotNull(message="")
 			it accepts "" and " " but not null.
+			This has to be used on Objects and not on Strings.
 
 			2) @NotEmpty(message="")
 			it does not accepts null and "" but accepts "  ".
@@ -257,9 +258,131 @@ step 2: Create a class which has a validation logic.
 
 	the above logic has to be implemented in Controller layer.
 
+<----------------------------------------------------------------------------------------------Filtering---------------------------------------------------------------------------------------------->
+
+	Ways to implement Filtering in Spring boot:
+
+	1) Custom Query methods: forming query methods in repository level.
+	we have to use specific keywords for performing the operations.
+
+					Keyword 								||  Operation
+		1)		find by 								=>	finding exact match
+		2) 		exists by								=>  whether data exists or not
+		3)		And/Or									=>  Logical Operation
+		4) 		Greater than/Less Than 	=> 	>/<
+		5) 		Like										=> 	Sql like operation
+		6) 		Starting/Ending with		=> 	starts/ ends with
+		7) 		OrderBy									=> 	sorting in ascennding/decending order
+		
+		The main issue with this is that this is fine for static or fixed queries. but filtering demands dynamic filtering, dynamic parameters etc 
 
 
-	
+		2) Specification: specification is a dynamic way of filtering by passing multiple search parameters.
+
+		Steps: 
+			1) extend the repository interface with JpaSpecificationExecutor<Entity>
+
+			2) create a EntitySpecification class and in that create static methods which returns Specification<Entity>
+
+			class EntitySpecification{
+
+			public Specification<Entity> hasAttribute1(Type attribute){
+
+					return (root, query, queryBuilder)-> queryBuilder.equals(root.get("name of attribute"), attribute)
+				}
+			}
+
+			public Specification<Entity> hasAttribute2(Type attribute){
+
+					return (root, query, queryBuilder)-> queryBuilder.equals(root.get("name of attribute"), attribute)
+				}
+			}
+
+			in this we return a lambda function which takes 3 parameters:
+				1) root: this refers to the Entity.
+				2) query: this refers to the entire query that has been formed.
+				3) criteriaBuilder: this refers to the where clause, defines the condition. where attribute1=attribute.
+				
+				
+			3) Than create a seprate controller which will take all the parameters which are defined in the Entity as requestParam and make them required=false.
+
+			  @GetMapping("/specification")
+  			public ResponseEntity<?> specification(
+    				@RequestParam(name = "name",required = false) String name,
+    				@RequestParam(name = "dateOfBirth",required = false) LocalDate dateOfBirth,
+    				@RequestParam(name = "contact",required = false) String contact,
+    				@RequestParam(name = "email",required = false) String email,
+    				@RequestParam(name = "username",required = false) String username
+  						){
+						....
+						}
+
+
+						now in controller create a Specification object,
+
+						Specification specification = Specification.allOf() => this defines a empty query with no conditions 
+						now on the basis of how many parameters recived, by checking whether each queryParam is null or not add it to the condition,
+
+						if(attribute !=null){
+
+								specification.or(EntitiySpecification.hasAttribute(attribute)); => we can use or/and and thiis method comes from EntitySpecification.
+						}
+
+						repeat this for all queryParams which are present.
+
+<----------------------------------------------------------------------------------------------Sorting------------------------------------------------------------------------------------------------>
+
+		1) Normal sorting using one field.
+		
+		In the controller layer take the parameter on the basis of which sorting is to be done and the direction of Sorting.and make them optional.
+
+		Then form a Sorting oobject,
+				Sort sort = Sort.by(direction, sortingParameter);
+						direction = Direction.ASC/Direction.DESC
+
+		than pass this sort object ot service -> repository in the custom method which finds the data.
+
+		when we implement, Pagination with cursor, 
+						we make 2 custom queirs , first which returns first n records.
+						2nd which takes the id of the last item and returns a list of n objects next to that.
+						so let that methods take Sort object so that it will return the Sorted list as per the direction passed.
+
+		2) Sorting using multiple parameters:
+
+		when there are multiple parameters on the basis of which we have to perform sorting than basically the complete list is being sorted on the basis of the first parameter.
+				than when there are equal cases than it is sorted on the basis of the second parameter. this is how sorting on multiple parameters work.
+
+		now in controller layer:
+		1) take List<String> sortingParameter as an input and while passing as request pass it like 
+					[
+						"userId,ASCENDING",
+						"name,DECENDING",
+						....
+						]
+
+			so in the controller , Declare the List<Sort.Order> orders;
+			now traverse the List<String> and take single String which contains "parameter,direction" and split them using split(",") which gives a array[].
+			
+			array[0] => field, array[1] => direction.
+
+			now form an object on the basis of direction
+
+			if(direction.equalsIgnoreCase(ASCENDING))
+				orders.add(Sort.Order.asc(array[0]))
+			else
+				orders.add(Sort.Order.desc(array[0]))
+
+			Sort.Order.asc(property) , Sort.Order.desc(property) gives a Order object.
+
+			than form a general Sort Object which takes the orders List.
+
+			Sort sort = Sort.by(orders);
+
+			than pass it to any Repository method.
+
+
+
+						
 	
 	*/
 

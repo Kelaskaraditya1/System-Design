@@ -4,7 +4,7 @@
 
 
 =======================================================================================================================================================================================================
-                                                                                    NAMING CONVENTIONS/URL DESIGNS
+                                                                                    1) NAMING CONVENTIONS/URL DESIGNS
 =======================================================================================================================================================================================================
 
 
@@ -26,7 +26,7 @@ query parameter format "/resource ? key=value & key=value"
 
 
 =======================================================================================================================================================================================================
-                                                                                            HTTP STATUS CODES
+                                                                                           2) HTTP STATUS CODES
 =======================================================================================================================================================================================================
 
 1) Status codes tell the client what is the outcome of the request sent.
@@ -112,11 +112,7 @@ for eg: client types 'http://google.com' but it has moved to 'https://google.com
 
 
 =======================================================================================================================================================================================================
-                                                                                            API OPERATIONS
-=======================================================================================================================================================================================================
-
-=======================================================================================================================================================================================================
-                                                                                            1) PAGINATION
+                                                                                      3) PAGINATION / FILTERING / SORTING
 =======================================================================================================================================================================================================
 
 Pagination is a technique by which we can send data in batches instead of sending the entire response at one.
@@ -140,3 +136,45 @@ There are 2 types of pagination:
     so the queryParam look like: ?cursor=""
 
     basicallly we donot have to pass any parameter , just the primary key of the last object.
+
+
+2) Filtering is returning data on the basis of the parameters that are passed.
+  we have to use query params for passing on the basis of what filter do we want the data.
+
+3) Sorting: 
+    we  can perform sorting on the basis of single parameter or multiple parameter.
+    when there are multiple parameters , the entire list is being sorted by first parameter and if there are equals than it is sorted on the basis of second parameter.
+
+
+
+
+=======================================================================================================================================================================================================
+                                                                                         4)  VERSIONING
+=======================================================================================================================================================================================================
+
+Versioning is to give versions to api when we have to use a particular version of api.
+Versioning allows to evolve the existing api without breaking the current version, basically existing clients can use the previous version and newer clients can use the newer versiion.
+to maintain backward compatibility.
+
+There are 4 types of Api versioning:
+
+1) URI Type: we write api version in uri.
+  for eg: "/api/v1/path" or "/api/v2/path".
+
+2) Request Param: we accept version as a Request Param.
+  for eg: "/path?version=1" or "/path?version=2".
+
+3) Header: we accept api version as Header.
+for eg: X-API-VERSION=1 or X-API-VERSION=2.
+
+4) MIME Type: MIME stands for Multipurpose Internet Mail Extension
+  means what type of response does the client expects.
+
+  so we can use the Accept or our custom Header for conveying to server that in what format do we want response.
+
+  for eg: Accept: application/vnd.starkindustries.v1+json
+
+  vdn stands for vendor 
+
+  format: application/vdn.organization.{something}+format.
+

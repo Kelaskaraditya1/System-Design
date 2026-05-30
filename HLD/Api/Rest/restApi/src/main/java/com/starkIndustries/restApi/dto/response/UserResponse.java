@@ -4,6 +4,7 @@ import java.time.LocalDate;
 
 import com.starkIndustries.restApi.model.Users;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -17,7 +18,11 @@ public class UserResponse {
 
   public String userId;
   public String name;
+
+  @Schema(description = "Should start with 7,8,9", example = "8591059220")
   public String contact;
+
+  @Schema(description = "domain should be @gmail.com", example = "kelaskaraditya1@gmail.com")
   public String email;
   public String username;
   public LocalDate dateOfBirth;

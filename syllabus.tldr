@@ -557,9 +557,9 @@
 			"typeName": "shape"
 		},
 		{
-			"x": 942.2561576598875,
-			"y": -24.000349290963186,
-			"z": 0.13891510409775784,
+			"x": 2643.1731691682926,
+			"y": -169.9670802858468,
+			"z": 0.14822704987473223,
 			"meta": {},
 			"id": "camera:page:page",
 			"typeName": "camera"
@@ -2579,7 +2579,7 @@
 			"screenBounds": {
 				"x": 0,
 				"y": 0,
-				"w": 1488,
+				"w": 829.6000366210938,
 				"h": 702.4000244140625
 			},
 			"insets": [
@@ -2735,7 +2735,7 @@
 							"content": [
 								{
 									"type": "text",
-									"text": "6. Filtering/Sorting (RSQL, Spring Data Specs)"
+									"text": "6. Filtering/Sorting (RSQL, Spring Data Specs) ✅"
 								}
 							]
 						},
@@ -2747,7 +2747,7 @@
 							"content": [
 								{
 									"type": "text",
-									"text": "7. Versioning (URI/MIME/Header strategies)"
+									"text": "\t7. Versioning (URI/MIME/Header strategies) ✅"
 								}
 							]
 						},
@@ -2759,7 +2759,7 @@
 							"content": [
 								{
 									"type": "text",
-									"text": "8. Swagger/OpenAPI (Annotations + customization)"
+									"text": "8. Swagger/OpenAPI (Annotations + customization) ✅"
 								}
 							]
 						},

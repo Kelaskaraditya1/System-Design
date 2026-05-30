@@ -26,12 +26,18 @@ import com.starkIndustries.restApi.model.Users;
 import com.starkIndustries.restApi.repository.UsersRepository;
 import com.starkIndustries.restApi.speciifications.UsersSpecification;
 import com.starkIndustries.restApi.utility.Utility;
+
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 
 @RestController
 @RequestMapping("/users")
 @Slf4j
+@Tag(name = "Users Controller", description = "This represents the operations realted to Users")
 public class UsersController {
 
   @Autowired
@@ -42,6 +48,7 @@ public class UsersController {
 
 
   @PostMapping
+  @Operation(summary ="POST: /api/v1/users", description = "This endpoint is to add User")
   public ResponseEntity<ApiResponse<UserResponse>> addUser(
     @Valid @RequestBody UserRequest userRequest
   ){
@@ -53,6 +60,7 @@ public class UsersController {
 
 
   @GetMapping("/{userId}")
+  @Operation(summary = "GET: /api/v1/users/{userId}", description = "To get a single user using User Id")
   public ResponseEntity<?> getUser(@PathVariable("userId") String userId){
 
     var users =  utility.getDummyUsers()
@@ -81,23 +89,25 @@ public class UsersController {
   // }
 
   @GetMapping
+  @Operation(summary = "GET: /api/v1/users", description = "This endpoint return a paginated annd sorted list of users and accepts 3 optional parameter Curson(userId of last object), sortingParameter and direction of sorting")
   public ResponseEntity<?> getAllUsers(
-    @RequestParam(name = "cursor", required = false) String cursor,
-    @RequestParam(name="sortingParameter", required = false) String sortingParameter,
-    @RequestParam(name = "direction", required = false, defaultValue = Keys.ASCENDING) String direction
+    @Parameter(description = "Cursro means the Primary key of the last object of the list, so in next iteration it will start from the next object") @RequestParam(name = "cursor", required = false) String cursor,
+    @Parameter(description = "sortingParameter means on the basis of whic parameter we have to perform sorting") @RequestParam(name="sortingParameter", required = false, defaultValue = "userId") String sortingParameter,
+    @Parameter(description = "Whether to sort in Ascending or Decending order") @RequestParam(name = "direction", required = false, defaultValue = Keys.ASCENDING) String direction
   ){
 
     log.info("Sorting Paramere: {}", sortingParameter);
     log.info("Sorting Direction: {}", direction);
 
     Direction direction2;
+    Sort sort;
     if(direction !=null && direction.equalsIgnoreCase(Keys.DECENDING))
       direction2=Direction.DESC;
     else 
       direction2 = Direction.ASC;
 
 
-    Sort sort = Sort.by(direction2, sortingParameter);
+    sort = sortingParameter!=null ? Sort.by(direction2, sortingParameter): Sort.by("userId");
 
     if(cursor==null)
       return ResponseEntity.status(HttpStatus.OK).body(ApiResponse.sucessWithData(this.usersRepository.findTop10By(sort)));
@@ -107,6 +117,15 @@ public class UsersController {
   }
 
   @GetMapping("/specification")
+  @Operation(summary = "GET: /api/v1/users/specification", description = "This endpoint is used to filter the user on the basis of multiple parameters, basically dynamic filtering")
+  @ApiResponses(
+    {
+      @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "200", description = "Success"),
+      @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode="400", description="Client side error"),
+      @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "500", description = "Server side error")
+
+    }
+  )
   public ResponseEntity<?> specification(
     @RequestParam(name = "name",required = false) String name,
     @RequestParam(name = "dateOfBirth",required = false) LocalDate dateOfBirth,
@@ -140,6 +159,7 @@ public class UsersController {
   }
 
   @GetMapping("/multiple-sort")
+  @Operation(summary = "GET: /api/v1/users/multiple-sort", description = "This returns a sorted list which is being sorted on the basis of multiple parameters.")
   public ResponseEntity<?> getMultipleSortedUsers(
     @RequestParam(required = false) List<String> fieldAndOrders,
     @RequestParam(name = "cursor", required = false) String cursorField
@@ -173,5 +193,18 @@ public class UsersController {
           return ResponseEntity.status(HttpStatus.OK).body(this.usersRepository.findTop10By(sort));
 
   }
+
+  // @GetMapping(produces = "application/vnd.starkindustries.v1+json")
+  // public ResponseEntity<?> getUsersV1(){
+  //   return ResponseEntity.status(HttpStatus.OK).body(ApiResponse.successWithDataAndMessage(null,"Response from Version 1"));
+  // }
+
+  //   @GetMapping(produces = "application/vnd.starkindustries.v2+json")
+  // public ResponseEntity<?> getUsersV2(){
+  //   return ResponseEntity.status(HttpStatus.OK).body(ApiResponse.successWithDataAndMessage(null,"Response from Version 2"));
+
+  // }
+
+
   
 }

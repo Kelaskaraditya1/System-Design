@@ -381,8 +381,42 @@ step 2: Create a class which has a validation logic.
 			than pass it to any Repository method.
 
 
+<----------------------------------------------------------------------------------------------Swagger/Open Api--------------------------------------------------------------------------------------->
 
-						
+		for opening Swagger-Ui Documentation: http://localhost:8080/swagger-ui/index.html
+
+		Annotations related to Swagger Ui:
+
+		1) @Tag: Tag shows the name and the description given to the controller.
+					  	Should be used on a controller.
+
+		@Tag(name="", description="")
+		@RestController
+		public class Controller{...}
+
+		2) @Operation: This tag is to be added to particular controller endpoing function, which describes what does the function do.
+										This has to be added to controller function.
+										
+		@GetMapping("/path")
+		@Operation(summary="", description="")
+		public ResponseEntity<?> function(){ ... }
+
+		3) @Parameter(description="") This tag has to be added in Header or Request Param to add information about it.
+		it has to be used in Header and Request Param part.
+
+
+		4) @Shema(description="", example="") This has to be used in Request dto.
+					This annotation is used to give a dummy example and to add a description.
+
+		5) @ApiResponses({
+
+			@ApiResonse=(responseCode="statusCode", desctiption="Reason/message"),
+			@ApiResonse=(responseCode="statusCode", desctiption="Reason/message"),
+			@ApiResonse=(responseCode="statusCode", desctiption="Reason/message")
+		})
+
+		This has to be added to Controller layer that what status code gives what 
+		
 	
 	*/
 

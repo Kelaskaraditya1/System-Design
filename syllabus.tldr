@@ -557,9 +557,9 @@
 			"typeName": "shape"
 		},
 		{
-			"x": 2643.1731691682926,
-			"y": -169.9670802858468,
-			"z": 0.14822704987473223,
+			"x": 3099.867340931152,
+			"y": -773.588892473731,
+			"z": 0.13621441199711615,
 			"meta": {},
 			"id": "camera:page:page",
 			"typeName": "camera"
@@ -2579,7 +2579,7 @@
 			"screenBounds": {
 				"x": 0,
 				"y": 0,
-				"w": 829.6000366210938,
+				"w": 1488,
 				"h": 702.4000244140625
 			},
 			"insets": [
@@ -2620,7 +2620,7 @@
 			"props": {
 				"color": "black",
 				"size": "m",
-				"w": 3100.624868509481,
+				"w": 3255.439976997866,
 				"font": "draw",
 				"textAlign": "start",
 				"autoSize": true,
@@ -2771,7 +2771,7 @@
 							"content": [
 								{
 									"type": "text",
-									"text": "9. Error Handling (Global @ControllerAdvice, Problem Details RFC)"
+									"text": "9. Error Handling (Global @ControllerAdvice, Problem Details RFC) ✅"
 								}
 							]
 						},

@@ -1,8 +1,9 @@
   package com.starkIndustries.restApi.dto.response;
 
   import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 
-  import lombok.*;
+import lombok.*;
 
   @Data
   @AllArgsConstructor
@@ -55,11 +56,11 @@
 
   }
 
-  public static <T> ApiResponse<T> failureWithErrorAndMessageis(HttpStatus httpStatus, Object errors, String message){
+  public static <T> ApiResponse<T> failureWithErrorAndMessages(HttpStatus status, Object errors, String message){
 
     return ApiResponse.<T>builder()
-    .statusCode(httpStatus.value())
-    .status(HttpStatus.valueOf(httpStatus.value()).name())
+    .statusCode(status.value())
+    .status(HttpStatus.valueOf(status.value()).name())
     .message(message)
     .errors(errors)
     .success(false)

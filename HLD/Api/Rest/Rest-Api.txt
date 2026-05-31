@@ -178,3 +178,29 @@ for eg: X-API-VERSION=1 or X-API-VERSION=2.
 
   format: application/vdn.organization.{something}+format.
 
+
+=======================================================================================================================================================================================================
+                                                                                         4)  RFC (Request For Comment)
+=======================================================================================================================================================================================================
+
+When we are dealing with microservices or response which is given by another organization api than the error response might not be proper.
+Like it's error terms might not be similar as ours so for that reason , they have iintroduced a common Error response pattern which is known as RFC.
+
+Field	Purpose
+type	=> Category/identifier of the error
+title	=> Short summary of the error
+status	=> HTTP status code
+detail	=> Detailed error message
+instance	=> URI/path that caused the error
+
+Example:
+
+{
+  "type": "/errors/user-not-found",
+  "title": "User Not Found",
+  "status": 404,
+  "detail": "User with id 123 not found",
+  "instance": "/users/123"
+}
+
+In springBoot we use ProblemDetail class to implement RFC.

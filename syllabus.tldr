@@ -557,9 +557,9 @@
 			"typeName": "shape"
 		},
 		{
-			"x": 1639.1118300134372,
-			"y": -1608.389488228813,
-			"z": 0.22144107159160503,
+			"x": 1433.4072596840588,
+			"y": -757.8016794904938,
+			"z": 0.14592982893480871,
 			"meta": {},
 			"id": "camera:page:page",
 			"typeName": "camera"
@@ -2579,7 +2579,7 @@
 			"screenBounds": {
 				"x": 0,
 				"y": 0,
-				"w": 1488,
+				"w": 829.6000366210938,
 				"h": 702.4000244140625
 			},
 			"insets": [
@@ -2807,7 +2807,7 @@
 							"content": [
 								{
 									"type": "text",
-									"text": "12. Bulk Operations (Batch endpoints, idempotency)"
+									"text": "12. Bulk Operations (Batch endpoints, idempotency) ✅"
 								}
 							]
 						},

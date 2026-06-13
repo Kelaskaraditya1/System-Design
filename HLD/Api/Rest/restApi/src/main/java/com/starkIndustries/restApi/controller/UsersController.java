@@ -20,6 +20,8 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.starkIndustries.restApi.dto.request.BulkEntriesReport;
 import com.starkIndustries.restApi.dto.request.UserRequest;
 import com.starkIndustries.restApi.dto.response.ApiResponse;
 import com.starkIndustries.restApi.dto.response.UserResponse;
@@ -221,6 +223,21 @@ public class UsersController {
       return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ApiResponse.failureWithMessage(HttpStatus.BAD_REQUEST,"Enter proper Idempotent key"));
 
     return ResponseEntity.status(HttpStatus.OK).body(this.userService.signup(userRequest,idempotencyKey));
+  }
+
+  @PostMapping("/bulk")
+  public ResponseEntity<ApiResponse<BulkEntriesReport>> saveBulkUsers(
+    @RequestBody List<UserRequest> userRequests
+  ){
+
+    if(userRequests.isEmpty())
+      return ResponseEntity.status(HttpStatus.OK).body(ApiResponse.successWithDataAndMessage(null,"List should contain atleast 1 users object"));
+
+    return ResponseEntity.status(HttpStatus.OK).body(
+      ApiResponse.sucessWithData(this.userService.performBulkUserSaving(userRequests))
+    );
+
+
   }
 
 

@@ -15,5 +15,9 @@ public interface UsersRepository extends JpaRepository<Users,String>, JpaSpecifi
   List<Users> findTop10By(Sort sort);
 
   List<Users> findByName(String name);
+
+  public boolean existsByContact(String contact);
+  public boolean existsByEmail(String email);
+  public boolean existsByUsername(String username);
   
 }

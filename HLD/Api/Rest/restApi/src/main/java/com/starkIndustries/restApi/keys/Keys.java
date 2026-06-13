@@ -12,6 +12,8 @@ public class Keys {
     public static final String SOCKET_FACTORY_PORT="mail.smtp.socketFactory.port";
     public static final String SOCKET_FACTORY_CLASS="mail.smtp.socketFactory.class";
     public static final String SOCKET_FACTORY_FALLBACK="mail.smtp.socketFactory.fallback";
+    public static final String USER_ID = "userId";
+    public static final String MESSAGE = "message";
     
 
   

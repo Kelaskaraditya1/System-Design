@@ -461,6 +461,16 @@ public class CorsConfiguration implements WebMvcConfigurer{
 		3) call this method in the desired location.
 
 
+<----------------------------------------------------------------------------------------------Idempotenncy------------------------------------------------------------------------------------------->
+
+	implementation: 
+
+	1) create a table which will store the idempotent key (Id) and  created At time
+	2) than  accept the key as a headeer or reques param
+	3) than in service method check whether the idempotency key exists or not first , if yes than send apprropriate  resopnse
+	4) if not save it , than process the request normally.
+
+
 		
 	
 	*/

@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -213,9 +214,13 @@ public class UsersController {
 
   @PostMapping("/signup")
   public ResponseEntity<ApiResponse<?>> signup(
-    @Valid @RequestBody UserRequest userRequest
+    @Valid @RequestBody UserRequest userRequest,
+    @RequestParam(name = "idempotency-key",required =true) String idempotencyKey
   ){
-    return ResponseEntity.status(HttpStatus.OK).body(this.userService.signup(userRequest));
+    if(idempotencyKey==null)
+      return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ApiResponse.failureWithMessage(HttpStatus.BAD_REQUEST,"Enter proper Idempotent key"));
+
+    return ResponseEntity.status(HttpStatus.OK).body(this.userService.signup(userRequest,idempotencyKey));
   }
 
 

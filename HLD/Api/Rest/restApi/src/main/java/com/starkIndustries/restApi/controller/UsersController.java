@@ -48,6 +48,7 @@ public class UsersController {
   public UsersRepository usersRepository;
 
 
+
   @PostMapping
   @Operation(summary ="POST: /api/v1/users", description = "This endpoint is to add User")
   public ResponseEntity<ApiResponse<UserResponse>> addUser(

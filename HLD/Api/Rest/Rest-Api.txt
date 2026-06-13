@@ -48,6 +48,8 @@ Meaning of Information and Redirection:
   2) so first the server checks all the headers are proper or not and sends a '100' continue status code than the client sends the entire image and server returns 201.
   3) if this checking was not there , than client will send the image and server will through 401.
 
+  also when there is a change of protocol, during Websocket connection first there is a Http request sent than it transitioned to WebSocket so there before transitioning it sends a 100 request code which means it is transtioning.
+
 2) Redirection: this simply means don't stop at this step, do one more.
 
 for eg: client types 'http://google.com' but it has moved to 'https://google.com' than the server throws a 301 and redirects the user to the actual url.
@@ -204,3 +206,64 @@ Example:
 }
 
 In springBoot we use ProblemDetail class to implement RFC.
+
+
+=======================================================================================================================================================================================================
+                                                                                         5)  PERFORMANCE ENHANCEMENT
+=======================================================================================================================================================================================================
+
+There are 3 components which we have to focus when we learn about Performance enhancement of an api
+Major concerns:
+    1) size of the response should be as low as possible
+    2) server should response quickly , no un necessarily delay.
+    3) Cacheing of response
+
+
+1) Comperssion: when the size of the response is very high than the server can compress the size of the response and send it.
+    It uses a GZIP algorithm which is a compression algorithm , which reduces the size of the response before sending it to the client.
+
+Clinet tells the server that  it supports compression by sending a header "Accept-encoding: gzip".
+
+and when using springboot we have to use the property:
+
+1) spring.compression.enabled = true => Compresses the response before sending it.
+2) spring.compression.min-response-size =  1024 => minimum size of the response (1 MB).
+
+
+2) E Tags: 
+    When server asks for the same data again and again for eg /users and the server returns the same data, no change no adding no subtracting
+    than what we can do is that it returns a Etag with the data.
+
+    basically it returns a tag which is a hashcode which represents a version of data.
+
+    1) first time the client requests the data, the server responds with the data and a E tag(which represents a version of data).
+    2) second time the client request the data by sending the Etag.
+    3) now the server fetches the data from the database , prepares the response and hashses it , if it matches the Etag than basically there is no change in the data so it responds with a 304 (Not modified).
+    4) if there is a change in the data , than it does not matches with the hash and it sends the new data with the new Etag.
+
+
+
+=======================================================================================================================================================================================================
+                                                                                         6)  CSP (Content Security Policy)
+=======================================================================================================================================================================================================
+
+XSS (Cross Site Scripting): Xss is a type of attack in which the attacker injects some malicious code in our webapp which is executed by the browser and it is intended towards stealing the 
+cookies/sensitive information. 
+
+for eg: 
+  1) There is a comment section in which the attacker writes a malicious code and submits it.
+  2) it get's stored in database.
+  3) while fetching from database, the browser sees something like <script>...<script/> and executes it.
+
+  so to avoid this proper sanitization is required.
+
+  To solve this CSP comes in picture:
+  CSP stands for Content Security Policy, it is basically a header which the backend sends to the browser that only trust the content which is coming from the allowed domains
+
+  CSP header: Content-Security-Policy: default-src 'self'
+
+  default-src: means default rules for all the components , scripts, images etc.
+  self means trust only your domain.
+
+  if there is any <script src="https://evil.com/hack.js"></script> it will block it's execution.
+  also it will block the code which will be written in the inline part, it will also block it's execution.

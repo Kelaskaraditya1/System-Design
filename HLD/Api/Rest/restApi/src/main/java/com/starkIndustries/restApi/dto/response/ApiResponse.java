@@ -1,8 +1,6 @@
   package com.starkIndustries.restApi.dto.response;
 
-  import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
-
+import org.springframework.http.HttpStatus;
 import lombok.*;
 
   @Data

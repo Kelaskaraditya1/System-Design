@@ -416,6 +416,37 @@ step 2: Create a class which has a validation logic.
 		})
 
 		This has to be added to Controller layer that what status code gives what 
+
+		<----------------------------------------------------------------------------------------------CORS Origin --------------------------------------------------------------------------------------->
+
+		1) @CorsOrigin annotation: this annotation which enforces Cross origin policy 
+			we can apply this annotaiton on both class and function 
+
+		@CorsOrigi(
+		allowedOrigins={...}, list of origins
+		allowedHeaders = {....} , list of headers
+		allowedMethod = {RequestMethod.GET, RequestMethod.Post, ....} , list of allowed methods
+		allowedCredentials = true/false
+			);
+
+
+		2) Global Cors Configuration class: which handles the Cors configuration globally 
+
+		@Configuration
+public class CorsConfiguration implements WebMvcConfigurer{
+
+  @Override
+  public void addCorsMappings(CorsRegistry registry) {
+            registry.addMapping("/**") => to which routes the cors configuration has to be applied
+        .allowedOrigins("http://localhost:3000") => which headers does the backend accepts
+        .allowedHeaders("*") => which headers does the backend accepts
+        .allowedMethods("*") => which methods does the backend accepts
+        .allowCredentials(true); 
+  }
+
+  
+}
+
 		
 	
 	*/

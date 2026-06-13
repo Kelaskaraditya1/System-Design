@@ -557,9 +557,9 @@
 			"typeName": "shape"
 		},
 		{
-			"x": 3725.5697966095595,
-			"y": -918.6244656417614,
-			"z": 0.16294928969323874,
+			"x": 1639.1118300134372,
+			"y": -1608.389488228813,
+			"z": 0.22144107159160503,
 			"meta": {},
 			"id": "camera:page:page",
 			"typeName": "camera"
@@ -2819,7 +2819,7 @@
 							"content": [
 								{
 									"type": "text",
-									"text": "13. Async Processing (@Async endpoints)"
+									"text": "13. Async Processing (@Async endpoints) ✅"
 								}
 							]
 						},

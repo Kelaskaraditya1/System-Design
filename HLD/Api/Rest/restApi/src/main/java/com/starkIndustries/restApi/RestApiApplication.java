@@ -2,8 +2,10 @@ package com.starkIndustries.restApi;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.scheduling.annotation.EnableAsync;
 
 @SpringBootApplication
+@EnableAsync
 public class RestApiApplication {
 
 	public static void main(String[] args) {
@@ -446,6 +448,18 @@ public class CorsConfiguration implements WebMvcConfigurer{
 
   
 }
+
+		<----------------------------------------------------------------------------------------------@Async Endpoint------------------------------------------------------------------------------------>
+
+		In order to execute Tasks asynchronously in background which donot effect the execution we use the @Async endpoint.
+		Instead of setting up Kafka , at small scale this is the best solution for performing Asynchronous tasks.
+
+		Implementation:
+
+		1) use @EnableSync in main class.
+		2) for the method which is going to perform the async task , write it in a seprate class and use @Async method on  it.
+		3) call this method in the desired location.
+
 
 		
 	

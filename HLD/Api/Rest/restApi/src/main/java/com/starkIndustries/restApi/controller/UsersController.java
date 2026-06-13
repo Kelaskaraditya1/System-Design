@@ -25,6 +25,7 @@ import com.starkIndustries.restApi.dto.response.UserResponse;
 import com.starkIndustries.restApi.keys.Keys;
 import com.starkIndustries.restApi.model.Users;
 import com.starkIndustries.restApi.repository.UsersRepository;
+import com.starkIndustries.restApi.service.UsersService;
 import com.starkIndustries.restApi.speciifications.UsersSpecification;
 import com.starkIndustries.restApi.utility.Utility;
 
@@ -46,6 +47,9 @@ public class UsersController {
 
   @Autowired
   public UsersRepository usersRepository;
+
+  @Autowired
+  public UsersService userService;
 
 
 
@@ -206,6 +210,13 @@ public class UsersController {
   //   return ResponseEntity.status(HttpStatus.OK).body(ApiResponse.successWithDataAndMessage(null,"Response from Version 2"));
 
   // }
+
+  @PostMapping("/signup")
+  public ResponseEntity<ApiResponse<?>> signup(
+    @Valid @RequestBody UserRequest userRequest
+  ){
+    return ResponseEntity.status(HttpStatus.OK).body(this.userService.signup(userRequest));
+  }
 
 
   

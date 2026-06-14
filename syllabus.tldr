@@ -557,9 +557,9 @@
 			"typeName": "shape"
 		},
 		{
-			"x": 1433.4072596840588,
-			"y": -757.8016794904938,
-			"z": 0.14592982893480871,
+			"x": 6241.453029651213,
+			"y": -1647.3838968321297,
+			"z": 0.05,
 			"meta": {},
 			"id": "camera:page:page",
 			"typeName": "camera"
@@ -989,8 +989,8 @@
 			"typeName": "shape"
 		},
 		{
-			"x": -715.2197639377255,
-			"y": 5436.193657817992,
+			"x": -5364.753578569346,
+			"y": 7846.410251312405,
 			"rotation": 0,
 			"isLocked": false,
 			"opacity": 1,
@@ -1004,7 +1004,7 @@
 				"font": "draw",
 				"textAlign": "start",
 				"autoSize": true,
-				"scale": 4.250919252371269,
+				"scale": 5.528242780817635,
 				"richText": {
 					"type": "doc",
 					"attrs": {
@@ -1271,12 +1271,13 @@
 			"typeName": "shape"
 		},
 		{
-			"editingShapeId": "shape:QJLW5PnRiag8uRA1qTIFl",
+			"editingShapeId": null,
 			"croppingShapeId": null,
 			"selectedShapeIds": [
-				"shape:QJLW5PnRiag8uRA1qTIFl"
+				"shape:pqT91yF7dWxCor1y_bYlp",
+				"shape:WyBJ5A9qFl827NT12uSqd"
 			],
-			"hoveredShapeId": "shape:QJLW5PnRiag8uRA1qTIFl",
+			"hoveredShapeId": null,
 			"erasingShapeIds": [],
 			"hintingShapeIds": [],
 			"focusedGroupId": null,
@@ -2423,8 +2424,8 @@
 			"typeName": "shape"
 		},
 		{
-			"x": -736.7377379053564,
-			"y": 4086.999246554212,
+			"x": -5392.7381041162935,
+			"y": 6070.999795870618,
 			"rotation": 0,
 			"isLocked": false,
 			"opacity": 1,
@@ -2438,7 +2439,7 @@
 				"font": "draw",
 				"textAlign": "start",
 				"autoSize": true,
-				"scale": 4.597562341339588,
+				"scale": 5.97904578137815,
 				"richText": {
 					"type": "doc",
 					"attrs": {
@@ -2569,7 +2570,7 @@
 			"brush": null,
 			"scribbles": [],
 			"cursor": {
-				"type": "default",
+				"type": "ew-resize",
 				"rotation": 0
 			},
 			"isFocusMode": false,
@@ -2609,8 +2610,8 @@
 			"typeName": "instance"
 		},
 		{
-			"x": -798.5855876063806,
-			"y": 1411.643923581888,
+			"x": -5446.0574080118795,
+			"y": 1434.748984875198,
 			"rotation": 0,
 			"isLocked": false,
 			"opacity": 1,
@@ -2620,7 +2621,7 @@
 			"props": {
 				"color": "black",
 				"size": "m",
-				"w": 3255.439976997866,
+				"w": 8112.312051860564,
 				"font": "draw",
 				"textAlign": "start",
 				"autoSize": true,
@@ -2657,7 +2658,7 @@
 							"content": [
 								{
 									"type": "text",
-									"text": "\t1) Rest"
+									"text": "\t1) Rest ✅"
 								}
 							]
 						},
@@ -2833,11 +2834,35 @@
 							"type": "paragraph",
 							"attrs": {
 								"dir": "auto"
+							}
+						},
+						{
+							"type": "paragraph",
+							"attrs": {
+								"dir": "auto"
 							},
 							"content": [
 								{
 									"type": "text",
-									"text": "\t2) GraphQl"
+									"text": "2) SOAP Api:"
+								}
+							]
+						},
+						{
+							"type": "paragraph",
+							"attrs": {
+								"dir": "auto"
+							}
+						},
+						{
+							"type": "paragraph",
+							"attrs": {
+								"dir": "auto"
+							},
+							"content": [
+								{
+									"type": "text",
+									"text": "1. SOAP Fundamentals (Envelope, Header, Body, Fault structure · SOAP 1.1 vs 1.2 differences · SOAP over HTTP vs REST mental model)"
 								}
 							]
 						},
@@ -2849,7 +2874,127 @@
 							"content": [
 								{
 									"type": "text",
-									"text": "\t3) Soap"
+									"text": "2. WSDL Deep Understanding (Reading & interpreting WSDL · Types, Messages, PortType, Binding, Service sections · wsdl2java / wsimport code generation)"
+								}
+							]
+						},
+						{
+							"type": "paragraph",
+							"attrs": {
+								"dir": "auto"
+							},
+							"content": [
+								{
+									"type": "text",
+									"text": "3. JAXB & Data Binding (XSD to Java class generation · Marshalling / Unmarshalling · JAXB annotations · Handling complex types and namespaces)"
+								}
+							]
+						},
+						{
+							"type": "paragraph",
+							"attrs": {
+								"dir": "auto"
+							},
+							"content": [
+								{
+									"type": "text",
+									"text": "4. Spring-WS Setup & Configuration (MessageDispatcherServlet · Endpoint configuration · WSDL-first vs contract-last · Project structure)"
+								}
+							]
+						},
+						{
+							"type": "paragraph",
+							"attrs": {
+								"dir": "auto"
+							},
+							"content": [
+								{
+									"type": "text",
+									"text": "5. Producing SOAP Services (@Endpoint · @PayloadRoot · @RequestPayload / @ResponsePayload · Exposing WSDL endpoint)"
+								}
+							]
+						},
+						{
+							"type": "paragraph",
+							"attrs": {
+								"dir": "auto"
+							},
+							"content": [
+								{
+									"type": "text",
+									"text": "6. Consuming External SOAP Services (WebServiceTemplate · Stub generation from WSDL · Connection pooling · Timeout configuration)"
+								}
+							]
+						},
+						{
+							"type": "paragraph",
+							"attrs": {
+								"dir": "auto"
+							},
+							"content": [
+								{
+									"type": "text",
+									"text": "7. SOAP Fault & Error Handling (Fault codes and fault strings · Custom SOAP faults · SoapFaultDefinitionExceptionResolver · Fault vs HTTP error distinction)"
+								}
+							]
+						},
+						{
+							"type": "paragraph",
+							"attrs": {
+								"dir": "auto"
+							},
+							"content": [
+								{
+									"type": "text",
+									"text": "8. WS-Security (UsernameToken authentication · X.509 certificate based security · Message signing & encryption · Wss4jSecurityInterceptor · Timestamp and nonce handling)"
+								}
+							]
+						},
+						{
+							"type": "paragraph",
+							"attrs": {
+								"dir": "auto"
+							},
+							"content": [
+								{
+									"type": "text",
+									"text": "9. Interceptors & Audit Logging (PayloadLoggingInterceptor · Custom interceptors · Logging full SOAP envelopes · Masking sensitive fields in logs)"
+								}
+							]
+						},
+						{
+							"type": "paragraph",
+							"attrs": {
+								"dir": "auto"
+							},
+							"content": [
+								{
+									"type": "text",
+									"text": "10. Testing SOAP Services (MockWebServiceServer · SoapUI for manual testing · Writing XML request payloads · Validating responses against XSD)"
+								}
+							]
+						},
+						{
+							"type": "paragraph",
+							"attrs": {
+								"dir": "auto"
+							},
+							"content": [
+								{
+									"type": "text",
+									"text": "11. MTOM & Attachments (Sending binary/file attachments over SOAP · When banks use this for document uploads and statements)"
+								}
+							]
+						},
+						{
+							"type": "paragraph",
+							"attrs": {
+								"dir": "auto"
+							},
+							"content": [
+								{
+									"type": "text",
+									"text": "12. Versioning & Namespace Management (WSDL versioning strategies · Namespace changes · Backward compatibility · Handling multiple versions)"
 								}
 							]
 						}

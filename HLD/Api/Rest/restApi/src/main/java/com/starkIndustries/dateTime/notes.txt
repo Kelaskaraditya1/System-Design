@@ -1,0 +1,71 @@
+<---------------------------------------------------------------------------------------------------Local Date---------------------------------------------------------------------------------------->
+
+Local Date is the class which is used to represent the Date.
+
+
+Important methods: 
+
+1) for getting the current date: LocalDate.now()
+2) for getting any date: LocalDate.of(year,month,date)
+3) for getting year from Date: localDate.getYear()
+4) for getting month from Date: localDate.getMonth()
+5) for getting day of the Date: localDate.getDayOfMonth()
+6) for getting which no out of 365 days: localDate.getDayOfYear()
+7) for getting which no out of 30 days: localDate.getDayOfMonth()
+8) for getting which no out of 7 days: localDate.getDayOfWeek()
+9) for adding days, month, year to existing date: .plusDays(), .plusMonth(), .plusYear() same for subtracting .minusDays(), .minusMonth(), .minusYear()
+10) for performing comparisions : isAfter(), isBefore(), equals()
+11) .parse(LocalDate in String format) gives LocalDate object.
+
+
+<---------------------------------------------------------------------------------------------------Local Time---------------------------------------------------------------------------------------->
+
+LocalTime is the class which is used to represent Time.
+
+1) .now() gives current time.
+2) .of(Hour,minute) gives LocalTime object 
+3) .getHour() gets hour of the LocalTime
+4) .getMinute() get minute of LocalTime
+5) .getSecond() get seconds of LocalTime
+6) arithmatic operations: .plusHour(), .plusMinute(), .plusSecond(), .minusHour(), .minusMinutes(), .minusSecond()
+7) comparision operators: .isAfter(LocalTime), .isBefore(LocalTime), .equals(LocalTime)
+8) .parse(LocalTime) gives a LocalTime object
+
+<---------------------------------------------------------------------------------------------------Local Date Time----------------------------------------------------------------------------------->
+
+LocalDateTime is a combination of both LocalDate and LocalTime , it is represented as LocalDate +"T"+   LocalTime
+
+1) LocalDateTime.now() gives current LocalDateTime.
+2) .of("") takes year,month,day,hour,minute and returns LocalDateTime.
+3) .toLocalDate() converts LocalDateTime to LocalDate.
+4) .toLocalTime() converts LocalDateTime to LocalTime.
+
+it contais a union of LlocalDate and LocalTime methods. getMethods, comparision methods , arithmatic methods, parse method.
+
+
+<---------------------------------------------------------------------------------------------------Instant------------------------------------------------------------------------------------------->
+
+The issue with LocalDateTime is that, the value created at the same moment will be different because of the timezone.
+one might in be in India and another might be in US so because the value of LocalDateTime created at the same time will be different.
+
+so to solve this issue Instant came into the picture, Instant represent's the exact moment which is independent of Date, Time, TimeZone etc.
+
+1) for creating the Instant of currnet moment: Instant.now()
+2) for adding some Time from the instant: isntant.plus(Duration) expects a object of Duration.
+3) for subtracting some Time from the instant: instant.minus(Duration) expects a object of Duration.
+4) comparision operations: .isBefore(Instant), .isAfter(Instant), .equals(Instant)
+5) when we have a instant in String format than use .parse("..") which returns a Instant object 
+
+<---------------------------------------------------------------------------------------------------Duration------------------------------------------------------------------------------------------>
+
+Duration represents the time difference between when something ended and when it started.
+
+1) for representing Duration of x hour: Duration.ofHour(x)
+2) for representing Duration of x minute: Duration.ofMinute(x)
+3) for representing Duration of x seconds: Duration.ofSecond(x)
+4) for converting a particular Duration to seconds: duration.toSeconds()
+5) for converting a particular Duration to minutes: duration.toMinutes()
+6) for converting a particular Duration to hours: duration.toHours()
+7) for calculating the defference between 2 entites (LocalDate, LocalTime, LocalDateTime, Instant) : Duration.between(i1, i2);  
+
+where i1: starting value, i2: ending value.

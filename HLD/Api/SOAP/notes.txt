@@ -1,0 +1,312 @@
+=======================================================================================================================================================================================================
+                                                                                            SOAP API
+=======================================================================================================================================================================================================
+
+Soap api is similar to Rest api , it also performs some computing and returns response in a specific format (XML) when a client asks it.
+The difference between REST and SOAP is that , REST is flexible in terms of response but SOAP requires a fixed type of response.
+
+Problem: 
+
+In case communication between multiple organizations , A might have different response , B and C might have some different response.
+which creates in convinience in communication.
+
+Solution:
+
+SOAP api is introduced and it suggests  to follow a common format of response.
+
+=======================================================================================================================================================================================================
+                                                                                        IMPORTANT TERMINOLOGIES
+=======================================================================================================================================================================================================
+
+Every Soap request follows a proper structure , so that the server could understand that the inncoming request(in form of XML) is a SOAP request and not just random XML configuration.
+
+Structure that SOAP request follows:
+
+  SOAP Api  request parameters: 
+
+    1) Evelope: This is the root element/tag which is the container which holds all other tags inside it. similar to <html>...</html>
+
+    for eg : <soap:Envelope> => Evelope
+
+    <soap:Header>
+    </soap:Header>
+
+    <soap:Body>
+    </soap:Body>
+
+    </soap:Envelope>
+
+    2) Body: This contains the actual Buissness Data.
+      it contains the operation and the data on which the operation is to be performed.
+
+      for eg : <soap:Body> => Body tag
+
+    <GetCustomerRequest> => Operation
+        <customerId>123</customerId> => Buissness data.
+    </GetCustomerRequest>
+
+</soap:Body>
+
+  the above is equivalent to : GET /customerdata/123
+
+    3) Headers: This tag contains the metadata about the request.
+    it contains the Headers , for eg: Authentication, Content-type
+
+    <soap:Header>
+
+    <Authentication>
+      Bearer xyz...
+    </Authentication>
+
+    <Content-type>
+      application/json
+    </Content-type>
+
+    </soap:Header>
+
+
+    4) Fault: When some error occurs , rest does not sends StatusCode , it sends a Fault error object.
+        This has to be changed as per our requirement i think so.
+        This has to be added in the body tag in evelope.
+
+      for eg:
+       <soap:Envelope>
+
+      <soap:Body>
+
+          <soap:Fault>
+
+            <faultcode>
+                Client
+            </faultcode>
+
+            <faultstring>
+                Invalid Customer ID
+            </faultstring>
+
+          </soap:Fault>
+
+      </soap:Body>
+
+    </soap:Envelope>
+
+    
+=======================================================================================================================================================================================================
+                                                                                WSDL (WEB SERVICE DESCRIPTION LANGUAGE)
+=======================================================================================================================================================================================================
+
+  How does the client knows that what request body it has to send , what response might it recive, what headers to add etc.
+  In Rest we have Swagger/OpenApi to understand which url to hit, what request body to send, what response does it gives , basically the docs.
+  So in SOAP Api this is done by WSDL 
+
+  There are 5 components  for this: 
+
+  1) Types: This defines what type request body which has to be send. 
+    it is similar to Request Dto.
+    it uses XSD XML Schema   
+
+    class GetCustomerRequest {
+    Long customerId;
+  }
+
+  <GetCustomerRequest>
+    <customerId>123</customerId>
+  </GetCustomerRequest>
+
+  2) Messages: Defines whether the type is used as a request or a response.
+
+  3) Port Type: This gives the list of operations/methods which are available.
+    This is similar to service layer.
+  
+  4) Binding: Details about communication , porttype gives the list of operations but how will we perform those operations.
+    so it gives the communication details like .
+
+  5) Service: where is the service running, basically the baseurl of the application.
+
+
+
+=======================================================================================================================================================================================================
+                                                                                            XML 
+=======================================================================================================================================================================================================
+
+  XML stands for Extensible Markup Language , unlike html , xml does not have predefined tags.
+
+  1) Element: everything which is under a tag is a element.
+
+      <Customer> => Element
+      <name>Aditya</name> => Element
+    </Customer> 
+
+
+  2) Attribute: Attribute is extra information which is required by the element.
+
+  <Customer id="123">
+    <name>Aditya</name>
+  </Customer>
+
+  here "id" is a attribute.
+
+
+  Thumb rules: 
+
+  1) one root element.
+  2) proper closing tags, no self closing
+  3) Case Sensitive.
+
+
+  XML Namespaces: Namespaces are used when we have distinguish between the tags of the same name but which behave differently.
+  it is similar to packages in Java.
+
+  for eg : 
+
+  <soapenv:Envelope
+    xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" => here soapenv is the name gives to the tag and it comes from the gives path
+    xmlns:cus="http://bank.com/customer">
+
+    <soapenv:Body> => use of soapenv tag
+
+        <cus:GetCustomerRequest>
+
+            <cus:customerId>123</cus:customerId>
+
+        </cus:GetCustomerRequest>
+
+    </soapenv:Body>
+
+</soapenv:Envelope>
+
+
+=======================================================================================================================================================================================================
+                                                                                            XSD 
+=======================================================================================================================================================================================================
+
+XSD: XML Schema Definition
+
+XSD defines the rules for validation of the XML document.
+The xml document should contain which all fields, what should be the type of the field etc.
+
+XSD syntax: 
+
+  <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"> 
+
+    <xs:element name="GetCustomerRequest"> 
+
+        <xs:complexType> 
+
+            <xs:sequence> => 
+
+                <xs:element => here element represents a field and type is the dataType of the field.
+                    name="customerId"
+                    type="xs:long"/>
+
+            </xs:sequence>
+
+        </xs:complexType>
+
+    </xs:element>
+
+</xs:schema>
+
+it contains 4 main elements:
+
+  1) schema: "schema" is the root element , everything inside this is a xml schema
+  2) element: "element" represents the name of the class or field , represents a simple element or a complex element.
+  3) sequence: "sequence" means it should follow proper order
+  4) complexType : "complexType" means it's a container , this will carry other elements
+
+Simple types: simple types represents single attribute of the request.
+it is the most basic element, which should contain other fields in itself.
+it represents a attribute of a class.
+
+| XSD Type      | Java Type                   |
+| ------------- | --------------------------- |
+| `xs:string`   | `String`                    |
+| `xs:int`      | `int` / `Integer`           |
+| `xs:long`     | `long` / `Long`             |
+| `xs:boolean`  | `boolean` / `Boolean`       |
+| `xs:double`   | `double` / `Double`         |
+| `xs:decimal`  | `BigDecimal`                |
+| `xs:date`     | `LocalDate` (or `Date`)     |
+| `xs:dateTime` | `LocalDateTime` (or `Date`) |
+
+
+the above table represents the "type" field in the element.
+
+<xs:element name="customerName" type="xs:string"/>
+
+<xs:element name="customerId" type="xs:long"/>
+
+<xs:element name="active" type="xs:boolean"/>
+
+2) ComplexType: it means the element will contain nested elements.
+it represents a java class.
+
+for eg: <xs:complexType name="Customer">
+
+    <xs:sequence>
+
+        <xs:element name="customerId" type="xs:long"/>
+
+        <xs:element name="customerName" type="xs:string"/>
+
+    </xs:sequence>
+
+</xs:complexType>
+
+it should be wrapped inside complexType tag and sequence tag. 
+
+this is equivalent to , this is what we send
+
+<customer>
+  <customerId>12</customerId>
+    <customerName>Aditya</customerName>
+</customer>
+
+3) Sequence: sequence introduced strict order between child elements of a complex type.
+and the child elements should follow that strict order.
+
+4) minOccurance: this defines a element should appear atleast specified number of times, it can appear more number of times as well.
+it is a attribute of the element tag.
+it defines the lower bound
+
+<xs:element
+    name="customerId"
+    type="xs:long"
+    minOccurs="1"/> 
+
+  this means customerId should appear atleast once.
+
+if minoccurance="0" than that field becomes optional , which means it is fine if it is absent in the request.
+
+
+5) maxOccurance: this defines a element should appear atmost the specified number, it can appear for maximum time.
+it defines the upper bound
+
+if we want the element to appear only once, than set minOccurance = 1 , maxOccurance=1
+if we want unlimited times the element should appear than set maxOccurance=unbounded
+
+6) nillable: this means that the field can or not have a null value.
+null value is represented as xsi:nil=true
+we can pass the value as well , but it also accepts a null value.
+
+the difference between minOccurance=0 and nillable.
+
+when we set minOccurance=0 it means that, it is valid if we donot pass the entire element.
+but when we set nillable=true than the element should be present but it can have null value 
+
+XSD:
+
+<xs:element
+    name="customerName"
+    type="xs:string"
+    nillable="true"/>
+
+XML: 
+
+    <Customer>
+
+    <customerId>123</customerId>
+
+    <customerName xsi:nil="true"/>
+
+</Customer>

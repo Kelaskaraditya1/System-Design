@@ -557,9 +557,9 @@
 			"typeName": "shape"
 		},
 		{
-			"x": 6241.453029651213,
-			"y": -1647.3838968321297,
-			"z": 0.05,
+			"x": 6715.556645249206,
+			"y": -1189.5976134223079,
+			"z": 0.12824823642150754,
 			"meta": {},
 			"id": "camera:page:page",
 			"typeName": "camera"
@@ -989,8 +989,8 @@
 			"typeName": "shape"
 		},
 		{
-			"x": -5364.753578569346,
-			"y": 7846.410251312405,
+			"x": -5927.944073580277,
+			"y": 7810.509522856642,
 			"rotation": 0,
 			"isLocked": false,
 			"opacity": 1,
@@ -1271,13 +1271,12 @@
 			"typeName": "shape"
 		},
 		{
-			"editingShapeId": null,
+			"editingShapeId": "shape:QJLW5PnRiag8uRA1qTIFl",
 			"croppingShapeId": null,
 			"selectedShapeIds": [
-				"shape:pqT91yF7dWxCor1y_bYlp",
-				"shape:WyBJ5A9qFl827NT12uSqd"
+				"shape:QJLW5PnRiag8uRA1qTIFl"
 			],
-			"hoveredShapeId": null,
+			"hoveredShapeId": "shape:QJLW5PnRiag8uRA1qTIFl",
 			"erasingShapeIds": [],
 			"hintingShapeIds": [],
 			"focusedGroupId": null,
@@ -2424,8 +2423,8 @@
 			"typeName": "shape"
 		},
 		{
-			"x": -5392.7381041162935,
-			"y": 6070.999795870618,
+			"x": -5937.977892524623,
+			"y": 6026.1240564882755,
 			"rotation": 0,
 			"isLocked": false,
 			"opacity": 1,
@@ -2570,7 +2569,7 @@
 			"brush": null,
 			"scribbles": [],
 			"cursor": {
-				"type": "ew-resize",
+				"type": "default",
 				"rotation": 0
 			},
 			"isFocusMode": false,
@@ -2580,7 +2579,7 @@
 			"screenBounds": {
 				"x": 0,
 				"y": 0,
-				"w": 829.6000366210938,
+				"w": 1488,
 				"h": 702.4000244140625
 			},
 			"insets": [
@@ -2610,8 +2609,8 @@
 			"typeName": "instance"
 		},
 		{
-			"x": -5446.0574080118795,
-			"y": 1434.748984875198,
+			"x": -5964.371650078387,
+			"y": 1479.624724257541,
 			"rotation": 0,
 			"isLocked": false,
 			"opacity": 1,
@@ -2862,7 +2861,7 @@
 							"content": [
 								{
 									"type": "text",
-									"text": "1. SOAP Fundamentals (Envelope, Header, Body, Fault structure · SOAP 1.1 vs 1.2 differences · SOAP over HTTP vs REST mental model)"
+									"text": "1. SOAP Fundamentals (Envelope, Header, Body, Fault structure · SOAP 1.1 vs 1.2 differences · SOAP over HTTP vs REST mental model) ✅"
 								}
 							]
 						},
@@ -2874,7 +2873,7 @@
 							"content": [
 								{
 									"type": "text",
-									"text": "2. WSDL Deep Understanding (Reading & interpreting WSDL · Types, Messages, PortType, Binding, Service sections · wsdl2java / wsimport code generation)"
+									"text": "2. WSDL Deep Understanding (Reading & interpreting WSDL · Types, Messages, PortType, Binding, Service sections · wsdl2java / wsimport code generation) ✅"
 								}
 							]
 						},

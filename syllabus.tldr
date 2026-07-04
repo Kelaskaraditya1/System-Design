@@ -20,13 +20,13 @@
 			"com.tldraw.shape.group": 0,
 			"com.tldraw.shape.text": 4,
 			"com.tldraw.shape.bookmark": 2,
-			"com.tldraw.shape.draw": 4,
+			"com.tldraw.shape.draw": 5,
 			"com.tldraw.shape.geo": 11,
-			"com.tldraw.shape.note": 12,
+			"com.tldraw.shape.note": 13,
 			"com.tldraw.shape.line": 5,
 			"com.tldraw.shape.frame": 1,
 			"com.tldraw.shape.arrow": 8,
-			"com.tldraw.shape.highlight": 3,
+			"com.tldraw.shape.highlight": 4,
 			"com.tldraw.shape.embed": 4,
 			"com.tldraw.shape.image": 5,
 			"com.tldraw.shape.video": 4,
@@ -557,9 +557,9 @@
 			"typeName": "shape"
 		},
 		{
-			"x": 6715.556645249206,
-			"y": -1189.5976134223079,
-			"z": 0.12824823642150754,
+			"x": 5776.645429383569,
+			"y": -2575.2587869841163,
+			"z": 0.17240289969862307,
 			"meta": {},
 			"id": "camera:page:page",
 			"typeName": "camera"
@@ -2885,7 +2885,7 @@
 							"content": [
 								{
 									"type": "text",
-									"text": "3. JAXB & Data Binding (XSD to Java class generation · Marshalling / Unmarshalling · JAXB annotations · Handling complex types and namespaces)"
+									"text": "3. JAXB & Data Binding (XSD to Java class generation · Marshalling / Unmarshalling · JAXB annotations · Handling complex types and namespaces) ✅"
 								}
 							]
 						},
@@ -2897,7 +2897,7 @@
 							"content": [
 								{
 									"type": "text",
-									"text": "4. Spring-WS Setup & Configuration (MessageDispatcherServlet · Endpoint configuration · WSDL-first vs contract-last · Project structure)"
+									"text": "4. Spring-WS Setup & Configuration (MessageDispatcherServlet · Endpoint configuration · WSDL-first vs contract-last · Project structure) ✅"
 								}
 							]
 						},

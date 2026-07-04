@@ -180,6 +180,11 @@ Structure that SOAP request follows:
                                                                                             XSD 
 =======================================================================================================================================================================================================
 
+difference between Json validation and XSD validation:
+
+In Json based validation, the json is converted to Java obejcts than they are validated.
+In XSD based validation, the validation layer comes first and after that they are being converted to java object. 
+
 XSD: XML Schema Definition
 
 XSD defines the rules for validation of the XML document.
@@ -310,3 +315,210 @@ XML:
     <customerName xsi:nil="true"/>
 
 </Customer>
+
+
+
+=======================================================================================================================================================================================================
+                                                                                            JAXB
+=======================================================================================================================================================================================================
+
+JAXB stands for Java Architecture for XML binding.
+JAXB is a library which helps in interconversion of Java to XML and viceversa.
+it is used for parsing XML document and converting it to Java obejcts.
+
+Marshelling: converting Java object to XML object.
+UnMarshelling: converting XML object to Java object.
+
+JAXB Annotations:
+
+1) @XmlRootElement :
+  This is a top level annotation which is used in a model or a dto class.
+  it specifies that , wherever this annotation is being placed , it is the root element.
+
+  Java Code:
+
+  @XmlRootElement(name = "Customer")
+public class Customer {
+
+    private Long customerId;
+    private String customerName;
+
+}
+
+XML code:
+
+<Customer>
+
+</Customer>
+
+it has to be used only on model classes like entity and dto's 
+
+2) @XmlElement:
+This annotation is used to represent a field of the class.
+a tag of this name will be created, which represents a field of the class.
+
+Java:
+
+@XmlRootElement(name = "Customer")
+public class Customer {
+
+    @XmlElement
+    private Long customerId;
+
+    @XmlElement
+    private String customerName;
+}
+
+XML:
+
+<Customer>
+    <customerId>123</customerId>
+    <customerName>Aditya</customerName>
+</Customer>
+
+3) @XmlAttribute:
+
+it makes the field an attribute of an element/tag.
+a attribute of it will be created and not a tag.
+
+Java:
+
+@XmlRootElement(name = "Customer")
+public class Customer {
+
+    @XmlAttribute
+    private Long customerId;
+
+    @XmlElement
+    private String customerName;
+}
+
+XML:
+
+<Customer customerId="123">
+    <customerName>Aditya</customerName>
+</Customer>
+
+
+4) @XmlTransient:
+
+It tells that ignore this field, donot include this in XML document.
+
+Java: 
+
+@XmlRootElement
+public class Customer {
+
+    @XmlElement
+    private Long customerId;
+
+    @XmlTransient
+    private String password;
+}
+
+XML:
+
+<Customer>
+    <customerId>123</customerId>
+</Customer>
+
+5) @XmlTypes: This annotation is used to give custom order of the fields 
+
+Java: 
+
+@XmlRootElement
+@XmlType(propOrder = {"customerId", "customerName"})
+public class Customer {
+
+    @XmlElement
+    private String customerName;
+
+    @XmlElement
+    private Long customerId;
+}
+
+XML: 
+
+<Customer>
+    <customerId>123</customerId>
+    <customerName>Aditya</customerName>
+</Customer>
+
+we have declared name as first and id as second in the java , but in type we have mentioned id first and name second so that order is also followed in while forming xml.
+
+6) @XmlAccessorType: this tells that where should i look for the annotations.
+  most commonly we use field based.
+
+  @XmlAccessorType(XmlAccessType.FIELD)
+public class Customer {
+
+    @XmlElement
+    private Long customerId;
+
+    @XmlElement
+    private String customerName;
+}
+
+7) @XmlELementWrapper(name="...")
+  this adds a wrapper elements, like if there is a list it adds a wrapper element.
+
+  for eg: there is a list.
+
+@XMLWrapper(name="contacts")
+@XMLElement
+  List<Contacts> contactList;
+
+  than in XMl:
+
+      <contacts>
+
+        <contact>9876543210</contact>
+
+        <contact>8765432109</contact>
+
+    </contacts>
+
+
+
+=======================================================================================================================================================================================================
+                                                                                            SPRING-WS
+=======================================================================================================================================================================================================
+
+Spring WS stands for Spring Web Services.
+
+Like for Rest Api there is Spring MVC, for SOAP based api there is Spring WS.
+
+┌────────────────────────────── REST ──────────────────────────────┐    ┌────────────────────────────── SOAP ──────────────────────────────┐
+│ Client                                                           │    │ Client                                                           │
+│   │                                                              │    │   │                                                              │
+│ HTTP Request (JSON)                                              │    │ SOAP XML Request                                                 │
+│   │                                                              │    │   │                                                              │
+│ DispatcherServlet                                                │    │ MessageDispatcherServlet                                         │
+│   │                                                              │    │   │                                                              │
+│ Jackson (JSON → Java Object)                                     │    │ XSD Validation                                                   │
+│   │                                                              │    │   │                                                              │
+│ Bean Validation (@Valid, @NotNull, etc.)                         │    │ JAXB (XML → Java Object)                                         │
+│   │                                                              │    │   │                                                              │
+│ @RestController                                                  │    │ @Endpoint                                                        │
+│   │                                                              │    │   │                                                              │
+│ Service                                                          │    │ Service                                                          │
+│   │                                                              │    │   │                                                              │
+│ Repository                                                       │    │ Repository                                                       │
+│   │                                                              │    │   │                                                              │
+│ Database                                                         │    │ Database                                                         │
+│   │                                                              │    │   │                                                              │
+│ Repository                                                       │    │ Repository                                                       │
+│   │                                                              │    │   │                                                              │
+│ Service                                                          │    │ Service                                                          │
+│   │                                                              │    │   │                                                              │
+│ @RestController                                                  │    │ @Endpoint                                                        │
+│   │                                                              │    │   │                                                              │
+│ Jackson (Java Object → JSON)                                     │    │ JAXB (Java Object → XML)                                         │
+│   │                                                              │    │   │                                                              │
+│ HTTP Response (JSON)                                             │    │ SOAP XML Response                                                │
+│   │                                                              │    │   │                                                              │
+│ Client                                                           │    │ Client                                                           │
+└──────────────────────────────────────────────────────────────────┘    └──────────────────────────────────────────────────────────────────┘
+
+DispatcherServlet is a servlet , which when recives a request to which endpoint it should be redirected , this is done by DispatcherServlet.
+MessageDispatcherServlet is a servlet, which recives the envelope and routes it to proper @Endpoint method.

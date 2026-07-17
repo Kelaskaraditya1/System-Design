@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xs:schema
+        xmlns:xs="http://www.w3.org/2001/XMLSchema"
+        targetNamespace="http://starkindustries.com/customer"
+        xmlns:tns="http://starkindustries.com/customer"
+        elementFormDefault="qualified">
+
+    <!-- Customer Type -->
+    <xs:complexType name="Customer">
+        <xs:sequence>
+            <xs:element name="customerId" type="xs:long"/>
+            <xs:element name="customerName" type="xs:string"/>
+            <xs:element name="email" type="xs:string"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <!-- Request Type -->
+    <xs:complexType name="GetCustomerRequest">
+        <xs:sequence>
+            <xs:element name="customerId" type="xs:long"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <!-- Response Type -->
+    <xs:complexType name="GetCustomerResponse">
+        <xs:sequence>
+            <xs:element name="customer" type="tns:Customer"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <!-- Root Elements -->
+    <xs:element
+            name="GetCustomerRequest"
+            type="tns:GetCustomerRequest"/>
+
+    <xs:element
+            name="GetCustomerResponse"
+            type="tns:GetCustomerResponse"/>
+
+</xs:schema>

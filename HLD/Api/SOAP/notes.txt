@@ -522,3 +522,93 @@ Like for Rest Api there is Spring MVC, for SOAP based api there is Spring WS.
 
 DispatcherServlet is a servlet , which when recives a request to which endpoint it should be redirected , this is done by DispatcherServlet.
 MessageDispatcherServlet is a servlet, which recives the envelope and routes it to proper @Endpoint method.
+
+
+=======================================================================================================================================================================================================
+                                                                                        SOAP ENDPOINTS
+=======================================================================================================================================================================================================
+
+1) @Endpoint: this is used to denote that a class has endpoint methods.
+it is similar to @RestController, and has to be used only on class.
+
+2) @PayloadRoot(
+  nameSpace="..",
+  localPart=".." 
+)
+
+This annotation is used to identify which endpoint method will be invoked on the basis of the root element of the request recived.
+This annotation contains 2 main attributes nameSpace and localPart.
+
+localPart contains the name of the root element of the request which is send.
+nameSpace contains the origin or from where it has been sent. (in case if multiple endpoint methods have same localPart than to identify uniquely which endpoint method to call we use the namespace)
+the combination of nameSpace and localPart uniquely identify which endpoint method to call.
+it is a method level annotation.
+
+for eg: 
+
+@Endpoint
+public class CustomerEndpoint {
+
+    @PayloadRoot(
+        namespace = "http://bank.com/customer",
+        localPart = "GetCustomerRequest"
+    )
+    public GetCustomerResponse getCustomer(GetCustomerRequest request) {
+
+        // Business Logic
+
+        return new GetCustomerResponse();
+    }
+
+    @PayloadRoot(
+        namespace = "http://bank.com/customer",
+        localPart = "AddCustomerRequest"
+    )
+    public AddCustomerResponse addCustomer(AddCustomerRequest request) {
+
+        // Business Logic
+
+        return new AddCustomerResponse();
+    }
+}
+
+
+XML request:
+
+<GetCustomerRequest xmlns="http://bank.com/customer">
+
+    <customerId>101</customerId>
+
+</GetCustomerRequest>
+
+calls the methods which has localPart as "GetCustomerRequest" and nameSpace="http://bank.com/customer"
+
+3) @RequestPayload: 
+
+This annotation converts incoming xml request into java object
+
+for eg:
+
+@PayloadRoot(
+    namespace = "http://bank.com/customer",
+    localPart = "GetCustomerRequest"
+)
+public GetCustomerResponse getCustomer(
+        @RequestPayload GetCustomerRequest request) {
+
+}
+
+4) @ResponsePayload:
+
+This annotaiton converts the response into XML object.
+
+@PayloadRoot(
+    namespace = "http://bank.com/customer",
+    localPart = "GetCustomerRequest"
+)
+@ResponsePayload
+public GetCustomerResponse getCustomer(
+        @RequestPayload GetCustomerRequest request) {
+
+    return new GetCustomerResponse();
+}

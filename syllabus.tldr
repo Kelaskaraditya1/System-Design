@@ -557,9 +557,9 @@
 			"typeName": "shape"
 		},
 		{
-			"x": 5776.645429383569,
-			"y": -2575.2587869841163,
-			"z": 0.17240289969862307,
+			"x": 7216.292764980958,
+			"y": -2165.5633237716283,
+			"z": 0.18306895306960747,
 			"meta": {},
 			"id": "camera:page:page",
 			"typeName": "camera"
@@ -2909,7 +2909,7 @@
 							"content": [
 								{
 									"type": "text",
-									"text": "5. Producing SOAP Services (@Endpoint · @PayloadRoot · @RequestPayload / @ResponsePayload · Exposing WSDL endpoint)"
+									"text": "\t5. Producing SOAP Services (@Endpoint · @PayloadRoot · @RequestPayload / @ResponsePayload · Exposing WSDL endpoint) ✅"
 								}
 							]
 						},

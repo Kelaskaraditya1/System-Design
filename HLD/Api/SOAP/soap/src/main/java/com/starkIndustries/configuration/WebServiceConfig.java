@@ -16,7 +16,6 @@ import org.springframework.ws.wsdl.wsdl11.DefaultWsdl11Definition;
 @Configuration
 public class WebServiceConfig {
 
-  // 
 
     @Bean
     public ServletRegistrationBean<MessageDispatcherServlet> messageDispatcherServlet(
@@ -38,7 +37,7 @@ public class WebServiceConfig {
         servlet.setApplicationContext(applicationContext);
         servlet.setTransformWsdlLocations(true); // when running locally client has to hit, localhost:8080/ws/... but when hosted using domain, it will automatically take the domain or shift to the new host
 
-        return new ServletRegistrationBean<>(servlet, "/ws/*"); // this creates a ServletRegisterationBean with a MessageDispatcherServlet type of servlet and it's base url will be : localhost:8080/ws, basically client has to reach the servlet on this url and if we want to get a particular .wsdl we have to use this base url for that, localhost:8080/ws/customer.wsdl
+        return new ServletRegistrationBean<>(servlet, "/ws/*"); // this creates a ServletRegisterationBean with a MessageDispatcherServlet type of servlet and it's base url will be : localhost:8080/ws/, basically client has to reach the servlet on this url and if we want to get a particular .wsdl we have to use this base url for that, localhost:8080/ws/customer.wsdl
     }
 
 

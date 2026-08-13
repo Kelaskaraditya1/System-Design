@@ -8,7 +8,7 @@ The difference between REST and SOAP is that , REST is flexible in terms of resp
 Problem: 
 
 In case communication between multiple organizations , A might have different response , B and C might have some different response.
-which creates in convinience in communication.
+which creates inconvinience in communication.
 
 Solution:
 

@@ -116,8 +116,8 @@
 			"typeName": "shape"
 		},
 		{
-			"x": 141.17567501056328,
-			"y": -3476.3610569975563,
+			"x": -65.31851125835146,
+			"y": -17747.75060957536,
 			"rotation": 0,
 			"isLocked": false,
 			"opacity": 1,
@@ -131,7 +131,7 @@
 				"font": "draw",
 				"textAlign": "start",
 				"autoSize": true,
-				"scale": 4.6168040677296736,
+				"scale": 7.083043229430972,
 				"richText": {
 					"type": "doc",
 					"attrs": {
@@ -569,16 +569,16 @@
 			"typeName": "shape"
 		},
 		{
-			"x": 6657.5429202762225,
-			"y": -1304.6632443792423,
-			"z": 0.10756729792942181,
+			"x": 15401.529046138698,
+			"y": -2253.8097589509102,
+			"z": 0.11296129339091521,
 			"meta": {},
 			"id": "camera:page:page",
 			"typeName": "camera"
 		},
 		{
-			"x": -2415.777192106618,
-			"y": -3937.8607236131447,
+			"x": -3988.163714935058,
+			"y": -18455.777643222827,
 			"rotation": 0,
 			"isLocked": false,
 			"opacity": 1,
@@ -592,7 +592,7 @@
 				"font": "draw",
 				"textAlign": "start",
 				"autoSize": true,
-				"scale": 10.864357333749833,
+				"scale": 16.667961543530954,
 				"richText": {
 					"type": "doc",
 					"attrs": {
@@ -1001,8 +1001,8 @@
 			"typeName": "shape"
 		},
 		{
-			"x": -5927.944073580277,
-			"y": 7810.509522856642,
+			"x": -5767.944073580277,
+			"y": 6146.510194243361,
 			"rotation": 0,
 			"isLocked": false,
 			"opacity": 1,
@@ -1283,12 +1283,12 @@
 			"typeName": "shape"
 		},
 		{
-			"editingShapeId": null,
+			"editingShapeId": "shape:pqT91yF7dWxCor1y_bYlp",
 			"croppingShapeId": null,
 			"selectedShapeIds": [
-				"shape:QJLW5PnRiag8uRA1qTIFl"
+				"shape:pqT91yF7dWxCor1y_bYlp"
 			],
-			"hoveredShapeId": null,
+			"hoveredShapeId": "shape:pqT91yF7dWxCor1y_bYlp",
 			"erasingShapeIds": [],
 			"hintingShapeIds": [],
 			"focusedGroupId": null,
@@ -1864,8 +1864,8 @@
 			"typeName": "shape"
 		},
 		{
-			"x": -1721.2174380285546,
-			"y": -4587.04159066889,
+			"x": -2922.578801348486,
+			"y": -19451.74283421186,
 			"rotation": 0,
 			"isLocked": false,
 			"opacity": 1,
@@ -1879,7 +1879,7 @@
 				"font": "draw",
 				"textAlign": "start",
 				"autoSize": true,
-				"scale": 11.272981648272568,
+				"scale": 17.29486787135015,
 				"richText": {
 					"type": "doc",
 					"attrs": {
@@ -1937,8 +1937,8 @@
 			"typeName": "shape"
 		},
 		{
-			"x": -2790.1763595036055,
-			"y": -3663.3979932909933,
+			"x": -4562.562248819538,
+			"y": -18034.700344896966,
 			"rotation": 0,
 			"isLocked": false,
 			"opacity": 1,
@@ -1952,7 +1952,7 @@
 				"font": "draw",
 				"textAlign": "start",
 				"autoSize": true,
-				"scale": 3.156275377437432,
+				"scale": 4.84231832549297,
 				"richText": {
 					"type": "doc",
 					"attrs": {
@@ -2309,8 +2309,8 @@
 			"typeName": "shape"
 		},
 		{
-			"x": 304.6310986186436,
-			"y": -3887.4499165142283,
+			"x": 185.4527613614796,
+			"y": -18378.438011591523,
 			"rotation": 0,
 			"isLocked": false,
 			"opacity": 1,
@@ -2324,7 +2324,7 @@
 				"font": "draw",
 				"textAlign": "start",
 				"autoSize": true,
-				"scale": 10.864357333749833,
+				"scale": 16.667961543530954,
 				"richText": {
 					"type": "doc",
 					"attrs": {
@@ -2435,8 +2435,8 @@
 			"typeName": "shape"
 		},
 		{
-			"x": -5937.977892524623,
-			"y": 6026.1240564882755,
+			"x": -13472.085812923277,
+			"y": 3234.3423020801206,
 			"rotation": 0,
 			"isLocked": false,
 			"opacity": 1,
@@ -2446,7 +2446,7 @@
 			"props": {
 				"color": "black",
 				"size": "m",
-				"w": 630.5183270577462,
+				"w": 6567.757722599893,
 				"font": "draw",
 				"textAlign": "start",
 				"autoSize": true,
@@ -2465,25 +2465,7 @@
 							"content": [
 								{
 									"type": "text",
-									"text": "2) Authentication & Authorization"
-								}
-							]
-						},
-						{
-							"type": "paragraph",
-							"attrs": {
-								"dir": "auto"
-							}
-						},
-						{
-							"type": "paragraph",
-							"attrs": {
-								"dir": "auto"
-							},
-							"content": [
-								{
-									"type": "text",
-									"text": "1) username & password"
+									"text": "\tAuthentication & Authorization"
 								}
 							]
 						},
@@ -2495,7 +2477,7 @@
 							"content": [
 								{
 									"type": "text",
-									"text": "2) jwt"
+									"text": "1. Username & Password"
 								}
 							]
 						},
@@ -2507,7 +2489,7 @@
 							"content": [
 								{
 									"type": "text",
-									"text": "3) refresh token"
+									"text": "\t - BCrypt internals — how salting actually works ✅"
 								}
 							]
 						},
@@ -2519,7 +2501,7 @@
 							"content": [
 								{
 									"type": "text",
-									"text": "4) oauth"
+									"text": "   - Implementation: PasswordEncoder · UserDetailsService · AuthenticationManager ✅"
 								}
 							]
 						},
@@ -2531,7 +2513,7 @@
 							"content": [
 								{
 									"type": "text",
-									"text": "5) KeyCloak"
+									"text": "\t - Understanding the Authentication FLow and Indivisual Components. ✅"
 								}
 							]
 						},
@@ -2543,7 +2525,878 @@
 							"content": [
 								{
 									"type": "text",
-									"text": "6) Role based authorization"
+									"text": "\t - Implementing Username and Password Authentication ✅"
+								}
+							]
+						},
+						{
+							"type": "paragraph",
+							"attrs": {
+								"dir": "auto"
+							},
+							"content": [
+								{
+									"type": "text",
+									"text": "2. JWT"
+								}
+							]
+						},
+						{
+							"type": "paragraph",
+							"attrs": {
+								"dir": "auto"
+							},
+							"content": [
+								{
+									"type": "text",
+									"text": "   - Header.Payload.Signature structure internals"
+								}
+							]
+						},
+						{
+							"type": "paragraph",
+							"attrs": {
+								"dir": "auto"
+							},
+							"content": [
+								{
+									"type": "text",
+									"text": "   - HS256 vs RS256 vs ES256 — symmetric vs asymmetric signing"
+								}
+							]
+						},
+						{
+							"type": "paragraph",
+							"attrs": {
+								"dir": "auto"
+							},
+							"content": [
+								{
+									"type": "text",
+									"text": "   - Why banks prefer RS256 (public/private key pair)"
+								}
+							]
+						},
+						{
+							"type": "paragraph",
+							"attrs": {
+								"dir": "auto"
+							},
+							"content": [
+								{
+									"type": "text",
+									"text": "   - Claims — standard vs custom claims"
+								}
+							]
+						},
+						{
+							"type": "paragraph",
+							"attrs": {
+								"dir": "auto"
+							},
+							"content": [
+								{
+									"type": "text",
+									"text": "   - JWT validation steps in exact order"
+								}
+							]
+						},
+						{
+							"type": "paragraph",
+							"attrs": {
+								"dir": "auto"
+							},
+							"content": [
+								{
+									"type": "text",
+									"text": "   - JWT vulnerabilities (alg:none attack, weak secret attack)"
+								}
+							]
+						},
+						{
+							"type": "paragraph",
+							"attrs": {
+								"dir": "auto"
+							},
+							"content": [
+								{
+									"type": "text",
+									"text": "   - Stateless vs Stateful trade-offs"
+								}
+							]
+						},
+						{
+							"type": "paragraph",
+							"attrs": {
+								"dir": "auto"
+							},
+							"content": [
+								{
+									"type": "text",
+									"text": "   - Implementation: Switch from HS256 to RS256"
+								}
+							]
+						},
+						{
+							"type": "paragraph",
+							"attrs": {
+								"dir": "auto"
+							},
+							"content": [
+								{
+									"type": "text",
+									"text": "3. Refresh Token"
+								}
+							]
+						},
+						{
+							"type": "paragraph",
+							"attrs": {
+								"dir": "auto"
+							},
+							"content": [
+								{
+									"type": "text",
+									"text": "   - Refresh token rotation strategy"
+								}
+							]
+						},
+						{
+							"type": "paragraph",
+							"attrs": {
+								"dir": "auto"
+							},
+							"content": [
+								{
+									"type": "text",
+									"text": "   - Token family concept — detecting reuse attacks"
+								}
+							]
+						},
+						{
+							"type": "paragraph",
+							"attrs": {
+								"dir": "auto"
+							},
+							"content": [
+								{
+									"type": "text",
+									"text": "   - Absolute vs Sliding expiration"
+								}
+							]
+						},
+						{
+							"type": "paragraph",
+							"attrs": {
+								"dir": "auto"
+							},
+							"content": [
+								{
+									"type": "text",
+									"text": "   - Where to store refresh tokens (HttpOnly cookie vs DB)"
+								}
+							]
+						},
+						{
+							"type": "paragraph",
+							"attrs": {
+								"dir": "auto"
+							},
+							"content": [
+								{
+									"type": "text",
+									"text": "   - Refresh token theft scenarios and mitigation"
+								}
+							]
+						},
+						{
+							"type": "paragraph",
+							"attrs": {
+								"dir": "auto"
+							},
+							"content": [
+								{
+									"type": "text",
+									"text": "   - Implementation: Token family + reuse detection logic"
+								}
+							]
+						},
+						{
+							"type": "paragraph",
+							"attrs": {
+								"dir": "auto"
+							},
+							"content": [
+								{
+									"type": "text",
+									"text": "4. OAuth 2.0 + OIDC + PKCE"
+								}
+							]
+						},
+						{
+							"type": "paragraph",
+							"attrs": {
+								"dir": "auto"
+							},
+							"content": [
+								{
+									"type": "text",
+									"text": "   - OAuth 2.0 vs OpenID Connect (OIDC) — critical difference"
+								}
+							]
+						},
+						{
+							"type": "paragraph",
+							"attrs": {
+								"dir": "auto"
+							},
+							"content": [
+								{
+									"type": "text",
+									"text": "   - OAuth = Authorization · OIDC = Authentication on top of OAuth"
+								}
+							]
+						},
+						{
+							"type": "paragraph",
+							"attrs": {
+								"dir": "auto"
+							},
+							"content": [
+								{
+									"type": "text",
+									"text": "   - All 4 grant types:"
+								}
+							]
+						},
+						{
+							"type": "paragraph",
+							"attrs": {
+								"dir": "auto"
+							},
+							"content": [
+								{
+									"type": "text",
+									"text": "     a) Authorization Code — web apps"
+								}
+							]
+						},
+						{
+							"type": "paragraph",
+							"attrs": {
+								"dir": "auto"
+							},
+							"content": [
+								{
+									"type": "text",
+									"text": "     b) Client Credentials — service to service (banking critical)"
+								}
+							]
+						},
+						{
+							"type": "paragraph",
+							"attrs": {
+								"dir": "auto"
+							},
+							"content": [
+								{
+									"type": "text",
+									"text": "     c) Device Code — IoT/CLI"
+								}
+							]
+						},
+						{
+							"type": "paragraph",
+							"attrs": {
+								"dir": "auto"
+							},
+							"content": [
+								{
+									"type": "text",
+									"text": "     d) Implicit — deprecated, know why"
+								}
+							]
+						},
+						{
+							"type": "paragraph",
+							"attrs": {
+								"dir": "auto"
+							},
+							"content": [
+								{
+									"type": "text",
+									"text": "   - PKCE (Proof Key for Code Exchange)"
+								}
+							]
+						},
+						{
+							"type": "paragraph",
+							"attrs": {
+								"dir": "auto"
+							},
+							"content": [
+								{
+									"type": "text",
+									"text": "   - Why PKCE exists · How it prevents auth code interception"
+								}
+							]
+						},
+						{
+							"type": "paragraph",
+							"attrs": {
+								"dir": "auto"
+							},
+							"content": [
+								{
+									"type": "text",
+									"text": "   - Scopes and consent"
+								}
+							]
+						},
+						{
+							"type": "paragraph",
+							"attrs": {
+								"dir": "auto"
+							},
+							"content": [
+								{
+									"type": "text",
+									"text": "   - Access token vs ID token vs Refresh token — exact differences"
+								}
+							]
+						},
+						{
+							"type": "paragraph",
+							"attrs": {
+								"dir": "auto"
+							},
+							"content": [
+								{
+									"type": "text",
+									"text": "   - OAuth vulnerabilities (redirect_uri manipulation, CSRF on auth endpoint)"
+								}
+							]
+						},
+						{
+							"type": "paragraph",
+							"attrs": {
+								"dir": "auto"
+							},
+							"content": [
+								{
+									"type": "text",
+									"text": "   - Implementation: Client Credentials flow for banking microservices"
+								}
+							]
+						},
+						{
+							"type": "paragraph",
+							"attrs": {
+								"dir": "auto"
+							},
+							"content": [
+								{
+									"type": "text",
+									"text": "5. Keycloak"
+								}
+							]
+						},
+						{
+							"type": "paragraph",
+							"attrs": {
+								"dir": "auto"
+							},
+							"content": [
+								{
+									"type": "text",
+									"text": "   - Realm concept — what it is and why it exists"
+								}
+							]
+						},
+						{
+							"type": "paragraph",
+							"attrs": {
+								"dir": "auto"
+							},
+							"content": [
+								{
+									"type": "text",
+									"text": "   - Clients — public vs confidential clients"
+								}
+							]
+						},
+						{
+							"type": "paragraph",
+							"attrs": {
+								"dir": "auto"
+							},
+							"content": [
+								{
+									"type": "text",
+									"text": "   - Client scopes and protocol mappers"
+								}
+							]
+						},
+						{
+							"type": "paragraph",
+							"attrs": {
+								"dir": "auto"
+							},
+							"content": [
+								{
+									"type": "text",
+									"text": "   - Keycloak flows — browser flow, direct grant flow"
+								}
+							]
+						},
+						{
+							"type": "paragraph",
+							"attrs": {
+								"dir": "auto"
+							},
+							"content": [
+								{
+									"type": "text",
+									"text": "   - How Keycloak issues tokens internally"
+								}
+							]
+						},
+						{
+							"type": "paragraph",
+							"attrs": {
+								"dir": "auto"
+							},
+							"content": [
+								{
+									"type": "text",
+									"text": "   - Keycloak vs rolling your own auth — trade-offs"
+								}
+							]
+						},
+						{
+							"type": "paragraph",
+							"attrs": {
+								"dir": "auto"
+							},
+							"content": [
+								{
+									"type": "text",
+									"text": "   - Federation — connecting Keycloak to LDAP/AD (banking uses this)"
+								}
+							]
+						},
+						{
+							"type": "paragraph",
+							"attrs": {
+								"dir": "auto"
+							},
+							"content": [
+								{
+									"type": "text",
+									"text": "   - Implementation:"
+								}
+							]
+						},
+						{
+							"type": "paragraph",
+							"attrs": {
+								"dir": "auto"
+							},
+							"content": [
+								{
+									"type": "text",
+									"text": "     a) Keycloak server setup (Docker)"
+								}
+							]
+						},
+						{
+							"type": "paragraph",
+							"attrs": {
+								"dir": "auto"
+							},
+							"content": [
+								{
+									"type": "text",
+									"text": "     b) Realm + Client configuration"
+								}
+							]
+						},
+						{
+							"type": "paragraph",
+							"attrs": {
+								"dir": "auto"
+							},
+							"content": [
+								{
+									"type": "text",
+									"text": "     c) Spring Boot as Resource Server behind Keycloak"
+								}
+							]
+						},
+						{
+							"type": "paragraph",
+							"attrs": {
+								"dir": "auto"
+							},
+							"content": [
+								{
+									"type": "text",
+									"text": "     d) JWT validation against Keycloak public keys"
+								}
+							]
+						},
+						{
+							"type": "paragraph",
+							"attrs": {
+								"dir": "auto"
+							},
+							"content": [
+								{
+									"type": "text",
+									"text": "     e) Role mapping from Keycloak to Spring Security"
+								}
+							]
+						},
+						{
+							"type": "paragraph",
+							"attrs": {
+								"dir": "auto"
+							},
+							"content": [
+								{
+									"type": "text",
+									"text": "     f) Client Credentials flow for service to service"
+								}
+							]
+						},
+						{
+							"type": "paragraph",
+							"attrs": {
+								"dir": "auto"
+							},
+							"content": [
+								{
+									"type": "text",
+									"text": "6. Role Based Authorization (RBAC + ABAC)"
+								}
+							]
+						},
+						{
+							"type": "paragraph",
+							"attrs": {
+								"dir": "auto"
+							},
+							"content": [
+								{
+									"type": "text",
+									"text": "   - RBAC vs ABAC vs PBAC"
+								}
+							]
+						},
+						{
+							"type": "paragraph",
+							"attrs": {
+								"dir": "auto"
+							},
+							"content": [
+								{
+									"type": "text",
+									"text": "   - RBAC — Role Based (what you have done)"
+								}
+							]
+						},
+						{
+							"type": "paragraph",
+							"attrs": {
+								"dir": "auto"
+							},
+							"content": [
+								{
+									"type": "text",
+									"text": "   - ABAC — Attribute Based (user.department == \"loans\")"
+								}
+							]
+						},
+						{
+							"type": "paragraph",
+							"attrs": {
+								"dir": "auto"
+							},
+							"content": [
+								{
+									"type": "text",
+									"text": "   - PBAC — Policy Based (Keycloak uses this)"
+								}
+							]
+						},
+						{
+							"type": "paragraph",
+							"attrs": {
+								"dir": "auto"
+							},
+							"content": [
+								{
+									"type": "text",
+									"text": "   - Role hierarchy design"
+								}
+							]
+						},
+						{
+							"type": "paragraph",
+							"attrs": {
+								"dir": "auto"
+							},
+							"content": [
+								{
+									"type": "text",
+									"text": "   - Permission granularity — coarse vs fine grained"
+								}
+							]
+						},
+						{
+							"type": "paragraph",
+							"attrs": {
+								"dir": "auto"
+							},
+							"content": [
+								{
+									"type": "text",
+									"text": "   - Maker-Checker pattern (4 eyes principle) — banking critical"
+								}
+							]
+						},
+						{
+							"type": "paragraph",
+							"attrs": {
+								"dir": "auto"
+							},
+							"content": [
+								{
+									"type": "text",
+									"text": "   - Implementation: Method level security with @PreAuthorize + SpEL expressions"
+								}
+							]
+						},
+						{
+							"type": "paragraph",
+							"attrs": {
+								"dir": "auto"
+							},
+							"content": [
+								{
+									"type": "text",
+									"text": "   - Complex expressions:"
+								}
+							]
+						},
+						{
+							"type": "paragraph",
+							"attrs": {
+								"dir": "auto"
+							},
+							"content": [
+								{
+									"type": "text",
+									"text": "     @PreAuthorize(\"hasRole('ADMIN') and #userId == "
+								},
+								{
+									"type": "text",
+									"marks": [
+										{
+											"type": "link",
+											"attrs": {
+												"href": "http://authentication.principal.id",
+												"target": "_blank",
+												"rel": "noopener noreferrer nofollow",
+												"class": null
+											}
+										}
+									],
+									"text": "authentication.principal.id"
+								},
+								{
+									"type": "text",
+									"text": "\")"
+								}
+							]
+						},
+						{
+							"type": "paragraph",
+							"attrs": {
+								"dir": "auto"
+							},
+							"content": [
+								{
+									"type": "text",
+									"text": "7. Token Revocation & Blacklisting"
+								}
+							]
+						},
+						{
+							"type": "paragraph",
+							"attrs": {
+								"dir": "auto"
+							},
+							"content": [
+								{
+									"type": "text",
+									"text": "   - Why JWT revocation is hard (stateless by design)"
+								}
+							]
+						},
+						{
+							"type": "paragraph",
+							"attrs": {
+								"dir": "auto"
+							},
+							"content": [
+								{
+									"type": "text",
+									"text": "   - Revocation strategies:"
+								}
+							]
+						},
+						{
+							"type": "paragraph",
+							"attrs": {
+								"dir": "auto"
+							},
+							"content": [
+								{
+									"type": "text",
+									"text": "     a) Short expiry + refresh rotation"
+								}
+							]
+						},
+						{
+							"type": "paragraph",
+							"attrs": {
+								"dir": "auto"
+							},
+							"content": [
+								{
+									"type": "text",
+									"text": "     b) Blacklist in Redis (token JTI claim)"
+								}
+							]
+						},
+						{
+							"type": "paragraph",
+							"attrs": {
+								"dir": "auto"
+							},
+							"content": [
+								{
+									"type": "text",
+									"text": "     c) Token versioning in DB"
+								}
+							]
+						},
+						{
+							"type": "paragraph",
+							"attrs": {
+								"dir": "auto"
+							},
+							"content": [
+								{
+									"type": "text",
+									"text": "   - Trade-offs of each approach"
+								}
+							]
+						},
+						{
+							"type": "paragraph",
+							"attrs": {
+								"dir": "auto"
+							},
+							"content": [
+								{
+									"type": "text",
+									"text": "   - Implementation: Redis based JWT blacklist"
+								}
+							]
+						},
+						{
+							"type": "paragraph",
+							"attrs": {
+								"dir": "auto"
+							},
+							"content": [
+								{
+									"type": "text",
+									"text": "   - Store JTI on logout · Check on every request"
+								}
+							]
+						},
+						{
+							"type": "paragraph",
+							"attrs": {
+								"dir": "auto"
+							},
+							"content": [
+								{
+									"type": "text",
+									"text": "8. MFA / 2FA (Theory Only)"
+								}
+							]
+						},
+						{
+							"type": "paragraph",
+							"attrs": {
+								"dir": "auto"
+							},
+							"content": [
+								{
+									"type": "text",
+									"text": "   - TOTP (Time based OTP) — how Google Authenticator works"
+								}
+							]
+						},
+						{
+							"type": "paragraph",
+							"attrs": {
+								"dir": "auto"
+							},
+							"content": [
+								{
+									"type": "text",
+									"text": "   - HOTP (Counter based OTP)"
+								}
+							]
+						},
+						{
+							"type": "paragraph",
+							"attrs": {
+								"dir": "auto"
+							},
+							"content": [
+								{
+									"type": "text",
+									"text": "   - OTP over SMS/Email — security concerns"
+								}
+							]
+						},
+						{
+							"type": "paragraph",
+							"attrs": {
+								"dir": "auto"
+							},
+							"content": [
+								{
+									"type": "text",
+									"text": "   - WebAuthn / FIDO2 — future of auth"
+								}
+							]
+						},
+						{
+							"type": "paragraph",
+							"attrs": {
+								"dir": "auto"
+							},
+							"content": [
+								{
+									"type": "text",
+									"text": "   - MFA in banking compliance context (RBI guidelines)"
 								}
 							]
 						},
@@ -2581,7 +3434,7 @@
 			"brush": null,
 			"scribbles": [],
 			"cursor": {
-				"type": "move",
+				"type": "default",
 				"rotation": 0
 			},
 			"isFocusMode": false,
@@ -2591,8 +3444,8 @@
 			"screenBounds": {
 				"x": 0,
 				"y": 0,
-				"w": 774.4000244140625,
-				"h": 702.4000244140625
+				"w": 1113.5999755859375,
+				"h": 685.6000366210938
 			},
 			"insets": [
 				false,

@@ -1,0 +1,106 @@
+=====================================================================================================================================================================================================
+                                                                                            AUTHENTICATION
+=====================================================================================================================================================================================================
+
+1) Auhtentication: Authentication is the process of verifiying wheather the user is a geniune user.
+2) Authorization: Authorization is the process of verifiying wheather or not user has the permission to perform a particular action.
+
+=====================================================================================================================================================================================================
+                                                                                    USERNAME AND PASSWORD AUTHENTICATION
+=====================================================================================================================================================================================================
+
+1) Hashing: Hashing is a operation in which we pass our plain text to a hashing function and it returns a hash value
+
+for eg: if we want to hash our pasword than the hashing function could be, the ascii(char+1), means replace every charecter in the password with it's equivalent (ascii+1)th charecter
+
+2) Salting: Hashing can be predictable like there is a rainbow table which has the plain text for most significant hash values.
+so we add a random salt to the password so even though 2 users have same password because of salt it becomes different String and generates different hash everytime.
+and the hash is also added in the new hashed password so that there is no need of storing salt in a different column
+
+for eg: Hashed password = $2b$12$+[22-character salt]+[31-character hash]
+
+Authentication Flow: 
+
+if user sends the below request:
+
+POST /login
+Content-Type: application/json
+
+{
+  "username": "aditya",
+  "password": "mypassword"
+}
+
+FLow:
+
+Client
+  │
+  ▼
+Tomcat / Servlet Container
+  │
+  ▼
+Servlet Filter Chain
+  │
+  ▼
+Spring Security Filter Chain
+  │
+  ▼
+Authentication Filter
+  │
+  ▼
+AuthenticationManager
+  │
+  ▼
+AuthenticationProvider
+  │
+  ├──────────────► UserDetailsService
+  │                     │
+  │                     ▼
+  │                  Database
+  │
+  └──────────────► PasswordEncoder
+                         │
+                         ▼
+                   Password Match
+                         │
+                         ▼
+                Authentication Object
+                         │
+                         ▼
+                  SecurityContext
+                         │
+                         ▼
+                    Controller
+
+Components: 
+
+1) Servlet Filter chain:
+
+Filter: it is a part which recives the request and inspects or processes it, before it reaches the controller.
+it can, intercept/process the request
+        modify the request or response
+        continute the chain, by passing the request to next Filter
+        reject the request and send response to the client.
+
+Security Filter chain is a group of, layers of filters.
+
+2) Authentication Filter: this has various filters reagarding to Authentication.
+now since we are dealing with username and password, there is a UsernameAndPasswordAuthenticationFilter which takes username and password and converts them into Authentication attempts
+and our /login endpoint should be handled by UsernameAndPasswordAuthenticationFilter
+
+3) AuthenticationManager:
+
+The Authentication Filter points to AuthenticationManager for Authentication.
+AuthenticationManager takes the Authentication object and passes it to appropriate Authentication Provider for Authentication.
+
+4) AuthenticationProvider:
+
+AuthenticationProvider is an entity which is responsible for Authentication or it has different Authentication techniques for different types of Authentication
+now in case of Username/Password Authentication we use DAOAuthenticationProvider.
+
+5) DAOAuthenticationProvider: DAOAuthenticationProvider requires 2 things for Authentication UserDetailsService and PasswordEncoder.
+UserDetailsService is what loads UsersDetails information on the basis of username provided
+UsersDetails is a entity which represents users information.
+
+6) SecurityContext: Spring Security has to remember who all are authenticated so it uses SecurityContext to store who all are authenticated.
+SecurityContextHolder is what holds SecurityContext.

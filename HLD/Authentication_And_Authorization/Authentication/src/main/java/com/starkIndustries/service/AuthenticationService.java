@@ -18,6 +18,7 @@ import com.starkIndustries.dto.response.ApiResponse;
 import com.starkIndustries.dto.response.LoginResponse;
 import com.starkIndustries.dto.response.SignupResponse;
 import com.starkIndustries.exceptions.CustomException;
+import com.starkIndustries.keys.Keys;
 import com.starkIndustries.models.Users;
 import com.starkIndustries.repository.AuthenticationRepository;
 
@@ -27,18 +28,21 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class AuthenticationService {
 
-  public AuthenticationRepository authenticationRepository;
-  public BCryptPasswordEncoder bCryptPasswordEncoder;
-  public AuthenticationManager authenticationManager;
+  private AuthenticationRepository authenticationRepository;
+  private BCryptPasswordEncoder bCryptPasswordEncoder;
+  private AuthenticationManager authenticationManager;
+  private JwtService jwtService;
 
   public AuthenticationService(
     AuthenticationRepository authenticationRepository,
     BCryptPasswordEncoder bCryptPasswordEncoder,
-    AuthenticationManager authenticationManager
+    AuthenticationManager authenticationManager,
+    JwtService jwtService
   ){
     this.authenticationRepository = authenticationRepository;
     this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     this.authenticationManager = authenticationManager;
+    this.jwtService = jwtService;
   }
 
   @Value("${date.of.birth.format}")
@@ -71,14 +75,29 @@ public class AuthenticationService {
       throw new CustomException(HttpStatus.BAD_REQUEST,"AuthenticationService :: signup() : Signup Request is null");
     }
 
-    String contactNumber = new StringBuffer().append("+91").append(signupRequest.getContactNumber()).toString();
+    String contactNumber = null;
+    Users users = null;
+    SignupResponse signupResponse = null;
+    String jwtToken = null;
+
+    try{
+
+    contactNumber = new StringBuffer().append("+91").append(signupRequest.getContactNumber()).toString();
     signupRequest.setContactNumber(contactNumber);
     signupRequest.setPassword(bCryptPasswordEncoder.encode(signupRequest.getPassword()));
     checkIfSignupCredentialsExist(signupRequest);
-    Users users = SignupRequest.mapSignupRequestToUser(UUID.randomUUID().toString(), signupRequest);
+    users = SignupRequest.mapSignupRequestToUser(UUID.randomUUID().toString(), signupRequest);
     this.authenticationRepository.save(users);
-    SignupResponse signupResponse = SignupResponse.mapUserToSignupResponse(users);
+    jwtToken = this.jwtService.generateJwtToken(users.getUsername());
+    signupResponse = SignupResponse.mapUserToSignupResponse(users,jwtToken,Keys.BEARER_TOKEN);
     return ApiResponse.successResponse("Signup Success for UserId "+users.getUserId(), signupResponse);
+
+    }catch(Exception e){
+      log.error("AuthenticationService :: signup() : Error while signup : {}",e.getMessage());
+      throw new CustomException(HttpStatus.INTERNAL_SERVER_ERROR, "AuthenticationService :: signup() : Error while signup :"+e.getMessage());
+    }
+
+
 
   }
 
@@ -89,15 +108,21 @@ public class AuthenticationService {
       throw new CustomException(HttpStatus.BAD_REQUEST,"AuthenticationService :: login() : Login Request is null");
     }
 
-    Optional<Users> optionalUsers = this.authenticationRepository.findByUsernameOrEmailId(loginRequest.getUsername(), loginRequest.getUsername());
+    LoginResponse loginResponse = null;
+    String jwtToken = null;
+
+    try{
+
+          Optional<Users> optionalUsers = this.authenticationRepository.findByUsernameOrEmailId(loginRequest.getUsername(), loginRequest.getUsername());
     if(optionalUsers.isPresent()){
       Users users = optionalUsers.get();
 
-      Authentication authentication = this.authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(users.getUsername(), users.getPassword()));
+      Authentication authentication = this.authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
 
       if(authentication.isAuthenticated()){
         log.info("Login Successful for {}",loginRequest.getUsername());
-        LoginResponse loginResponse = LoginResponse.mapUsersToLoginResponse(users);
+        jwtToken = this.jwtService.generateJwtToken(users.getUsername());
+        loginResponse = LoginResponse.mapUsersToLoginResponse(users,jwtToken,Keys.BEARER_TOKEN);
         return ApiResponse.successResponse("Login Successful for "+loginRequest.getUsername(), loginResponse);
       }else{
         log.error("AuthenticationService :: login() : Invalid credentials");
@@ -108,6 +133,13 @@ public class AuthenticationService {
       log.error("AuthenticationService :: login() : Username {} doesnot exists",loginRequest.getUsername());
       throw new CustomException(HttpStatus.UNAUTHORIZED,"AuthenticationService :: login() : Username "+loginRequest.getUsername()+" doesnot exists");
     }
+
+    }catch(Exception e){
+      log.error("AuthenticationService :: login() : Error occured while login: {}",e.getMessage());
+      throw new CustomException(HttpStatus.INTERNAL_SERVER_ERROR, "AuthenticationService :: login() : Error occured while login: "+e.getMessage());
+    }
+
+
 
   }
 }

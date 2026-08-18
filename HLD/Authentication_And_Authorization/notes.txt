@@ -104,3 +104,66 @@ UsersDetails is a entity which represents users information.
 
 6) SecurityContext: Spring Security has to remember who all are authenticated so it uses SecurityContext to store who all are authenticated.
 SecurityContextHolder is what holds SecurityContext.
+
+
+=====================================================================================================================================================================================================
+                                                                                    JWT AUTHENTICATION
+=====================================================================================================================================================================================================
+
+We have to provide username and password everytime we have to access any resources, so instead of that once the user is Authenticated for the first time the server gives it a token known as JWT Token.
+The Jwt token proves that the user is Authenticated and it is short lived, therefore  we have to keep renewing it using Refresh token, Refresh token has a longer life span as compared to Jwt Token.
+The Jwt Token can also store some users information like userId etc it is known as Claims.
+Jwt Token has a initiated date and a expiry date, once expire we use the refresh token to generate a new Jwt Token.
+
+representation: 
+
+xxxxx.yyyyy.zzzzz
+  ↑      ↑      ↑
+Header  Payload Signature
+
+1) Header: This part contains the Signing Algorithm  and the type of token 
+
+  {
+  "alg": "RS256",
+  "typ": "JWT"
+}
+
+2) Payload: This contains the metadata about the token like subject, issuedAt, expiredAt etc
+
+{
+  "sub": "user-123",
+  "iss": "authentication-service",
+  "role": "USER",
+  "iat": 1723800000,
+  "exp": 1723803600
+}
+
+subject : users information, generally userId
+role: which role is assigned to the user
+iss: issued at
+exp: expired at
+
+3) Signature: This represents the Digital Signature of combination of Base64 encoded Header, payload and secret key.
+
+signature =Sign(Base64URL(header) + "." + Base64URL(payload), key)
+this is digitally signed and not encrypted
+
+final Jwt Token = Base64URL(Header).Base64URL(Payload).Signature
+
+Need of Signature part:
+The Signature represents the checksum(wheather or not data is tempared)
+the attacker can modify the payload information or the Header information and the modification generates a different signature as compared to original so this difference denotes that there is temper in the token 
+
+Validation: 
+
+The one who is going to recive the Jwt token should have the same secret key as the issuer for verification.
+The reciver seprates the Header and Payload and uses Base64 decoder to decode and get the original value.
+than it uses that information again to regenerate the signature part using the secret key and compares the signature part of both if same than valid user else invalid
+Trust Claims only after succesful validation.
+
+RS250 Algorithm: RS256 is a Asymetric Encryption algorithm.
+means it uses 2 keys for encryption and decryption.
+The issuer has the private key and it is only with the issuer service which geneares the token and the public kkey is being distributed amongs all the service who are going to consume the jwt token and they use the public key to decode the jwt token.
+
+This is generally used in Microservices architecture where the issuer service possess the private key and the services who are going to  consume the jwt token has the public key.
+

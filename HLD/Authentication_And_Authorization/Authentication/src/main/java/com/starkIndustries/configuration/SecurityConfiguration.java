@@ -17,11 +17,13 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import com.starkIndustries.exceptions.CustomException;
+import com.starkIndustries.filter.JwtAuthenticationFilter;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -30,12 +32,15 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class SecurityConfiguration {
 
-  public UserDetailsService userDetailsService;
+  private UserDetailsService userDetailsService;
+  private JwtAuthenticationFilter jwtAuthenticationFilter;
 
   public SecurityConfiguration(
-    @Autowired UserDetailsService userDetailsService
+    UserDetailsService userDetailsService,
+    JwtAuthenticationFilter  jwtAuthenticationFilter
   ){
     this.userDetailsService = userDetailsService;
+    this.jwtAuthenticationFilter = jwtAuthenticationFilter;
   }
 
   @Bean
@@ -96,6 +101,7 @@ public class SecurityConfiguration {
             .anyRequest()
             .authenticated()
         )
+        .addFilterBefore(jwtAuthenticationFilter,UsernamePasswordAuthenticationFilter.class)
         .build();
 
       return securityFilterChain;

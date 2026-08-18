@@ -26,8 +26,10 @@ public class LoginResponse {
   public String contactNumber;
   public String emailId;
   public String username;
+  public String jwtToken;
+  public String tokenType;
 
-  public static LoginResponse mapUsersToLoginResponse(Users users){
+  public static LoginResponse mapUsersToLoginResponse(Users users, String jwtToken, String tokenType){
 
     return LoginResponse.builder()
       .userId(users.getUserId())
@@ -37,6 +39,8 @@ public class LoginResponse {
       .contactNumber(users.getContactNumber())
       .emailId(users.getEmailId())
       .username(users.getUsername())
+      .jwtToken(jwtToken)
+      .tokenType(tokenType)
       .build();
 
   }

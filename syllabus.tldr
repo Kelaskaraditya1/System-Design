@@ -569,9 +569,9 @@
 			"typeName": "shape"
 		},
 		{
-			"x": 15401.529046138698,
-			"y": -2253.8097589509102,
-			"z": 0.11296129339091521,
+			"x": 14332.744736816001,
+			"y": -2575.7249510089855,
+			"z": 0.09830112699747798,
 			"meta": {},
 			"id": "camera:page:page",
 			"typeName": "camera"
@@ -2477,7 +2477,7 @@
 							"content": [
 								{
 									"type": "text",
-									"text": "1. Username & Password"
+									"text": "1. Username & Password✅"
 								}
 							]
 						},
@@ -2549,7 +2549,7 @@
 							"content": [
 								{
 									"type": "text",
-									"text": "   - Header.Payload.Signature structure internals"
+									"text": "   - Header.Payload.Signature structure internals ✅"
 								}
 							]
 						},
@@ -2561,7 +2561,7 @@
 							"content": [
 								{
 									"type": "text",
-									"text": "   - HS256 vs RS256 vs ES256 — symmetric vs asymmetric signing"
+									"text": "   - HS256 vs RS256 vs ES256 — symmetric vs asymmetric signing✅"
 								}
 							]
 						},
@@ -2573,7 +2573,7 @@
 							"content": [
 								{
 									"type": "text",
-									"text": "   - Why banks prefer RS256 (public/private key pair)"
+									"text": "   - Why banks prefer RS256 (public/private key pair)✅"
 								}
 							]
 						},
@@ -2585,7 +2585,7 @@
 							"content": [
 								{
 									"type": "text",
-									"text": "   - Claims — standard vs custom claims"
+									"text": "   - Claims — standard vs custom claims✅"
 								}
 							]
 						},
@@ -2597,7 +2597,7 @@
 							"content": [
 								{
 									"type": "text",
-									"text": "   - JWT validation steps in exact order"
+									"text": "   - JWT validation steps in exact order ✅"
 								}
 							]
 						},
@@ -2609,7 +2609,7 @@
 							"content": [
 								{
 									"type": "text",
-									"text": "   - JWT vulnerabilities (alg:none attack, weak secret attack)"
+									"text": "   - JWT vulnerabilities (alg:none attack, weak secret attack) ✅"
 								}
 							]
 						},
@@ -2621,7 +2621,7 @@
 							"content": [
 								{
 									"type": "text",
-									"text": "   - Stateless vs Stateful trade-offs"
+									"text": "   - Stateless vs Stateful trade-offs ✅"
 								}
 							]
 						},

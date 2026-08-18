@@ -12,5 +12,7 @@ public class Keys {
   public static final String ERRORS="errors";
   public static final String TIME_STAMP="time-stamp";
   public static final String MOBILE_NUMBER_REGEXP="${mobile.number.regexp}";
+  public static final String AUTHORIZATION="Authorization";
+  public static final String BEARER_TOKEN="Bearer";
   
 }

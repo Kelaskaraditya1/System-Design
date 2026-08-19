@@ -1,8 +1,6 @@
 package com.starkIndustries.configuration;
 
 import java.util.Arrays;
-
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpStatus;
@@ -73,7 +71,7 @@ public class SecurityConfiguration {
   }
 
   @Bean
-  public AuthenticationManager gAuthenticationManager(AuthenticationConfiguration authenticationConfiguration){
+  public AuthenticationManager getAuthenticationManager(AuthenticationConfiguration authenticationConfiguration){
   
     try{
       return authenticationConfiguration.getAuthenticationManager();

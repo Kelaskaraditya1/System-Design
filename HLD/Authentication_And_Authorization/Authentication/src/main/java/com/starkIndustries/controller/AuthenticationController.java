@@ -2,9 +2,9 @@ package com.starkIndustries.controller;
 
 import java.util.HashMap;
 import java.util.Map;
-
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -63,5 +63,27 @@ public class AuthenticationController {
     return ResponseEntity.status(HttpStatus.OK).body(response);
 
   }
+
+  // @PostMapping("/validate")
+  // public ResponseEntity<ApiResponse<JwtValidationResponse>>  validateJwtToken(
+  //   @RequestHeader("Authorization") String bearerToken
+  // ){
+
+  //   if(bearerToken==null || bearerToken.isBlank() || !bearerToken.startsWith("Bearer "))
+  //     return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ApiResponse.failureResponse(HttpStatus.BAD_REQUEST,"Jwt Toke is null or blank or Invalid Jwt Token doesnot stars with Bearer",null));
+
+  //   String jwtToken = bearerToken.substring(7);
+  //   ApiResponse<JwtValidationResponse> jwtValidationResponse = this.authenticationService.validateJwtToken(jwtToken);
+  //   return ResponseEntity.status(jwtValidationResponse.getStatusCode()).body(jwtValidationResponse);
+
+  // }
+
+@GetMapping("/validate")
+public ResponseEntity<ApiResponse<Object>> validate(Authentication authentication) {
+
+  ApiResponse<Object> apiResponse = ApiResponse.successResponse("Authenticated Successfully", authentication.getPrincipal());
+  return ResponseEntity.status(HttpStatus.OK).body(apiResponse);
+
+}
   
 }

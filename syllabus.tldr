@@ -569,9 +569,9 @@
 			"typeName": "shape"
 		},
 		{
-			"x": 14332.744736816001,
-			"y": -2575.7249510089855,
-			"z": 0.09830112699747798,
+			"x": 16431.146500974126,
+			"y": -1527.286060419499,
+			"z": 0.10139476135733412,
 			"meta": {},
 			"id": "camera:page:page",
 			"typeName": "camera"
@@ -2633,7 +2633,31 @@
 							"content": [
 								{
 									"type": "text",
-									"text": "   - Implementation: Switch from HS256 to RS256"
+									"text": "   - Implementation: Switch from HS256 ✅"
+								}
+							]
+						},
+						{
+							"type": "paragraph",
+							"attrs": {
+								"dir": "auto"
+							},
+							"content": [
+								{
+									"type": "text",
+									"text": "   - validating JwtToken endpoint (only passing jwt token) ✅"
+								}
+							]
+						},
+						{
+							"type": "paragraph",
+							"attrs": {
+								"dir": "auto"
+							},
+							"content": [
+								{
+									"type": "text",
+									"text": "\t - Implementation: Switch from to RS256"
 								}
 							]
 						},
@@ -3444,7 +3468,7 @@
 			"screenBounds": {
 				"x": 0,
 				"y": 0,
-				"w": 1113.5999755859375,
+				"w": 1478.4000244140625,
 				"h": 685.6000366210938
 			},
 			"insets": [
@@ -3462,7 +3486,7 @@
 			"isFocused": true,
 			"devicePixelRatio": 1.25,
 			"isCoarsePointer": false,
-			"isHoveringCanvas": true,
+			"isHoveringCanvas": false,
 			"openMenus": [],
 			"isChangingStyle": false,
 			"isReadonly": false,

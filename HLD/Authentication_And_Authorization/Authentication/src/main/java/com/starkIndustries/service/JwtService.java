@@ -28,8 +28,7 @@ public class JwtService {
   public String generateJwtToken(String userId){
 
     Map<String,Object> claims =null;
-
-
+    
     try{
 
       claims = new HashMap<>();

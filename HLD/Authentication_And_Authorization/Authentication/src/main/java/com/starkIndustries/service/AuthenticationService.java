@@ -1,5 +1,6 @@
 package com.starkIndustries.service;
 
+import java.nio.file.attribute.UserPrincipal;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Optional;
@@ -9,12 +10,14 @@ import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.starkIndustries.dto.request.LoginRequest;
 import com.starkIndustries.dto.request.SignupRequest;
 import com.starkIndustries.dto.response.ApiResponse;
+import com.starkIndustries.dto.response.JwtValidationResponse;
 import com.starkIndustries.dto.response.LoginResponse;
 import com.starkIndustries.dto.response.SignupResponse;
 import com.starkIndustries.exceptions.CustomException;
@@ -110,14 +113,16 @@ public class AuthenticationService {
 
     LoginResponse loginResponse = null;
     String jwtToken = null;
+    Optional<Users> optionalUsers = null;
+    Authentication authentication = null;
 
     try{
 
-          Optional<Users> optionalUsers = this.authenticationRepository.findByUsernameOrEmailId(loginRequest.getUsername(), loginRequest.getUsername());
+          optionalUsers = this.authenticationRepository.findByUsernameOrEmailId(loginRequest.getUsername(), loginRequest.getUsername());
     if(optionalUsers.isPresent()){
       Users users = optionalUsers.get();
 
-      Authentication authentication = this.authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
+      authentication = this.authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
 
       if(authentication.isAuthenticated()){
         log.info("Login Successful for {}",loginRequest.getUsername());
@@ -139,7 +144,39 @@ public class AuthenticationService {
       throw new CustomException(HttpStatus.INTERNAL_SERVER_ERROR, "AuthenticationService :: login() : Error occured while login: "+e.getMessage());
     }
 
-
-
   }
+
+  public ApiResponse<JwtValidationResponse> validateJwtToken(String authToken){
+
+    String username = null;
+
+    try{
+
+      username = this.jwtService.extractUserName(authToken);
+      if(username==null || username.isBlank()){
+        log.error("AuthenticationService :: validateJwtToken() : Username not found in Jwt Token");
+        throw new CustomException(HttpStatus.UNAUTHORIZED, "AuthenticationService :: validateJwtToken() : Username not found in Jwt Token");
+      }
+
+      Optional<Users> users = this.authenticationRepository.findByUsername(username);
+      if(users.isPresent()){
+
+        UserDetails userDetails = new com.starkIndustries.models.UserPrincipal(users.get());
+        if(this.jwtService.isTokenValid(authToken, userDetails))
+          return ApiResponse.successResponse(username,JwtValidationResponse.mapUsersToJwtValidationResponse(users.get()));
+        else
+          return ApiResponse.failureResponse(HttpStatus.UNAUTHORIZED,"Unable to validate JWT Authentication",null);
+
+      }else{
+        log.error("AuthenticationService :: validateJwtToken() : User with username {} doesnot exists in the database",username);
+        throw new CustomException(HttpStatus.UNAUTHORIZED,"AuthenticationService :: validateJwtToken() : User with username "+username+" doesnot exists in the database");
+      }
+
+
+    }catch(Exception e){
+      log.error("AuthenticationService :: validateJwtToken() :Error while validating Jwt Token :{}",e.getMessage());
+      throw new CustomException(HttpStatus.INTERNAL_SERVER_ERROR,"AuthenticationService :: validateJwtToken() : Error while validating Jwt Token: "+e.getMessage());
+    }
+
+  } 
 }

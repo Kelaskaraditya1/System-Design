@@ -13,6 +13,7 @@ public interface AuthenticationRepository extends JpaRepository<Users,String>{
   public boolean existsByEmailId(String emailId);
   public boolean existsByContactNumber(String contactNumber);
   public Optional<Users> findByUsernameOrEmailId(String username, String emailId);
+  public Optional<Users> findByUsername(String username);
 
   
 }

@@ -11,6 +11,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import com.starkIndustries.exceptions.CustomException;
+import com.starkIndustries.keys.Keys;
+import com.starkIndustries.models.Users;
+
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import lombok.extern.slf4j.Slf4j;
@@ -25,18 +28,20 @@ public class JwtService {
   @Value("${jwt.expiry.time}")
   public Long jwtExpirationTime;
 
-  public String generateJwtToken(String userId){
+  public String generateJwtToken(Users users){
 
     Map<String,Object> claims =null;
-    
+
     try{
 
       claims = new HashMap<>();
+      claims.put(Keys.USER_ID,users.getUserId());
+      claims.put(Keys.ROLE,"USER");
 
       return Jwts.builder()
         .claims()
         .add(claims)
-        .subject(userId)
+        .subject(users.getUsername())
         .issuedAt(new Date(System.currentTimeMillis()))
         .expiration(new Date(System.currentTimeMillis()+jwtExpirationTime))
         .and()
@@ -59,12 +64,12 @@ public class JwtService {
 
     }
 
-    private <T> T extractClaims(String token, Function<Claims,T> claimResolver) {
+    public <T> T extractClaims(String token, Function<Claims,T> claimResolver) {
         Claims claims = extractClaims(token);
         return claimResolver.apply(claims);
     }
 
-    private Claims extractClaims(String token) {
+    public Claims extractClaims(String token) {
         return Jwts
                 .parser()
                 .verifyWith(getSecretKey())

@@ -3,6 +3,7 @@ package com.starkIndustries.service;
 import java.nio.file.attribute.UserPrincipal;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
 import org.springframework.beans.factory.annotation.Value;
@@ -91,7 +92,7 @@ public class AuthenticationService {
     checkIfSignupCredentialsExist(signupRequest);
     users = SignupRequest.mapSignupRequestToUser(UUID.randomUUID().toString(), signupRequest);
     this.authenticationRepository.save(users);
-    jwtToken = this.jwtService.generateJwtToken(users.getUsername());
+    jwtToken = this.jwtService.generateJwtToken(users);
     signupResponse = SignupResponse.mapUserToSignupResponse(users,jwtToken,Keys.BEARER_TOKEN);
     return ApiResponse.successResponse("Signup Success for UserId "+users.getUserId(), signupResponse);
 
@@ -126,7 +127,7 @@ public class AuthenticationService {
 
       if(authentication.isAuthenticated()){
         log.info("Login Successful for {}",loginRequest.getUsername());
-        jwtToken = this.jwtService.generateJwtToken(users.getUsername());
+        jwtToken = this.jwtService.generateJwtToken(users);
         loginResponse = LoginResponse.mapUsersToLoginResponse(users,jwtToken,Keys.BEARER_TOKEN);
         return ApiResponse.successResponse("Login Successful for "+loginRequest.getUsername(), loginResponse);
       }else{
@@ -162,8 +163,12 @@ public class AuthenticationService {
       if(users.isPresent()){
 
         UserDetails userDetails = new com.starkIndustries.models.UserPrincipal(users.get());
-        if(this.jwtService.isTokenValid(authToken, userDetails))
+        if(this.jwtService.isTokenValid(authToken, userDetails)){
+          Map<String,Object> claims = this.jwtService.extractClaims(authToken);
+          log.info("User Id: {}",claims.get(Keys.USER_ID));
+          log.info("Role: {}",claims.get(Keys.ROLE));
           return ApiResponse.successResponse(username,JwtValidationResponse.mapUsersToJwtValidationResponse(users.get()));
+        }
         else
           return ApiResponse.failureResponse(HttpStatus.UNAUTHORIZED,"Unable to validate JWT Authentication",null);
 

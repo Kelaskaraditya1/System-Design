@@ -14,5 +14,7 @@ public class Keys {
   public static final String MOBILE_NUMBER_REGEXP="${mobile.number.regexp}";
   public static final String AUTHORIZATION="Authorization";
   public static final String BEARER_TOKEN="Bearer";
+  public static final String USER_ID="userId";
+  public static final String ROLE="role";
   
 }

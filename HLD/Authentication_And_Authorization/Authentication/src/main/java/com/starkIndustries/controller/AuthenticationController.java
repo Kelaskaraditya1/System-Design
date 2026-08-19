@@ -8,12 +8,14 @@ import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.starkIndustries.dto.request.LoginRequest;
 import com.starkIndustries.dto.request.SignupRequest;
 import com.starkIndustries.dto.response.ApiResponse;
+import com.starkIndustries.dto.response.JwtValidationResponse;
 import com.starkIndustries.dto.response.LoginResponse;
 import com.starkIndustries.dto.response.SignupResponse;
 import com.starkIndustries.service.AuthenticationService;
@@ -64,26 +66,26 @@ public class AuthenticationController {
 
   }
 
-  // @PostMapping("/validate")
-  // public ResponseEntity<ApiResponse<JwtValidationResponse>>  validateJwtToken(
-  //   @RequestHeader("Authorization") String bearerToken
-  // ){
+  @PostMapping("/validate")
+  public ResponseEntity<ApiResponse<JwtValidationResponse>>  validateJwtToken(
+    @RequestHeader("Authorization") String bearerToken
+  ){
 
-  //   if(bearerToken==null || bearerToken.isBlank() || !bearerToken.startsWith("Bearer "))
-  //     return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ApiResponse.failureResponse(HttpStatus.BAD_REQUEST,"Jwt Toke is null or blank or Invalid Jwt Token doesnot stars with Bearer",null));
+    if(bearerToken==null || bearerToken.isBlank() || !bearerToken.startsWith("Bearer "))
+      return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ApiResponse.failureResponse(HttpStatus.BAD_REQUEST,"Jwt Toke is null or blank or Invalid Jwt Token doesnot stars with Bearer",null));
 
-  //   String jwtToken = bearerToken.substring(7);
-  //   ApiResponse<JwtValidationResponse> jwtValidationResponse = this.authenticationService.validateJwtToken(jwtToken);
-  //   return ResponseEntity.status(jwtValidationResponse.getStatusCode()).body(jwtValidationResponse);
+    String jwtToken = bearerToken.substring(7);
+    ApiResponse<JwtValidationResponse> jwtValidationResponse = this.authenticationService.validateJwtToken(jwtToken);
+    return ResponseEntity.status(jwtValidationResponse.getStatusCode()).body(jwtValidationResponse);
 
-  // }
+  }
 
-@GetMapping("/validate")
-public ResponseEntity<ApiResponse<Object>> validate(Authentication authentication) {
+// @GetMapping("/validate")
+// public ResponseEntity<ApiResponse<Object>> validate(Authentication authentication) {
 
-  ApiResponse<Object> apiResponse = ApiResponse.successResponse("Authenticated Successfully", authentication.getPrincipal());
-  return ResponseEntity.status(HttpStatus.OK).body(apiResponse);
+//   ApiResponse<Object> apiResponse = ApiResponse.successResponse("Authenticated Successfully", authentication.getPrincipal());
+//   return ResponseEntity.status(HttpStatus.OK).body(apiResponse);
 
-}
+// }
   
 }

@@ -138,7 +138,7 @@ Header  Payload Signature
   "exp": 1723803600
 }
 
-subject : users information, generally userId
+subject : users information, generally username
 role: which role is assigned to the user
 iss: issued at
 exp: expired at
@@ -167,3 +167,35 @@ The issuer has the private key and it is only with the issuer service which gene
 
 This is generally used in Microservices architecture where the issuer service possess the private key and the services who are going to  consume the jwt token has the public key.
 
+
+=====================================================================================================================================================================================================
+                                                                                    JWT AUTHENTICATION USING RS256 ALGORITHM
+=====================================================================================================================================================================================================
+
+We can implement Jwt Authentication using both Symmetric and Asymmetric cryptography 
+
+1) Symmetric cryptography: which uses same secret key for generating and validation of token (using HMACSha 256)
+2) Asymetric cryptography: it uses 2 different key, 1 private and 1 public the private key is used for generating the token and public key which is distributed to all is used for validation (RS256)
+
+RS256: Algorithm 
+
+Implementation steps:
+
+1) generate a public key and private key and store it in res/ using the below commands and run it in git bash.
+
+Public Key: openssl rsa -in private_key.pem -pubout -out public_key.pem
+Private Key: openssl genrsa -out private_key.pem 2048
+
+this commands create 2 files which represents the public and private key and place them in res/
+
+2) Autowire the Resource object in jwtService which points to the files in res/
+
+  @Value("classpath:private_key.pem")
+    private Resource privateKeyResource;
+
+    @Value("classpath:public_key.pem")
+    private Resource publicKeyResource;
+
+than write 2 functions for getting public and private key from the Resource object.
+
+3) than use private key while generating Jwt Token and private key while in the verification part which is written in verifyClaims()

@@ -1,21 +1,20 @@
 package com.starkIndustries.dto.response;
 
+import lombok.Data;
 import java.time.LocalDate;
-
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.starkIndustries.models.Gender;
 import com.starkIndustries.models.Users;
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Data;
 import lombok.NoArgsConstructor;
+
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class SignupResponse {
+public class RefreshTokenResponse {
 
   public String userId;
   public String name;
@@ -30,20 +29,21 @@ public class SignupResponse {
   public String refreshToken;
   public String tokenType;
 
-  public static SignupResponse mapUserToSignupResponse(Users users,String jwtToken, String refreshToken,  String tokenType){
+  public static RefreshTokenResponse mapUsersToRefreshTokenResponse(Users users, String jwtToken, String refreshToken,  String tokenType){
 
-    return SignupResponse.builder()
-    .userId(users.getUserId())
-    .name(users.getName())
-    .dateOfBirth(users.getDateOfBirth())
-    .gender(users.getGender())
-    .contactNumber(users.getContactNumber())
-    .emailId(users.getEmailId())
-    .username(users.getUsername())
-    .jwtToken(jwtToken)
-    .refreshToken(jwtToken)
-    .tokenType(tokenType) 
-    .build();
+    return RefreshTokenResponse.builder()
+      .userId(users.getUserId())
+      .name(users.getName())
+      .dateOfBirth(users.getDateOfBirth())
+      .gender(users.getGender())
+      .contactNumber(users.getContactNumber())
+      .emailId(users.getEmailId())
+      .username(users.getUsername())
+      .jwtToken(jwtToken)
+      .refreshToken(refreshToken)
+      .tokenType(tokenType)
+      .build();
+
   }
   
 }

@@ -42,7 +42,8 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter{
 
     String endPoint  = request.getServletPath();
     return endPoint.equals("/auth/signup") ||
-    endPoint.equals("/auth/login");
+    endPoint.equals("/auth/login") ||
+    endPoint.equals("/auth/refresh-token");
     
   }
 

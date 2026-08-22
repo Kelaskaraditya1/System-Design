@@ -17,7 +17,9 @@ import com.starkIndustries.dto.request.SignupRequest;
 import com.starkIndustries.dto.response.ApiResponse;
 import com.starkIndustries.dto.response.JwtValidationResponse;
 import com.starkIndustries.dto.response.LoginResponse;
+import com.starkIndustries.dto.response.RefreshTokenResponse;
 import com.starkIndustries.dto.response.SignupResponse;
+import com.starkIndustries.keys.Keys;
 import com.starkIndustries.service.AuthenticationService;
 
 import jakarta.validation.Valid;
@@ -87,5 +89,19 @@ public class AuthenticationController {
 //   return ResponseEntity.status(HttpStatus.OK).body(apiResponse);
 
 // }
+
+@PostMapping("/refresh-token")
+public ResponseEntity<ApiResponse<RefreshTokenResponse>> regenerateJwtTokenUsingRefreshToken(
+  @RequestHeader(Keys.AUTHORIZATION) String bearerToken
+){
+
+  if(bearerToken==null || bearerToken.isBlank() || !bearerToken.startsWith("Bearer "))
+          return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ApiResponse.failureResponse(HttpStatus.BAD_REQUEST,"Jwt Toke is null or blank or Invalid Jwt Token doesnot stars with Bearer",null));
+
+  String refreshToken = bearerToken.substring(7);
+  ApiResponse<RefreshTokenResponse> refreshTokenResponse = this.authenticationService.regenerateJwtTokenUsingRefereshToken(refreshToken);
+  return ResponseEntity.status(refreshTokenResponse.getStatusCode()).body(refreshTokenResponse);
+
+}
   
 }

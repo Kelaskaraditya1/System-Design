@@ -12,7 +12,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
 import javax.crypto.SecretKey;
-
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpStatus;
@@ -21,9 +20,7 @@ import org.springframework.stereotype.Service;
 import com.starkIndustries.exceptions.CustomException;
 import com.starkIndustries.keys.Keys;
 import com.starkIndustries.models.Users;
-
 import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jwt;
 import io.jsonwebtoken.Jwts;
 import lombok.extern.slf4j.Slf4j;
 
@@ -34,8 +31,11 @@ public class JwtService {
   @Value("${jwt.secret.key}")
   public String secretKey;
 
-  @Value("${jwt.expiry.time}")
-  public Long jwtExpirationTime;
+  @Value("${jwt.token.expiry.time}")
+  public Long jwtTokenExpirationTime;
+
+  @Value("${refresh.token.expiry.time}")
+  public Long refreshTokenExpirationTime;
 
 
 //   The below 2 are for fetching public key and private key which are stored in res/
@@ -46,16 +46,58 @@ public class JwtService {
     @Value("classpath:public_key.pem")
     private Resource publicKeyResource;
 
+    public String generateJwtToken(Users users){
+        try{
+            return generateToken(users,jwtTokenExpirationTime);
+        }catch(Exception e){
+            log.error("JwtService :: generateJwtToken() : Error while generating Jwt Token: {}",e.getMessage());
+            throw new CustomException(HttpStatus.INTERNAL_SERVER_ERROR, "JwtService :: generateJwtToken() : Error while generating Jwt Token: "+e.getMessage());
+        }
+    }
+
+    public String generateRefreshToken(Users users){
+        try{
+            return generateToken(users,refreshTokenExpirationTime);
+        }catch(Exception e){
+            log.error("JwtService :: generateRefreshToken() : Error while generating Jwt Token: {}",e.getMessage());
+            throw new CustomException(HttpStatus.INTERNAL_SERVER_ERROR, "JwtService :: generateRefreshToken() : Error while generating Jwt Token: "+e.getMessage());
+        }    
+    }
+
     // This generates JwtToken using HMACSha 256 
+  public String generateToken(Users users, Long expirationTime){
+
+    Map<String,Object> claims =null;
+
+    try{
+
+      claims = new HashMap<>();
+      claims.put(Keys.USER_ID,users.getUserId());
+      claims.put(Keys.ROLE,"USER");
+
+      return Jwts.builder()
+        .claims()
+        .add(claims)
+        .subject(users.getUsername())
+        .issuedAt(new Date(System.currentTimeMillis()))
+        .expiration(new Date(System.currentTimeMillis()+expirationTime))
+        .and()
+        .signWith(getSecretKey())
+        .compact();
+
+    }catch(Exception e){
+      log.error("JwtService :: generateToken() : Error while generating Jwt Token: {}",e.getMessage());
+      throw new CustomException(HttpStatus.INTERNAL_SERVER_ERROR, "JwtService :: generateToken() : Error while generating Jwt Token: "+e.getMessage());
+    }
+  }
+
 //   public String generateJwtToken(Users users){
 
-//     Map<String,Object> claims =null;
+//     Map<String,Object> claims = null;
 
 //     try{
 
-//       claims = new HashMap<>();
-//       claims.put(Keys.USER_ID,users.getUserId());
-//       claims.put(Keys.ROLE,"USER");
+//         claims = new HashMap<>();
 
 //       return Jwts.builder()
 //         .claims()
@@ -64,45 +106,21 @@ public class JwtService {
 //         .issuedAt(new Date(System.currentTimeMillis()))
 //         .expiration(new Date(System.currentTimeMillis()+jwtExpirationTime))
 //         .and()
-//         .signWith(getSecretKey())
+//         .signWith(getPrivateKey(), Jwts.SIG.RS256)
 //         .compact();
 
 //     }catch(Exception e){
 //       log.error("JwtService :: generateJwtToken() : Error while generating Jwt Token: {}",e.getMessage());
 //       throw new CustomException(HttpStatus.INTERNAL_SERVER_ERROR, "JwtService :: generateJwtToken() : Error while generating Jwt Token: "+e.getMessage());
 //     }
+
 //   }
-
-  public String generateJwtToken(Users users){
-
-    Map<String,Object> claims = null;
-
-    try{
-
-        claims = new HashMap<>();
-
-      return Jwts.builder()
-        .claims()
-        .add(claims)
-        .subject(users.getUsername())
-        .issuedAt(new Date(System.currentTimeMillis()))
-        .expiration(new Date(System.currentTimeMillis()+jwtExpirationTime))
-        .and()
-        .signWith(getPrivateKey(), Jwts.SIG.RS256)
-        .compact();
-
-    }catch(Exception e){
-      log.error("JwtService :: generateJwtToken() : Error while generating Jwt Token: {}",e.getMessage());
-      throw new CustomException(HttpStatus.INTERNAL_SERVER_ERROR, "JwtService :: generateJwtToken() : Error while generating Jwt Token: "+e.getMessage());
-    }
-
-  }
 
 //   This is for getting Secret key for signing the token 
 
       public SecretKey getSecretKey(){
       byte [] keyRawBytes = Base64.getDecoder().decode(secretKey);
-      return io.jsonwebtoken.security.Keys.hmacShaKeyFor(keyRawBytes);
+        return io.jsonwebtoken.security.Keys.hmacShaKeyFor(keyRawBytes);
     }
 
         public String extractUserName(String token) {
@@ -117,25 +135,25 @@ public class JwtService {
 
     // This is used for verifiying Jwt Token using HMAC Sha 256
 
-    // public Claims extractClaims(String token) {
-    //     return Jwts
-    //             .parser()
-    //             .verifyWith(getSecretKey())
-    //             .build()
-    //             .parseSignedClaims(token)
-    //             .getPayload();
-    // }
-
-    // This is used for verifiying the JwtToken using RS256 using Public Key which was signed by Private key
-
     public Claims extractClaims(String token) {
         return Jwts
                 .parser()
-                .verifyWith(getPublicKey())
+                .verifyWith(getSecretKey())
                 .build()
                 .parseSignedClaims(token)
                 .getPayload();
     }
+
+    // This is used for verifiying the JwtToken using RS256 using Public Key which was signed by Private key
+
+    // public Claims extractClaims(String token) {
+    //     return Jwts
+    //             .parser()
+    //             .verifyWith(getPublicKey())
+    //             .build()
+    //             .parseSignedClaims(token)
+    //             .getPayload();
+    // }
 
     public boolean isTokenValid(String token, UserDetails userDetails) {
         final String userName = extractUserName(token);

@@ -154,7 +154,7 @@ Need of Signature part:
 The Signature represents the checksum(wheather or not data is tempared)
 the attacker can modify the payload information or the Header information and the modification generates a different signature as compared to original so this difference denotes that there is temper in the token 
 
-Validation: 
+4) Validation: 
 
 The one who is going to recive the Jwt token should have the same secret key as the issuer for verification.
 The reciver seprates the Header and Payload and uses Base64 decoder to decode and get the original value.
@@ -199,3 +199,33 @@ this commands create 2 files which represents the public and private key and pla
 than write 2 functions for getting public and private key from the Resource object.
 
 3) than use private key while generating Jwt Token and private key while in the verification part which is written in verifyClaims()
+
+
+
+=====================================================================================================================================================================================================
+                                                                                    REFRESH TOKEN
+=====================================================================================================================================================================================================
+
+Industrial sytems make the jwt token last short lived, so that if they are compromised they are short lived and cannot be used after expiry.
+but if the token is short lived than the user will have to do login again and again, so avoid this we introduce the concept of Refresh token.
+
+Refresh Token: Refresh Token generally have a long life as compared to the jwt Token and they are used to regenerate the jwt token.
+and once Refresh token are expired than the user has to relogin.
+
+uses: 
+Jwt Token are used for Authenticaiton purpose for api's 
+Refresh Token are used to regenerate the Jwt Token are expiration.
+
+1) Refresh Token Stratergy:
+
+Problem: if there is a Refresh Token A and it get's stolen by the Attacker, than Attacker can generate Access Tokens until the refresh token epxpires.
+Solution: once the refresh Token is used than we have to invalidate it, and after that generate a new Refresh Token.
+so that if the older refresh token is used again than we can be sure that it is being used by a Attacker. 
+
+2) Absolute vs Sliding Expiration:
+
+Every Refresh Token has a expiration time, after which we have to generate a new refresh token, this is called Absolute Expiration because the expiration is fixed.
+In sliding expiration after every succesful use of refresh  Token we increase it's expiration.
+
+The disadvantage of this is that if we use sliding expiration than if the attacker get's the refresh token than he can extend the session for as long as possible.
+Refresh Token is to be stored in Cookies and jwt token is to be stored in local storage.

@@ -94,7 +94,7 @@ public class SecurityConfiguration {
         .sessionManagement(session->session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
         .authenticationProvider(getAuthenticationProvider())
         .authorizeHttpRequests(
-          request->request.requestMatchers("/auth/signup","/auth/login")
+          request->request.requestMatchers("/auth/signup","/auth/login", "/auth/refresh-token")
             .permitAll()
             .anyRequest()
             .authenticated()

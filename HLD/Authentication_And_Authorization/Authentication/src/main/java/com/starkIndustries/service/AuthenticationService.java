@@ -1,8 +1,5 @@
 package com.starkIndustries.service;
 
-import java.nio.file.attribute.UserPrincipal;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
@@ -12,6 +9,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -20,6 +18,7 @@ import com.starkIndustries.dto.request.SignupRequest;
 import com.starkIndustries.dto.response.ApiResponse;
 import com.starkIndustries.dto.response.JwtValidationResponse;
 import com.starkIndustries.dto.response.LoginResponse;
+import com.starkIndustries.dto.response.RefreshTokenResponse;
 import com.starkIndustries.dto.response.SignupResponse;
 import com.starkIndustries.exceptions.CustomException;
 import com.starkIndustries.keys.Keys;
@@ -36,17 +35,20 @@ public class AuthenticationService {
   private BCryptPasswordEncoder bCryptPasswordEncoder;
   private AuthenticationManager authenticationManager;
   private JwtService jwtService;
+  private UserDetailsService userDetailsService;
 
   public AuthenticationService(
     AuthenticationRepository authenticationRepository,
     BCryptPasswordEncoder bCryptPasswordEncoder,
     AuthenticationManager authenticationManager,
-    JwtService jwtService
+    JwtService jwtService,
+    UserDetailsService userDetailsService
   ){
     this.authenticationRepository = authenticationRepository;
     this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     this.authenticationManager = authenticationManager;
     this.jwtService = jwtService;
+    this.userDetailsService=userDetailsService;
   }
 
   @Value("${date.of.birth.format}")
@@ -82,7 +84,6 @@ public class AuthenticationService {
     String contactNumber = null;
     Users users = null;
     SignupResponse signupResponse = null;
-    String jwtToken = null;
 
     try{
 
@@ -92,8 +93,7 @@ public class AuthenticationService {
     checkIfSignupCredentialsExist(signupRequest);
     users = SignupRequest.mapSignupRequestToUser(UUID.randomUUID().toString(), signupRequest);
     this.authenticationRepository.save(users);
-    jwtToken = this.jwtService.generateJwtToken(users);
-    signupResponse = SignupResponse.mapUserToSignupResponse(users,jwtToken,Keys.BEARER_TOKEN);
+    signupResponse = SignupResponse.mapUserToSignupResponse(users,this.jwtService.generateJwtToken(users), this.jwtService.generateRefreshToken(users), Keys.BEARER_TOKEN);
     return ApiResponse.successResponse("Signup Success for UserId "+users.getUserId(), signupResponse);
 
     }catch(Exception e){
@@ -113,7 +113,6 @@ public class AuthenticationService {
     }
 
     LoginResponse loginResponse = null;
-    String jwtToken = null;
     Optional<Users> optionalUsers = null;
     Authentication authentication = null;
 
@@ -127,8 +126,7 @@ public class AuthenticationService {
 
       if(authentication.isAuthenticated()){
         log.info("Login Successful for {}",loginRequest.getUsername());
-        jwtToken = this.jwtService.generateJwtToken(users);
-        loginResponse = LoginResponse.mapUsersToLoginResponse(users,jwtToken,Keys.BEARER_TOKEN);
+        loginResponse = LoginResponse.mapUsersToLoginResponse(users,this.jwtService.generateJwtToken(users), this.jwtService.generateRefreshToken(users), Keys.BEARER_TOKEN);
         return ApiResponse.successResponse("Login Successful for "+loginRequest.getUsername(), loginResponse);
       }else{
         log.error("AuthenticationService :: login() : Invalid credentials");
@@ -184,4 +182,39 @@ public class AuthenticationService {
     }
 
   } 
+
+  public ApiResponse<RefreshTokenResponse> regenerateJwtTokenUsingRefereshToken(String refreshToken){
+    String username = null;
+    UserDetails userDetails = null;
+    Optional<Users> optionalUsers = null;
+
+    try{
+        username = this.jwtService.extractUserName(refreshToken);
+        optionalUsers = this.authenticationRepository.findByUsername(username);
+
+        if(optionalUsers.isPresent()){
+          Users users = optionalUsers.get();
+          userDetails = new com.starkIndustries.models.UserPrincipal(users);
+          if(this.jwtService.isTokenValid(refreshToken, userDetails)){
+
+            RefreshTokenResponse refreshTokenResponse = RefreshTokenResponse.mapUsersToRefreshTokenResponse(users, this.jwtService.generateJwtToken(users), refreshToken, Keys.BEARER_TOKEN);
+            return ApiResponse.successResponse(null, refreshTokenResponse);
+
+          }else{
+            log.error("AuthenticationService :: regenerateJwtTokenUsingRefereshToken() : Token is invalid or expired");
+            throw new CustomException(HttpStatus.INTERNAL_SERVER_ERROR,"AuthenticationService :: regenerateJwtTokenUsingRefereshToken() : Token is invalid or expired");
+          }
+
+        }else{ 
+        log.error("AuthenticationService :: regenerateJwtTokenUsingRefereshToken() : User with username {} does not exists",username);
+        throw new CustomException(HttpStatus.INTERNAL_SERVER_ERROR,"AuthenticationService :: regenerateJwtTokenUsingRefereshToken() : User with username "+username+" does not exists");
+        }
+
+    }catch(Exception e){
+      log.error("AuthenticationService :: regenerateJwtTokenUsingRefereshToken() : error while regerating Jwt Token: {}",e.getMessage());
+      throw new CustomException(HttpStatus.INTERNAL_SERVER_ERROR, "AuthenticationService :: regenerateJwtTokenUsingRefereshToken() : error while regerating Jwt Token: "+e.getMessage());
+    }
+
+
+  }
 }
